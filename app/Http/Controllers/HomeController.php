@@ -38,8 +38,8 @@ class HomeController extends Controller
             $hilangQuery->where('kategori_id', $request->kategori_id);
         }
 
-        $barangTemuan = $temuanQuery->latest()->paginate(9, ['*'], 'page_temuan')->withQueryString();
-        $laporanKehilangan = $hilangQuery->latest()->paginate(9, ['*'], 'page_hilang')->withQueryString();
+        $barangTemuan = $temuanQuery->latest()->paginate(3, ['*'], 'page_temuan')->withQueryString();
+        $laporanKehilangan = $hilangQuery->latest()->paginate(3, ['*'], 'page_hilang')->withQueryString();
         $kategori = Kategori::orderBy('nama_kategori')->get();
         $petugas = User::where('role', 'petugas')->first();
 

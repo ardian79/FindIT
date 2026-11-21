@@ -309,15 +309,23 @@
             </div>
 
             @if ($tab !== 'hilang')
-                @if ($barangTemuan->isEmpty())
+                @php
+                    $itemsTemuan = $barangTemuan instanceof \Illuminate\Pagination\AbstractPaginator
+                        ? $barangTemuan->getCollection()->take(3)
+                        : collect($barangTemuan)->take(3);
+                    $currPageTemuan = $barangTemuan instanceof \Illuminate\Pagination\AbstractPaginator ? $barangTemuan->currentPage() : 1;
+                    $lastPageTemuan = $barangTemuan instanceof \Illuminate\Pagination\AbstractPaginator ? $barangTemuan->lastPage() : 1;
+                    $pageNameTemuan = $barangTemuan instanceof \Illuminate\Pagination\AbstractPaginator ? $barangTemuan->getPageName() : 'page';
+                @endphp
+                @if ($itemsTemuan->isEmpty())
                     <div class="rounded-[24px] border border-dashed border-[#d5dbe6] bg-white p-14 text-center mt-6">
                         <h3 class="text-base font-extrabold text-ink">Belum ada barang temuan yang sesuai</h3>
                         <p class="mt-1 text-sm text-ink-muted">Coba ubah kata kunci pencarian atau periksa kembali nanti.
                         </p>
                     </div>
                 @else
-                    <div class="mt-6 grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-3">
-                        @foreach ($barangTemuan as $item)
+                    <div class="mt-6 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+                        @foreach ($itemsTemuan as $item)
                             @php
                                 $namaKategoriTemuan = $item->kategori?->nama_kategori ?? 'Umum';
                             @endphp
@@ -353,18 +361,51 @@
                             </article>
                         @endforeach
                     </div>
-                    <div class="mt-8">{{ $barangTemuan->links() }}</div>
+
+                    @if ($lastPageTemuan > 1)
+                        <nav aria-label="Navigasi halaman barang temuan" class="mt-8 flex flex-wrap items-center justify-center gap-2">
+                            @if ($currPageTemuan > 1)
+                                <a href="{{ route('home', array_merge(request()->except($pageNameTemuan), ['tab' => 'temuan', $pageNameTemuan => $currPageTemuan - 1])) }}"
+                                    class="inline-flex h-10 items-center justify-center rounded-full border border-[#d5dbe6] bg-white px-4 text-xs font-bold text-[#172033] transition hover:border-[#102a4c] hover:text-[#102a4c]">
+                                    &lsaquo; Prev
+                                </a>
+                            @endif
+
+                            @for ($p = 1; $p <= $lastPageTemuan; $p++)
+                                <a href="{{ route('home', array_merge(request()->except($pageNameTemuan), ['tab' => 'temuan', $pageNameTemuan => $p])) }}"
+                                    aria-current="{{ $p === $currPageTemuan ? 'page' : 'false' }}"
+                                    class="inline-flex h-10 min-w-10 items-center justify-center rounded-full px-3 text-xs font-extrabold transition {{ $p === $currPageTemuan ? 'bg-[#c41230] text-white shadow-[0_6px_14px_rgba(196,18,48,.18)]' : 'border border-[#e7ebf2] bg-white text-[#172033] hover:border-[#102a4c] hover:text-[#102a4c]' }}">
+                                    {{ $p }}
+                                </a>
+                            @endfor
+
+                            @if ($currPageTemuan < $lastPageTemuan)
+                                <a href="{{ route('home', array_merge(request()->except($pageNameTemuan), ['tab' => 'temuan', $pageNameTemuan => $currPageTemuan + 1])) }}"
+                                    class="inline-flex h-10 items-center justify-center rounded-full border border-[#d5dbe6] bg-white px-4 text-xs font-bold text-[#172033] transition hover:border-[#102a4c] hover:text-[#102a4c]">
+                                    Next &rsaquo;
+                                </a>
+                            @endif
+                        </nav>
+                    @endif
                 @endif
             @else
-                @if ($laporanKehilangan->isEmpty())
+                @php
+                    $itemsHilang = $laporanKehilangan instanceof \Illuminate\Pagination\AbstractPaginator
+                        ? $laporanKehilangan->getCollection()->take(3)
+                        : collect($laporanKehilangan)->take(3);
+                    $currPageHilang = $laporanKehilangan instanceof \Illuminate\Pagination\AbstractPaginator ? $laporanKehilangan->currentPage() : 1;
+                    $lastPageHilang = $laporanKehilangan instanceof \Illuminate\Pagination\AbstractPaginator ? $laporanKehilangan->lastPage() : 1;
+                    $pageNameHilang = $laporanKehilangan instanceof \Illuminate\Pagination\AbstractPaginator ? $laporanKehilangan->getPageName() : 'page';
+                @endphp
+                @if ($itemsHilang->isEmpty())
                     <div class="rounded-[24px] border border-dashed border-[#d5dbe6] bg-white p-14 text-center mt-6">
                         <h3 class="text-base font-extrabold text-ink">Belum ada laporan barang hilang yang sesuai</h3>
                         <p class="mt-1 text-sm text-ink-muted">Semua laporan kehilangan yang sedang dicari akan tampil di
                             sini.</p>
                     </div>
                 @else
-                    <div class="mt-6 grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-3">
-                        @foreach ($laporanKehilangan as $item)
+                    <div class="mt-6 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+                        @foreach ($itemsHilang as $item)
                             @php
                                 $namaKategoriHilang = $item->kategori?->nama_kategori ?? 'Umum';
                                 $namaPelaporHilang = $item->pengguna?->nama ?? '-';
@@ -416,7 +457,32 @@
                             </article>
                         @endforeach
                     </div>
-                    <div class="mt-8">{{ $laporanKehilangan->links() }}</div>
+
+                    @if ($lastPageHilang > 1)
+                        <nav aria-label="Navigasi halaman barang hilang" class="mt-8 flex flex-wrap items-center justify-center gap-2">
+                            @if ($currPageHilang > 1)
+                                <a href="{{ route('home', array_merge(request()->except($pageNameHilang), ['tab' => 'hilang', $pageNameHilang => $currPageHilang - 1])) }}"
+                                    class="inline-flex h-10 items-center justify-center rounded-full border border-[#d5dbe6] bg-white px-4 text-xs font-bold text-[#172033] transition hover:border-[#102a4c] hover:text-[#102a4c]">
+                                    &lsaquo; Prev
+                                </a>
+                            @endif
+
+                            @for ($p = 1; $p <= $lastPageHilang; $p++)
+                                <a href="{{ route('home', array_merge(request()->except($pageNameHilang), ['tab' => 'hilang', $pageNameHilang => $p])) }}"
+                                    aria-current="{{ $p === $currPageHilang ? 'page' : 'false' }}"
+                                    class="inline-flex h-10 min-w-10 items-center justify-center rounded-full px-3 text-xs font-extrabold transition {{ $p === $currPageHilang ? 'bg-[#c41230] text-white shadow-[0_6px_14px_rgba(196,18,48,.18)]' : 'border border-[#e7ebf2] bg-white text-[#172033] hover:border-[#102a4c] hover:text-[#102a4c]' }}">
+                                    {{ $p }}
+                                </a>
+                            @endfor
+
+                            @if ($currPageHilang < $lastPageHilang)
+                                <a href="{{ route('home', array_merge(request()->except($pageNameHilang), ['tab' => 'hilang', $pageNameHilang => $currPageHilang + 1])) }}"
+                                    class="inline-flex h-10 items-center justify-center rounded-full border border-[#d5dbe6] bg-white px-4 text-xs font-bold text-[#172033] transition hover:border-[#102a4c] hover:text-[#102a4c]">
+                                    Next &rsaquo;
+                                </a>
+                            @endif
+                        </nav>
+                    @endif
                 @endif
             @endif
         </div>
