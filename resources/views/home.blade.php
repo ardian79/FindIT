@@ -348,7 +348,7 @@
                                         data-deskripsi="{{ $item->deskripsi }}"
                                         data-foto="{{ asset('storage/' . $item->foto_barang) }}"
                                         class="inline-flex items-center justify-center gap-2 rounded-full border border-transparent bg-[#102a4c] px-5 py-3 text-sm font-bold leading-[1.2] text-white transition-all duration-200 ease-out hover:-translate-y-px hover:bg-[#0a1c33] active:translate-y-0 active:scale-[.98] mt-4 w-full">Lihat
-                                        Detail & Klaim</button>
+                                        Detail</button>
                                 </div>
                             </article>
                         @endforeach

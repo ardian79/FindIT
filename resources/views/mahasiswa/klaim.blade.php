@@ -32,8 +32,8 @@
             <div class="space-y-4">
                 @foreach ($klaim as $item)
                     <div class="overflow-hidden rounded-2xl border border-slate-200/80 bg-white p-5">
-                        <div class="flex flex-col gap-5 md:flex-row">
-                            <div class="h-36 w-full shrink-0 overflow-hidden rounded-xl bg-slate-100 md:h-32 md:w-40">
+                        <div class="flex flex-col gap-5 md:flex-row md:items-center">
+                            <div class="h-36 w-full shrink-0 overflow-hidden rounded-xl bg-slate-100 md:h-32 md:w-40 md:self-center">
                                 <img src="{{ asset('storage/' . $item->barangTemuan->foto_barang) }}" alt="{{ $item->barangTemuan->nama_barang }}" class="h-full w-full object-cover">
                             </div>
 
