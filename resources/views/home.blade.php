@@ -247,7 +247,7 @@
                 <h2 class="mt-3 font-heading text-3xl font-extrabold tracking-tight text-ink sm:text-4xl">Barang temuan dan
                     laporan hilang</h2>
                 <p class="mx-auto mt-3 max-w-xl text-sm leading-7 text-ink-muted">Gunakan pencarian dan kategori untuk
-                    menemukan barang di lingkungan UNEJ.</p>
+                    menemukan barang temuan atau barang hilang.</p>
             </div>
 
             <div
