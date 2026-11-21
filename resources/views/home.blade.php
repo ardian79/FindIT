@@ -299,15 +299,6 @@
                 </form>
             </div>
 
-            <div class="mt-4 flex gap-2 overflow-x-auto px-1 py-2">
-                <a href="{{ route('home', array_merge(request()->except('kategori_id'), ['tab' => $tab])) }}"
-                    class="inline-flex min-h-[34px] shrink-0 items-center whitespace-nowrap rounded-full border-0 px-[13px] py-[7px] text-xs font-bold leading-[1.3] outline-none transition-[background-color,color,transform] duration-180 ease-[cubic-bezier(.22,1,.36,1)] hover:scale-[1.04] active:scale-[.98] focus-visible:ring-2 focus-visible:ring-[#c41230] focus-visible:ring-offset-2 {{ !request()->filled('kategori_id') ? 'bg-[#102a4c] text-white hover:bg-[#102a4c] hover:text-white' : 'bg-white text-[#102a4c] hover:bg-[#f3f5f8] hover:text-[#102a4c]' }}">Semua</a>
-                @foreach ($kategori as $kat)
-                    <a href="{{ route('home', array_merge(request()->except(['page_temuan', 'page_hilang']), ['tab' => $tab, 'kategori_id' => $kat->id])) }}"
-                        class="inline-flex min-h-[34px] shrink-0 items-center whitespace-nowrap rounded-full border-0 px-[13px] py-[7px] text-xs font-bold leading-[1.3] outline-none transition-[background-color,color,transform] duration-180 ease-[cubic-bezier(.22,1,.36,1)] hover:scale-[1.04] active:scale-[.98] focus-visible:ring-2 focus-visible:ring-[#c41230] focus-visible:ring-offset-2 {{ request('kategori_id') == $kat->id ? 'bg-[#102a4c] text-white hover:bg-[#102a4c] hover:text-white' : 'bg-white text-[#102a4c] hover:bg-[#f3f5f8] hover:text-[#102a4c]' }}">{{ $kat->nama_kategori }}</a>
-                @endforeach
-            </div>
-
             @if ($tab !== 'hilang')
                 @php
                     $itemsTemuan =
