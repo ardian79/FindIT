@@ -45,8 +45,7 @@ updateActive();
 $nextTick(() => {
     ready = true;
 });
-window.addEventListener('scroll', updateActive, { passive: true });"
-    @keydown.escape.window="mobile = false; account = false"
+window.addEventListener('scroll', updateActive, { passive: true });" @keydown.escape.window="mobile = false; account = false"
     :class="[
         scrolled ? 'px-3 sm:px-5' : 'px-0',
         ready ? 'transition-[padding] duration-[520ms] ease-[cubic-bezier(.22,1,.36,1)]' : 'transition-none'
@@ -62,7 +61,8 @@ window.addEventListener('scroll', updateActive, { passive: true });"
     ]"
         class="relative w-full border border-[#e7ebf2] backdrop-blur-md">
         <div class="mx-auto w-full max-w-[1160px] px-3 sm:px-5">
-            <div class="flex min-h-[68px] items-center justify-between gap-3 lg:grid lg:grid-cols-[1fr_auto_1fr] lg:gap-6">
+            <div
+                class="flex min-h-[68px] items-center justify-between gap-3 lg:grid lg:grid-cols-[1fr_auto_1fr] lg:gap-6">
                 <a href="{{ route('home') }}" class="flex shrink-0 items-center gap-2 lg:justify-self-start">
                     @if (is_file(public_path('images/logo-findit.svg')))
                         <img src="{{ asset('images/logo-findit.svg') }}" alt="Logo FindIT"
@@ -119,11 +119,6 @@ window.addEventListener('scroll', updateActive, { passive: true });"
 
                 <div class="hidden min-w-0 items-center justify-end gap-2 lg:flex lg:justify-self-end">
                     @auth
-                        @if (Auth::user()->role !== 'mahasiswa')
-                            <a href="{{ route('petugas.dashboard') }}"
-                                class="inline-flex items-center justify-center gap-2 rounded-full border border-transparent bg-[#fdecee] px-3.5 py-2 text-xs font-bold leading-[1.2] text-[#9b1028] transition-all duration-200 ease-out hover:-translate-y-px hover:bg-[#f8d5da] active:translate-y-0 active:scale-[.98]">Panel
-                                Petugas</a>
-                        @endif
                         <div class="relative" @keydown.escape.window="account = false">
                             <button type="button" @click="account = !account"
                                 class="flex items-center gap-2 rounded-full py-1 pl-1 pr-3 transition hover:bg-[#f4f6f8]"
@@ -181,8 +176,7 @@ window.addEventListener('scroll', updateActive, { passive: true });"
     </nav>
 
     <div id="mobile-menu" x-show="mobile" x-cloak x-transition.origin.top.duration.200ms
-        @click.outside="mobile = false"
-        :class="scrolled ? 'mx-auto mt-4 max-w-[1160px]' : 'mx-0 mt-1.5 max-w-none'"
+        @click.outside="mobile = false" :class="scrolled ? 'mx-auto mt-4 max-w-[1160px]' : 'mx-0 mt-1.5 max-w-none'"
         class="w-full rounded-3xl border border-[#e7ebf2] bg-white/98 shadow-lift backdrop-blur-md lg:hidden">
         <div class="flex flex-col gap-1.5 px-4 py-3 sm:px-6">
             <a href="{{ route('home') }}" @click="navigateFromNavbar($event, 'top'); mobile = false"
@@ -218,7 +212,8 @@ window.addEventListener('scroll', updateActive, { passive: true });"
                 @endif
                 <a href="{{ route('profil.edit') }}"
                     class="relative block rounded-full px-4 py-2 text-sm font-semibold text-[#3d4b60] transition-colors duration-160 ease-[cubic-bezier(.22,1,.36,1)] hover:bg-[#f3f5f8] hover:text-[#172033] {{ request()->routeIs('profil.*') ? 'bg-[#fdecee] text-[#c41230]' : '' }}">Profil
-                    ({{ Auth::user()->nama }})</a>
+                    ({{ Auth::user()->nama }})
+                </a>
                 <form action="{{ route('logout') }}" method="POST" class="pt-1">
                     @csrf
                     <button type="submit"
