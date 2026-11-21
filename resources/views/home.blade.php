@@ -648,8 +648,10 @@
                 </button>
             </div>
             <div class="p-5 sm:p-6">
-                <div id="hilang-foto-wrapper" class="mb-5 hidden overflow-hidden rounded-2xl bg-[#eef1f5]">
-                    <img id="hilang-foto" src="" alt="" class="max-h-80 w-full object-contain">
+                <div id="hilang-foto-wrapper"
+                    class="group mb-5 hidden overflow-hidden rounded-2xl border border-[#e7ebf2] bg-[#eef1f5] transition-[transform,box-shadow,border-color] duration-220 ease-[cubic-bezier(.22,1,.36,1)] hover:-translate-y-0.5 hover:border-[#d1d8e4] hover:shadow-[0_14px_30px_rgba(16,42,76,.08)]">
+                    <img id="hilang-foto" src="" alt=""
+                        class="max-h-80 w-full object-contain transition-transform duration-300 ease-[cubic-bezier(.22,1,.36,1)] group-hover:scale-[1.03]">
                 </div>
                 <div
                     class="transition-[transform,box-shadow,border-color,background-color] duration-220 ease-[cubic-bezier(.22,1,.36,1)] hover:-translate-y-0.5 hover:border-[#d1d8e4] hover:shadow-[0_14px_30px_rgba(16,42,76,.08)] grid grid-cols-1 gap-3 rounded-2xl bg-[#f7f8fb] p-4 text-sm sm:grid-cols-2">
