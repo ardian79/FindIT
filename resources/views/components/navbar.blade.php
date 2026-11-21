@@ -46,6 +46,7 @@ $nextTick(() => {
     ready = true;
 });
 window.addEventListener('scroll', updateActive, { passive: true });"
+    @keydown.escape.window="mobile = false; account = false"
     :class="[
         scrolled ? 'px-3 sm:px-5' : 'px-0',
         ready ? 'transition-[padding] duration-[520ms] ease-[cubic-bezier(.22,1,.36,1)]' : 'transition-none'
@@ -59,13 +60,16 @@ window.addEventListener('scroll', updateActive, { passive: true });"
         'transition-[max-width,border-radius,box-shadow,background-color,transform] duration-[520ms] ease-[cubic-bezier(.22,1,.36,1)]' :
         'transition-none'
     ]"
-        class="w-full border border-[#e7ebf2] backdrop-blur-md">
+        class="relative w-full border border-[#e7ebf2] backdrop-blur-md">
         <div class="mx-auto w-full max-w-[1160px] px-3 sm:px-5">
-            <div class="grid min-h-[68px] grid-cols-[1fr_auto_1fr] items-center gap-3 lg:gap-6">
-                <a href="{{ route('home') }}" class="flex shrink-0 items-center gap-2 justify-self-start">
+            <div class="flex min-h-[68px] items-center justify-between gap-3 lg:grid lg:grid-cols-[1fr_auto_1fr] lg:gap-6">
+                <a href="{{ route('home') }}" class="flex shrink-0 items-center gap-2 lg:justify-self-start">
                     @if (is_file(public_path('images/logo-findit.svg')))
                         <img src="{{ asset('images/logo-findit.svg') }}" alt="Logo FindIT"
-                            class="h-8 w-auto object-contain">
+                            class="h-8 w-8 shrink-0 object-contain">
+                    @elseif (is_file(public_path('images/logo-findit.png')))
+                        <img src="{{ asset('images/logo-findit.png') }}" alt="Logo FindIT"
+                            class="h-8 w-8 shrink-0 object-contain">
                     @endif
                     <span class="leading-tight">
                         <span class="block text-lg font-extrabold tracking-tight text-ink">Find<span
@@ -113,7 +117,7 @@ window.addEventListener('scroll', updateActive, { passive: true });"
                     </span>
                 </div>
 
-                <div class="hidden min-w-0 items-center justify-end gap-2 justify-self-end lg:flex">
+                <div class="hidden min-w-0 items-center justify-end gap-2 lg:flex lg:justify-self-end">
                     @auth
                         @if (Auth::user()->role !== 'mahasiswa')
                             <a href="{{ route('petugas.dashboard') }}"
@@ -161,72 +165,73 @@ window.addEventListener('scroll', updateActive, { passive: true });"
 
                 <button type="button" @click="mobile = !mobile" :aria-expanded="mobile.toString()"
                     aria-controls="mobile-menu" aria-label="Buka navigasi"
-                    class="flex h-11 w-11 items-center justify-center justify-self-end rounded-xl text-ink transition hover:bg-[#f3f5f8] lg:hidden">
-                    <svg x-show="!mobile" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                    class="ml-auto flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-ink transition hover:bg-[#f3f5f8] active:scale-95 lg:hidden">
+                    <svg x-show="!mobile" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"
                         stroke-width="2">
                         <path stroke-linecap="round" stroke-linejoin="round"
                             d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
                     </svg>
-                    <svg x-show="mobile" x-cloak class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                    <svg x-show="mobile" x-cloak class="h-5 w-5" fill="none" viewBox="0 0 24 24"
                         stroke="currentColor" stroke-width="2">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
                     </svg>
                 </button>
             </div>
         </div>
-
-        <div id="mobile-menu" x-show="mobile" x-cloak x-transition.origin.top
-            class="border-t border-[#e7ebf2] bg-white/95 lg:hidden">
-            <div class="mx-auto w-full max-w-[1160px] flex flex-col gap-2 px-4 py-3 sm:px-6 lg:px-8">
-                <a href="{{ route('home') }}" @click="navigateFromNavbar($event, 'top'); mobile = false"
-                    :class="active === 'Beranda' ? 'bg-[#fdecee] text-[#c41230]' :
-                        'bg-transparent text-[#102a4c] hover:bg-[#f3f5f8] hover:text-[#102a4c]'"
-                    class="flex min-h-[40px] items-center rounded-full px-4 py-2.5 text-sm font-bold transition-colors duration-200 ease-in-out">Beranda</a>
-                <a href="{{ route('home') }}#cara-kerja"
-                    @click="navigateFromNavbar($event, 'cara-kerja'); mobile = false"
-                    :class="active === 'Cara Kerja' ? 'bg-[#fdecee] text-[#c41230]' :
-                        'bg-transparent text-[#102a4c] hover:bg-[#f3f5f8] hover:text-[#102a4c]'"
-                    class="flex min-h-[40px] items-center rounded-full px-4 py-2.5 text-sm font-bold transition-colors duration-200 ease-in-out">Cara
-                    Kerja</a>
-                <a href="{{ route('home') }}#lokasi" @click="navigateFromNavbar($event, 'lokasi'); mobile = false"
-                    :class="active === 'Lokasi' ? 'bg-[#fdecee] text-[#c41230]' :
-                        'bg-transparent text-[#102a4c] hover:bg-[#f3f5f8] hover:text-[#102a4c]'"
-                    class="flex min-h-[40px] items-center rounded-full px-4 py-2.5 text-sm font-bold transition-colors duration-200 ease-in-out">Lokasi</a>
-                <a href="{{ route('home') }}#katalog" @click="navigateFromNavbar($event, 'katalog'); mobile = false"
-                    :class="active === 'Katalog' ? 'bg-[#fdecee] text-[#c41230]' :
-                        'bg-transparent text-[#102a4c] hover:bg-[#f3f5f8] hover:text-[#102a4c]'"
-                    class="flex min-h-[40px] items-center rounded-full px-4 py-2.5 text-sm font-bold transition-colors duration-200 ease-in-out">Katalog</a>
-                @auth
-                    @if (Auth::user()->role === 'mahasiswa')
-                        <a href="{{ route('mahasiswa.laporan.index') }}"
-                            class="relative block rounded-full px-3.5 py-2 text-sm font-semibold text-[#3d4b60] transition-colors duration-160 ease-[cubic-bezier(.22,1,.36,1)] hover:bg-[#f3f5f8] hover:text-[#172033] {{ request()->routeIs('mahasiswa.laporan.*') ? 'bg-[#fdecee] text-[#c41230]' : '' }}">Laporan
-                            Saya</a>
-                        <a href="{{ route('mahasiswa.klaim.index') }}"
-                            class="relative block rounded-full px-3.5 py-2 text-sm font-semibold text-[#3d4b60] transition-colors duration-160 ease-[cubic-bezier(.22,1,.36,1)] hover:bg-[#f3f5f8] hover:text-[#172033] {{ request()->routeIs('mahasiswa.klaim.*') ? 'bg-[#fdecee] text-[#c41230]' : '' }}">Klaim
-                            Saya</a>
-                    @else
-                        <a href="{{ route('petugas.dashboard') }}"
-                            class="relative block rounded-full px-3.5 py-2 text-sm font-semibold text-[#3d4b60] transition-colors duration-160 ease-[cubic-bezier(.22,1,.36,1)] hover:bg-[#f3f5f8] hover:text-[#172033] bg-[#fdecee] text-[#c41230]">Panel
-                            Petugas</a>
-                    @endif
-                    <a href="{{ route('profil.edit') }}"
-                        class="relative block rounded-full px-3.5 py-2 text-sm font-semibold text-[#3d4b60] transition-colors duration-160 ease-[cubic-bezier(.22,1,.36,1)] hover:bg-[#f3f5f8] hover:text-[#172033] {{ request()->routeIs('profil.*') ? 'bg-[#fdecee] text-[#c41230]' : '' }}">Profil
-                        ({{ Auth::user()->nama }})
-                    </a>
-                    <form action="{{ route('logout') }}" method="POST" class="pt-1">
-                        @csrf
-                        <button type="submit"
-                            class="relative block rounded-full px-3.5 py-2 text-sm font-semibold text-[#3d4b60] transition-colors duration-160 ease-[cubic-bezier(.22,1,.36,1)] hover:bg-[#f3f5f8] hover:text-[#172033] w-full text-left text-brand">Keluar</button>
-                    </form>
-                @else
-                    <div class="grid grid-cols-2 gap-2 pt-2">
-                        <a href="{{ route('login') }}"
-                            class="inline-flex items-center justify-center gap-2 rounded-full border border-[#d5dbe6] bg-white px-5 py-3 text-sm font-bold leading-[1.2] text-[#172033] transition-all duration-200 ease-out hover:-translate-y-px hover:border-[#102a4c] hover:text-[#102a4c] active:translate-y-0 active:scale-[.98]">Masuk</a>
-                        <a href="{{ route('register') }}"
-                            class="inline-flex items-center justify-center gap-2 rounded-full border border-transparent bg-[#c41230] px-5 py-3 text-sm font-bold leading-[1.2] text-white shadow-[0_6px_14px_rgba(196,18,48,.14)] transition-all duration-200 ease-out hover:-translate-y-px hover:bg-[#9b1028] active:translate-y-0 active:scale-[.98]">Daftar</a>
-                    </div>
-                @endauth
-            </div>
-        </div>
     </nav>
+
+    <div id="mobile-menu" x-show="mobile" x-cloak x-transition.origin.top.duration.200ms
+        @click.outside="mobile = false"
+        :class="scrolled ? 'mx-auto mt-4 max-w-[1160px]' : 'mx-0 mt-1.5 max-w-none'"
+        class="w-full rounded-3xl border border-[#e7ebf2] bg-white/98 shadow-lift backdrop-blur-md lg:hidden">
+        <div class="flex flex-col gap-1.5 px-4 py-3 sm:px-6">
+            <a href="{{ route('home') }}" @click="navigateFromNavbar($event, 'top'); mobile = false"
+                :class="active === 'Beranda' ? 'bg-[#fdecee] text-[#c41230]' :
+                    'bg-transparent text-[#102a4c] hover:bg-[#f3f5f8] hover:text-[#102a4c]'"
+                class="flex min-h-[40px] items-center rounded-full px-4 py-2 text-sm font-bold transition-colors duration-200 ease-in-out">Beranda</a>
+            <a href="{{ route('home') }}#cara-kerja"
+                @click="navigateFromNavbar($event, 'cara-kerja'); mobile = false"
+                :class="active === 'Cara Kerja' ? 'bg-[#fdecee] text-[#c41230]' :
+                    'bg-transparent text-[#102a4c] hover:bg-[#f3f5f8] hover:text-[#102a4c]'"
+                class="flex min-h-[40px] items-center rounded-full px-4 py-2 text-sm font-bold transition-colors duration-200 ease-in-out">Cara
+                Kerja</a>
+            <a href="{{ route('home') }}#lokasi" @click="navigateFromNavbar($event, 'lokasi'); mobile = false"
+                :class="active === 'Lokasi' ? 'bg-[#fdecee] text-[#c41230]' :
+                    'bg-transparent text-[#102a4c] hover:bg-[#f3f5f8] hover:text-[#102a4c]'"
+                class="flex min-h-[40px] items-center rounded-full px-4 py-2 text-sm font-bold transition-colors duration-200 ease-in-out">Lokasi</a>
+            <a href="{{ route('home') }}#katalog" @click="navigateFromNavbar($event, 'katalog'); mobile = false"
+                :class="active === 'Katalog' ? 'bg-[#fdecee] text-[#c41230]' :
+                    'bg-transparent text-[#102a4c] hover:bg-[#f3f5f8] hover:text-[#102a4c]'"
+                class="flex min-h-[40px] items-center rounded-full px-4 py-2 text-sm font-bold transition-colors duration-200 ease-in-out">Katalog</a>
+            @auth
+                @if (Auth::user()->role === 'mahasiswa')
+                    <a href="{{ route('mahasiswa.laporan.index') }}"
+                        class="relative block rounded-full px-4 py-2 text-sm font-semibold text-[#3d4b60] transition-colors duration-160 ease-[cubic-bezier(.22,1,.36,1)] hover:bg-[#f3f5f8] hover:text-[#172033] {{ request()->routeIs('mahasiswa.laporan.*') ? 'bg-[#fdecee] text-[#c41230]' : '' }}">Laporan
+                        Saya</a>
+                    <a href="{{ route('mahasiswa.klaim.index') }}"
+                        class="relative block rounded-full px-4 py-2 text-sm font-semibold text-[#3d4b60] transition-colors duration-160 ease-[cubic-bezier(.22,1,.36,1)] hover:bg-[#f3f5f8] hover:text-[#172033] {{ request()->routeIs('mahasiswa.klaim.*') ? 'bg-[#fdecee] text-[#c41230]' : '' }}">Klaim
+                        Saya</a>
+                @else
+                    <a href="{{ route('petugas.dashboard') }}"
+                        class="relative block rounded-full bg-[#fdecee] px-4 py-2 text-sm font-semibold text-[#c41230] transition-colors duration-160 ease-[cubic-bezier(.22,1,.36,1)] hover:bg-[#f3f5f8]">Panel
+                        Petugas</a>
+                @endif
+                <a href="{{ route('profil.edit') }}"
+                    class="relative block rounded-full px-4 py-2 text-sm font-semibold text-[#3d4b60] transition-colors duration-160 ease-[cubic-bezier(.22,1,.36,1)] hover:bg-[#f3f5f8] hover:text-[#172033] {{ request()->routeIs('profil.*') ? 'bg-[#fdecee] text-[#c41230]' : '' }}">Profil
+                    ({{ Auth::user()->nama }})</a>
+                <form action="{{ route('logout') }}" method="POST" class="pt-1">
+                    @csrf
+                    <button type="submit"
+                        class="relative block w-full rounded-full px-4 py-2 text-left text-sm font-semibold text-brand transition-colors duration-160 ease-[cubic-bezier(.22,1,.36,1)] hover:bg-brand-soft">Keluar</button>
+                </form>
+            @else
+                <div class="grid grid-cols-2 gap-2 pt-2">
+                    <a href="{{ route('login') }}"
+                        class="inline-flex items-center justify-center gap-2 rounded-full border border-[#d5dbe6] bg-white px-5 py-3 text-sm font-bold leading-[1.2] text-[#172033] transition-all duration-200 ease-out hover:-translate-y-px hover:border-[#102a4c] hover:text-[#102a4c] active:translate-y-0 active:scale-[.98]">Masuk</a>
+                    <a href="{{ route('register') }}"
+                        class="inline-flex items-center justify-center gap-2 rounded-full border border-transparent bg-[#c41230] px-5 py-3 text-sm font-bold leading-[1.2] text-white shadow-[0_6px_14px_rgba(196,18,48,.14)] transition-all duration-200 ease-out hover:-translate-y-px hover:bg-[#9b1028] active:translate-y-0 active:scale-[.98]">Daftar</a>
+                </div>
+            @endauth
+        </div>
+    </div>
 </div>

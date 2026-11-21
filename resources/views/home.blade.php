@@ -251,7 +251,7 @@
             </div>
 
             <div
-                class="rounded-[24px] border border-[#e7ebf2]/95 bg-white shadow-[0_10px_30px_rgba(16,42,76,.05)] transition-[transform,box-shadow,border-color] duration-220 ease-[cubic-bezier(.22,1,.36,1)] hover:-translate-y-0.5 hover:border-[#d1d8e4] hover:shadow-[0_14px_30px_rgba(16,42,76,.08)] p-4 sm:p-5">
+                class="relative z-20 rounded-[24px] border border-[#e7ebf2]/95 bg-white p-4 shadow-[0_10px_30px_rgba(16,42,76,.05)] transition-[box-shadow,border-color] duration-220 ease-[cubic-bezier(.22,1,.36,1)] hover:border-[#d1d8e4] hover:shadow-[0_14px_30px_rgba(16,42,76,.08)] sm:p-5">
                 <div id="catalog-tabs" class="relative mx-auto flex max-w-lg rounded-full bg-[#f3f5f8] p-1"
                     data-active-tab="{{ $tab !== 'hilang' ? 'temuan' : 'hilang' }}">
                     <span id="catalog-tab-indicator"
