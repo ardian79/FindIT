@@ -20,7 +20,7 @@
                     Tambah Temuan
                 </a>
                 <a href="{{ route('petugas.verifikasi-klaim.index', ['status' => 'pending']) }}" class="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-semibold text-slate-700 transition-all duration-150 hover:bg-slate-50 active:scale-[0.98]">
-                    Cek Klaim Pending ({{ $totalKlaimPending }})
+                    Cek Klaim Pending
                 </a>
             </div>
         </div>
