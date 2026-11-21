@@ -3,55 +3,57 @@
 @section('title', 'Daftar Mahasiswa - FindIT UNEJ')
 
 @section('content')
-    <div class="mx-auto max-w-md px-4 py-10 sm:px-6">
-        <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
-            <div class="mb-6 text-center">
-                <div class="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-600 text-white">
-                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M19 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zM4 19.235v-.11a6.375 6.375 0 0112.75 0v.109A12.318 12.318 0 0110.374 21c-2.331 0-4.512-.645-6.374-1.766z" />
-                    </svg>
-                </div>
-                <h1 class="text-xl font-bold text-slate-900">Daftar Akun Mahasiswa</h1>
-                <p class="mt-1 text-sm text-slate-500">Buat akun untuk melapor kehilangan dan mengajukan klaim barang</p>
+    @php
+        $registerImage = 'images/background.svg';
+        $hasRegisterImage = is_file(public_path($registerImage));
+    @endphp
+    <div class="mx-auto w-full max-w-[1160px] px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+        <div class="mx-auto grid max-w-5xl overflow-hidden rounded-[28px] border border-[#e7ebf2] bg-white shadow-card lg:grid-cols-[.9fr_1.1fr]">
+            
+            <div class="relative hidden min-h-[560px] overflow-hidden bg-ink-deep lg:block">
+                @if ($hasRegisterImage)
+                    <img src="{{ asset($registerImage) }}" alt="Latar Belakang FindIT" class="absolute inset-0 h-full w-full object-cover">
+                @endif
             </div>
 
-            <form action="{{ route('register') }}" method="POST" class="space-y-4">
-                @csrf
+            <div class="p-6 sm:p-10">
+                <p class="inline-flex items-center gap-2 text-[#c41230] text-[12px] font-bold tracking-[.16em] uppercase">Pendaftaran</p>
+                <h1 class="mt-2 font-heading text-2xl font-extrabold text-ink">Daftar</h1>
 
-                <div>
-                    <label for="nama" class="mb-1.5 block text-sm font-medium text-slate-700">Nama Lengkap</label>
-                    <input type="text" id="nama" name="nama" value="{{ old('nama') }}" required autofocus placeholder="Masukkan nama lengkap" class="w-full rounded-xl border border-slate-300 px-3.5 py-2.5 text-sm text-slate-900 outline-none transition focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20">
-                </div>
+                <form action="{{ route('register') }}" method="POST" class="mt-8 space-y-4">
+                    @csrf
+                    <div>
+                        <label for="nama" class="mb-1.5 block text-[13px] font-semibold text-[#243044]">Nama lengkap</label>
+                        <input type="text" id="nama" name="nama" value="{{ old('nama') }}" required autofocus placeholder="Masukkan nama lengkap" class="w-full rounded-[14px] border border-[#d7dde7] bg-white px-3.5 py-3 text-sm leading-[1.4] text-[#172033] outline-none transition-[border-color,box-shadow] duration-160 focus:border-[#102a4c] focus:ring-4 focus:ring-[#102a4c]/10 disabled:cursor-not-allowed disabled:bg-[#f3f5f8] disabled:text-[#6b7585]">
+                    </div>
+                    <div class="grid gap-4 sm:grid-cols-2">
+                        <div>
+                            <label for="nim" class="mb-1.5 block text-[13px] font-semibold text-[#243044]">NIM</label>
+                            <input type="text" id="nim" name="nim" value="{{ old('nim') }}" required placeholder="Contoh: 252410101010" class="w-full rounded-[14px] border border-[#d7dde7] bg-white px-3.5 py-3 text-sm leading-[1.4] text-[#172033] outline-none transition-[border-color,box-shadow] duration-160 focus:border-[#102a4c] focus:ring-4 focus:ring-[#102a4c]/10 disabled:cursor-not-allowed disabled:bg-[#f3f5f8] disabled:text-[#6b7585]">
+                        </div>
+                        <div>
+                            <label for="no_hp" class="mb-1.5 block text-[13px] font-semibold text-[#243044]">Nomor WhatsApp</label>
+                            <input type="text" id="no_hp" name="no_hp" value="{{ old('no_hp') }}" required placeholder="Contoh: 081234567890" class="w-full rounded-[14px] border border-[#d7dde7] bg-white px-3.5 py-3 text-sm leading-[1.4] text-[#172033] outline-none transition-[border-color,box-shadow] duration-160 focus:border-[#102a4c] focus:ring-4 focus:ring-[#102a4c]/10 disabled:cursor-not-allowed disabled:bg-[#f3f5f8] disabled:text-[#6b7585]">
+                        </div>
+                    </div>
+                    <div class="grid gap-4 sm:grid-cols-2">
+                        <div>
+                            <label for="password" class="mb-1.5 block text-[13px] font-semibold text-[#243044]">Kata Sandi</label>
+                            <input type="password" id="password" name="password" required placeholder="Minimal 6 karakter" class="w-full rounded-[14px] border border-[#d7dde7] bg-white px-3.5 py-3 text-sm leading-[1.4] text-[#172033] outline-none transition-[border-color,box-shadow] duration-160 focus:border-[#102a4c] focus:ring-4 focus:ring-[#102a4c]/10 disabled:cursor-not-allowed disabled:bg-[#f3f5f8] disabled:text-[#6b7585]">
+                        </div>
+                        <div>
+                            <label for="password_confirmation" class="mb-1.5 block text-[13px] font-semibold text-[#243044]">Konfirmasi Kata Sandi</label>
+                            <input type="password" id="password_confirmation" name="password_confirmation" required placeholder="Ulangi kata sandi" class="w-full rounded-[14px] border border-[#d7dde7] bg-white px-3.5 py-3 text-sm leading-[1.4] text-[#172033] outline-none transition-[border-color,box-shadow] duration-160 focus:border-[#102a4c] focus:ring-4 focus:ring-[#102a4c]/10 disabled:cursor-not-allowed disabled:bg-[#f3f5f8] disabled:text-[#6b7585]">
+                        </div>
+                    </div>
+                    <button type="submit" class="inline-flex items-center justify-center gap-2 rounded-full border border-transparent bg-[#c41230] px-5 py-3 text-sm font-bold leading-[1.2] text-white shadow-[0_6px_14px_rgba(196,18,48,.14)] transition-all duration-200 ease-out hover:-translate-y-px hover:bg-[#9b1028] active:translate-y-0 active:scale-[.98] w-full">Daftar sekarang</button>
+                </form>
 
-                <div>
-                    <label for="nim" class="mb-1.5 block text-sm font-medium text-slate-700">NIM</label>
-                    <input type="text" id="nim" name="nim" value="{{ old('nim') }}" required placeholder="Contoh: 222410101001" class="w-full rounded-xl border border-slate-300 px-3.5 py-2.5 text-sm text-slate-900 outline-none transition focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20">
-                </div>
-
-                <div>
-                    <label for="no_hp" class="mb-1.5 block text-sm font-medium text-slate-700">Nomor WhatsApp / HP</label>
-                    <input type="text" id="no_hp" name="no_hp" value="{{ old('no_hp') }}" required placeholder="Contoh: 081234567890" class="w-full rounded-xl border border-slate-300 px-3.5 py-2.5 text-sm text-slate-900 outline-none transition focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20">
-                </div>
-
-                <div>
-                    <label for="password" class="mb-1.5 block text-sm font-medium text-slate-700">Password</label>
-                    <input type="password" id="password" name="password" required placeholder="Minimal 6 karakter" class="w-full rounded-xl border border-slate-300 px-3.5 py-2.5 text-sm text-slate-900 outline-none transition focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20">
-                </div>
-
-                <div>
-                    <label for="password_confirmation" class="mb-1.5 block text-sm font-medium text-slate-700">Konfirmasi Password</label>
-                    <input type="password" id="password_confirmation" name="password_confirmation" required placeholder="Ulangi password" class="w-full rounded-xl border border-slate-300 px-3.5 py-2.5 text-sm text-slate-900 outline-none transition focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20">
-                </div>
-
-                <button type="submit" class="w-full rounded-xl bg-emerald-600 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-emerald-700">
-                    Daftar Sekarang
-                </button>
-            </form>
-
-            <p class="mt-6 text-center text-sm text-slate-600">
-                Sudah punya akun?
-                <a href="{{ route('login') }}" class="font-semibold text-emerald-600 hover:text-emerald-700">Masuk di sini</a>
-            </p>
+                <p class="mt-6 text-center text-sm text-ink-muted">
+                    Sudah punya akun?
+                    <a href="{{ route('login') }}" class="font-bold text-brand hover:text-brand-dark">Masuk di sini</a>
+                </p>
+            </div>
         </div>
     </div>
 @endsection

@@ -6,40 +6,40 @@
 
 @section('content')
     <div class="space-y-6">
-        <div class="flex flex-col gap-4 rounded-2xl border border-emerald-200 bg-gradient-to-r from-emerald-600 to-teal-600 p-6 text-white shadow-sm sm:flex-row sm:items-center sm:justify-between">
+        <div class="flex flex-col gap-4 rounded-2xl border border-red-200 bg-red-50 p-6 text-slate-900 sm:flex-row sm:items-center sm:justify-between">
             <div>
-                <p class="text-xs font-medium uppercase tracking-wider text-emerald-100">Pos Keamanan Utama UNEJ</p>
+                <p class="text-xs font-bold uppercase tracking-wider text-[#94191d]">Pos Keamanan Utama UNEJ</p>
                 <h2 class="mt-1 text-xl font-bold">Selamat datang, {{ Auth::user()->nama }}</h2>
-                <p class="mt-1 text-sm text-emerald-50">Pantau inventaris barang temuan, klaim yang perlu diverifikasi, dan laporan kehilangan terbaru.</p>
+                <p class="mt-1 text-sm text-slate-600">Pantau inventaris barang temuan, klaim yang perlu diverifikasi, dan laporan kehilangan terbaru.</p>
             </div>
             <div class="flex flex-wrap gap-2.5">
-                <a href="{{ route('petugas.barang-temuan.create') }}" class="inline-flex items-center gap-2 rounded-xl bg-white px-4 py-2.5 text-sm font-semibold text-emerald-700 transition hover:bg-emerald-50">
+                <a href="{{ route('petugas.barang-temuan.create') }}" class="inline-flex items-center gap-2 rounded-xl bg-white px-4 py-2.5 text-sm font-semibold text-[#94191d] transition hover:bg-red-50">
                     <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                     </svg>
                     Tambah Temuan
                 </a>
-                <a href="{{ route('petugas.verifikasi-klaim.index', ['status' => 'pending']) }}" class="inline-flex items-center gap-2 rounded-xl border border-white/30 bg-white/10 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-white/20">
+                <a href="{{ route('petugas.verifikasi-klaim.index', ['status' => 'pending']) }}" class="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-semibold text-slate-700 transition-all duration-150 hover:bg-slate-50 active:scale-[0.98]">
                     Cek Klaim Pending ({{ $totalKlaimPending }})
                 </a>
             </div>
         </div>
 
         <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
-            <a href="{{ route('petugas.barang-temuan.index', ['status' => 'tersedia']) }}" class="flex items-center justify-between rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition hover:border-emerald-300">
+            <a href="{{ route('petugas.barang-temuan.index', ['status' => 'tersedia']) }}" class="flex items-center justify-between rounded-2xl border border-slate-200/80 bg-white p-5 transition-all duration-150 hover:border-red-300 active:scale-[0.98]">
                 <div>
                     <p class="text-xs font-medium uppercase tracking-wider text-slate-500">Temuan Tersedia</p>
                     <p class="mt-2 text-3xl font-bold text-slate-900">{{ $totalTersedia }}</p>
                     <p class="mt-1 text-xs text-slate-500">Siap diklaim di Pos Keamanan</p>
                 </div>
-                <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-50 text-emerald-600">
+                <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-red-50 text-[#b12025]">
                     <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z" />
                     </svg>
                 </div>
             </a>
 
-            <a href="{{ route('petugas.verifikasi-klaim.index', ['status' => 'pending']) }}" class="flex items-center justify-between rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition hover:border-amber-300">
+            <a href="{{ route('petugas.verifikasi-klaim.index', ['status' => 'pending']) }}" class="flex items-center justify-between rounded-2xl border border-slate-200/80 bg-white p-5 transition-all duration-150 hover:border-red-300 active:scale-[0.98]">
                 <div>
                     <p class="text-xs font-medium uppercase tracking-wider text-slate-500">Klaim Pending</p>
                     <p class="mt-2 text-3xl font-bold text-slate-900">{{ $totalKlaimPending }}</p>
@@ -52,7 +52,7 @@
                 </div>
             </a>
 
-            <a href="{{ route('petugas.barang-temuan.index', ['status' => 'diklaim']) }}" class="flex items-center justify-between rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition hover:border-blue-300">
+            <a href="{{ route('petugas.barang-temuan.index', ['status' => 'diklaim']) }}" class="flex items-center justify-between rounded-2xl border border-slate-200/80 bg-white p-5 transition-all duration-150 hover:border-red-300 active:scale-[0.98]">
                 <div>
                     <p class="text-xs font-medium uppercase tracking-wider text-slate-500">Menunggu Diambil</p>
                     <p class="mt-2 text-3xl font-bold text-slate-900">{{ $totalDiklaim }}</p>
@@ -65,20 +65,20 @@
                 </div>
             </a>
 
-            <a href="{{ route('petugas.barang-temuan.index', ['status' => 'dikembalikan']) }}" class="flex items-center justify-between rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition hover:border-teal-300">
+            <a href="{{ route('petugas.barang-temuan.index', ['status' => 'dikembalikan']) }}" class="flex items-center justify-between rounded-2xl border border-slate-200/80 bg-white p-5 transition-all duration-150 hover:border-red-300 active:scale-[0.98]">
                 <div>
                     <p class="text-xs font-medium uppercase tracking-wider text-slate-500">Sudah Dikembalikan</p>
                     <p class="mt-2 text-3xl font-bold text-slate-900">{{ $totalDikembalikan }}</p>
                     <p class="mt-1 text-xs text-slate-500">Selesai serah terima ke pemilik</p>
                 </div>
-                <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-teal-50 text-teal-600">
+                <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-50 text-[#17365d]">
                     <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
                 </div>
             </a>
 
-            <a href="{{ route('petugas.laporan-kehilangan.index', ['status' => 'dicari']) }}" class="flex items-center justify-between rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition hover:border-rose-300">
+            <a href="{{ route('petugas.laporan-kehilangan.index', ['status' => 'dicari']) }}" class="flex items-center justify-between rounded-2xl border border-slate-200/80 bg-white p-5 transition-all duration-150 hover:border-red-300 active:scale-[0.98]">
                 <div>
                     <p class="text-xs font-medium uppercase tracking-wider text-slate-500">Laporan Dicari</p>
                     <p class="mt-2 text-3xl font-bold text-slate-900">{{ $totalLaporanDicari }}</p>
@@ -91,7 +91,7 @@
                 </div>
             </a>
 
-            <a href="{{ route('petugas.pengguna.index', ['status' => 'aktif']) }}" class="flex items-center justify-between rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition hover:border-slate-300">
+            <a href="{{ route('petugas.pengguna.index', ['status' => 'aktif']) }}" class="flex items-center justify-between rounded-2xl border border-slate-200/80 bg-white p-5 transition-all duration-150 hover:border-red-300 active:scale-[0.98]">
                 <div>
                     <p class="text-xs font-medium uppercase tracking-wider text-slate-500">Mahasiswa Aktif</p>
                     <p class="mt-2 text-3xl font-bold text-slate-900">{{ $totalMahasiswaAktif }}</p>
@@ -106,13 +106,13 @@
         </div>
 
         <div class="grid grid-cols-1 gap-6 xl:grid-cols-2">
-            <div class="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+            <div class="overflow-hidden rounded-2xl border border-slate-200/80 bg-white">
                 <div class="flex items-center justify-between border-b border-slate-200 px-5 py-4">
                     <div>
                         <h3 class="text-base font-bold text-slate-900">Klaim Menunggu Verifikasi</h3>
                         <p class="text-xs text-slate-500">5 pengajuan klaim terbaru</p>
                     </div>
-                    <a href="{{ route('petugas.verifikasi-klaim.index') }}" class="text-xs font-semibold text-emerald-600 hover:text-emerald-700">Lihat Semua</a>
+                    <a href="{{ route('petugas.verifikasi-klaim.index') }}" class="text-xs font-semibold text-[#b12025] hover:text-[#94191d]">Lihat Semua</a>
                 </div>
 
                 @if ($klaimTerbaru->isEmpty())
@@ -129,7 +129,7 @@
                                         {{ $item->pengguna->nama }} ({{ $item->pengguna->nim }}) · {{ $item->created_at->format('d M Y, H:i') }}
                                     </p>
                                 </div>
-                                <a href="{{ route('petugas.verifikasi-klaim.show', $item) }}" class="shrink-0 rounded-lg bg-emerald-50 px-3 py-1.5 text-xs font-semibold text-emerald-700 transition hover:bg-emerald-100">
+                                <a href="{{ route('petugas.verifikasi-klaim.show', $item) }}" class="shrink-0 rounded-lg bg-red-50 px-3 py-1.5 text-xs font-semibold text-[#94191d] transition hover:bg-red-50">
                                     Periksa
                                 </a>
                             </div>
@@ -138,13 +138,13 @@
                 @endif
             </div>
 
-            <div class="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+            <div class="overflow-hidden rounded-2xl border border-slate-200/80 bg-white">
                 <div class="flex items-center justify-between border-b border-slate-200 px-5 py-4">
                     <div>
                         <h3 class="text-base font-bold text-slate-900">Laporan Kehilangan Terbaru</h3>
                         <p class="text-xs text-slate-500">5 barang hilang yang sedang dicari</p>
                     </div>
-                    <a href="{{ route('petugas.laporan-kehilangan.index') }}" class="text-xs font-semibold text-emerald-600 hover:text-emerald-700">Lihat Semua</a>
+                    <a href="{{ route('petugas.laporan-kehilangan.index') }}" class="text-xs font-semibold text-[#b12025] hover:text-[#94191d]">Lihat Semua</a>
                 </div>
 
                 @if ($laporanTerbaru->isEmpty())

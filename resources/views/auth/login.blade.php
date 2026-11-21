@@ -3,47 +3,46 @@
 @section('title', 'Masuk - FindIT UNEJ')
 
 @section('content')
-    <div class="mx-auto max-w-md px-4 py-12 sm:px-6">
-        <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
-            <div class="mb-6 text-center">
-                <div class="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-600 text-white">
-                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9" />
-                    </svg>
-                </div>
-                <h1 class="text-xl font-bold text-slate-900">Masuk ke FindIT</h1>
-                <p class="mt-1 text-sm text-slate-500">Gunakan NIM untuk Mahasiswa atau Email untuk Petugas</p>
+    @php
+        $loginImage = 'images/background.svg';
+        $hasLoginImage = is_file(public_path($loginImage));
+    @endphp
+
+    <div class="mx-auto w-full max-w-[1160px] px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+        <div class="mx-auto grid max-w-5xl overflow-hidden rounded-[28px] border border-[#e7ebf2] bg-white shadow-card lg:grid-cols-[.9fr_1.1fr]">
+            
+            <div class="relative hidden min-h-[560px] overflow-hidden bg-ink-deep lg:block">
+                @if ($hasLoginImage)
+                    <img src="{{ asset($loginImage) }}" alt="Latar Belakang FindIT" class="absolute inset-0 h-full w-full object-cover">
+                @endif
             </div>
 
-            <form action="{{ route('login') }}" method="POST" class="space-y-4">
-                @csrf
+            <div class="p-6 sm:p-10">
+                <p class="inline-flex items-center gap-2 text-[#c41230] text-[12px] font-bold tracking-[.16em] uppercase">Akun FindIT</p>
+                <h1 class="mt-2 font-heading text-2xl font-extrabold text-ink">Masuk</h1>
 
-                <div>
-                    <label for="identifier" class="mb-1.5 block text-sm font-medium text-slate-700">NIM / Email</label>
-                    <input type="text" id="identifier" name="identifier" value="{{ old('identifier') }}" required autofocus placeholder="Contoh: 222410101001 atau petugas@unej.ac.id" class="w-full rounded-xl border border-slate-300 px-3.5 py-2.5 text-sm text-slate-900 outline-none transition focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20">
-                </div>
-
-                <div>
-                    <label for="password" class="mb-1.5 block text-sm font-medium text-slate-700">Password</label>
-                    <input type="password" id="password" name="password" required placeholder="Masukkan password" class="w-full rounded-xl border border-slate-300 px-3.5 py-2.5 text-sm text-slate-900 outline-none transition focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20">
-                </div>
-
-                <div class="flex items-center justify-between">
-                    <label class="flex items-center gap-2 text-sm text-slate-600">
-                        <input type="checkbox" name="remember" class="h-4 w-4 rounded border-slate-300 text-emerald-600 focus:ring-emerald-500">
+                <form action="{{ route('login') }}" method="POST" class="mt-8 space-y-4">
+                    @csrf
+                    <div>
+                        <label for="identifier" class="mb-1.5 block text-[13px] font-semibold text-[#243044]">NIM / Email</label>
+                        <input type="text" id="identifier" name="identifier" value="{{ old('identifier') }}" required autofocus placeholder="Contoh: 252410101010" class="w-full rounded-[14px] border border-[#d7dde7] bg-white px-3.5 py-3 text-sm leading-[1.4] text-[#172033] outline-none transition-[border-color,box-shadow] duration-160 focus:border-[#102a4c] focus:ring-4 focus:ring-[#102a4c]/10 disabled:cursor-not-allowed disabled:bg-[#f3f5f8] disabled:text-[#6b7585]">
+                    </div>
+                    <div>
+                        <label for="password" class="mb-1.5 block text-[13px] font-semibold text-[#243044]">Kata Sandi</label>
+                        <input type="password" id="password" name="password" required placeholder="Masukkan password" class="w-full rounded-[14px] border border-[#d7dde7] bg-white px-3.5 py-3 text-sm leading-[1.4] text-[#172033] outline-none transition-[border-color,box-shadow] duration-160 focus:border-[#102a4c] focus:ring-4 focus:ring-[#102a4c]/10 disabled:cursor-not-allowed disabled:bg-[#f3f5f8] disabled:text-[#6b7585]">
+                    </div>
+                    <label class="flex items-center gap-2 text-sm text-[#3d4b60]">
+                        <input type="checkbox" name="remember" class="h-4 w-4 rounded border-[#d7dde7] text-brand focus:ring-brand">
                         <span>Ingat saya</span>
                     </label>
-                </div>
+                    <button type="submit" class="inline-flex items-center justify-center gap-2 rounded-full border border-transparent bg-[#c41230] px-5 py-3 text-sm font-bold leading-[1.2] text-white shadow-[0_6px_14px_rgba(196,18,48,.14)] transition-all duration-200 ease-out hover:-translate-y-px hover:bg-[#9b1028] active:translate-y-0 active:scale-[.98] w-full">Masuk</button>
+                </form>
 
-                <button type="submit" class="w-full rounded-xl bg-emerald-600 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-emerald-700">
-                    Masuk
-                </button>
-            </form>
-
-            <p class="mt-6 text-center text-sm text-slate-600">
-                Belum punya akun mahasiswa?
-                <a href="{{ route('register') }}" class="font-semibold text-emerald-600 hover:text-emerald-700">Daftar di sini</a>
-            </p>
+                <p class="mt-6 text-center text-sm text-ink-muted">
+                    Belum punya akun mahasiswa?
+                    <a href="{{ route('register') }}" class="font-bold text-brand hover:text-brand-dark">Daftar di sini</a>
+                </p>
+            </div>
         </div>
     </div>
 @endsection

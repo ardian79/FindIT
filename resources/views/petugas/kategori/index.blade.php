@@ -6,9 +6,8 @@
 
 @section('content')
     <div class="space-y-5">
-        <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-            <p class="text-sm text-slate-500">Kelola daftar kategori untuk pengelompokan barang temuan dan laporan kehilangan.</p>
-            <a href="{{ route('petugas.kategori.create') }}" class="inline-flex items-center justify-center gap-2 rounded-xl bg-emerald-600 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-emerald-700">
+        <div class="flex items-center justify-start">
+            <a href="{{ route('petugas.kategori.create') }}" class="inline-flex items-center justify-center gap-2 rounded-full bg-[#c41230] focus-visible:ring-2 focus-visible:ring-[#c41230] focus-visible:ring-offset-2 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-[#9b1028]">
                 <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                 </svg>
@@ -16,7 +15,7 @@
             </a>
         </div>
 
-        <div class="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+        <div class="overflow-hidden rounded-2xl border border-slate-200/80 bg-white">
             @if ($kategori->isEmpty())
                 <div class="px-6 py-14 text-center text-sm text-slate-500">
                     Belum ada data kategori.

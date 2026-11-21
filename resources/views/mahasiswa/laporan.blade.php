@@ -9,7 +9,7 @@
                 <h1 class="text-2xl font-bold text-slate-900">Laporan Kehilangan Saya</h1>
                 <p class="mt-1 text-sm text-slate-500">Kelola daftar barang hilang yang Anda laporkan agar dapat dipantau petugas dan sivitas kampus.</p>
             </div>
-            <button type="button" onclick="openCreateModal()" class="inline-flex items-center justify-center gap-2 rounded-xl bg-emerald-600 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-emerald-700">
+            <button type="button" onclick="openCreateModal()" class="inline-flex items-center justify-center gap-2 rounded-full bg-[#c41230] focus-visible:ring-2 focus-visible:ring-[#c41230] focus-visible:ring-offset-2 px-4 py-2.5 text-sm font-semibold text-white transition-all duration-150 hover:bg-[#9b1028] active:scale-[0.98]">
                 <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                 </svg>
@@ -24,12 +24,12 @@
                 </svg>
                 <h3 class="mt-3 text-base font-semibold text-slate-900">Belum ada laporan kehilangan</h3>
                 <p class="mt-1 text-sm text-slate-500">Kehilangan barang di area kampus? Buat laporan agar lebih mudah ditemukan.</p>
-                <button type="button" onclick="openCreateModal()" class="mt-5 inline-flex items-center gap-2 rounded-xl bg-emerald-600 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-emerald-700">
+                <button type="button" onclick="openCreateModal()" class="mt-5 inline-flex items-center gap-2 rounded-full bg-[#c41230] focus-visible:ring-2 focus-visible:ring-[#c41230] focus-visible:ring-offset-2 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-[#9b1028]">
                     Buat Laporan Pertama
                 </button>
             </div>
         @else
-            <div class="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+            <div class="overflow-hidden rounded-2xl border border-slate-200/80 bg-white">
                 <div class="overflow-x-auto">
                     <table class="min-w-full divide-y divide-slate-200 text-left text-sm">
                         <thead class="bg-slate-50 text-xs font-semibold uppercase tracking-wider text-slate-500">
@@ -71,7 +71,7 @@
                                                 Dicari
                                             </span>
                                         @else
-                                            <span class="inline-flex items-center rounded-full bg-emerald-100 px-2.5 py-1 text-xs font-semibold text-emerald-800">
+                                            <span class="inline-flex items-center rounded-full bg-blue-100 px-2.5 py-1 text-xs font-semibold text-[#17365d]">
                                                 Ditemukan
                                             </span>
                                         @endif
@@ -82,7 +82,7 @@
                                                 <form action="{{ route('mahasiswa.laporan.ditemukan', $item) }}" method="POST" onsubmit="return confirm('Tandai barang ini sudah ditemukan?')">
                                                     @csrf
                                                     @method('PATCH')
-                                                    <button type="submit" class="rounded-lg bg-emerald-50 px-2.5 py-1.5 text-xs font-semibold text-emerald-700 transition hover:bg-emerald-100">
+                                                    <button type="submit" class="rounded-lg bg-red-50 px-2.5 py-1.5 text-xs font-semibold text-[#94191d] transition hover:bg-red-50">
                                                         Sudah Ditemukan
                                                     </button>
                                                 </form>
@@ -123,7 +123,7 @@
     </div>
 
     <div id="modal-laporan" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-900/60 p-4 backdrop-blur-sm">
-        <div class="relative max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-2xl bg-white shadow-xl">
+        <div class="relative max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-2xl border border-slate-200/80 bg-white">
             <div class="sticky top-0 z-10 flex items-center justify-between border-b border-slate-200 bg-white px-6 py-4">
                 <h2 id="modal-laporan-title" class="text-lg font-bold text-slate-900">Buat Laporan Kehilangan</h2>
                 <button type="button" onclick="closeLaporanModal()" class="rounded-lg p-1.5 text-slate-400 hover:bg-slate-100 hover:text-slate-600">
@@ -139,13 +139,13 @@
 
                 <div>
                     <label for="nama_barang" class="mb-1.5 block text-sm font-medium text-slate-700">Nama Barang</label>
-                    <input type="text" id="nama_barang" name="nama_barang" required placeholder="Contoh: Dompet Kulit Hitam" class="w-full rounded-xl border border-slate-300 px-3.5 py-2.5 text-sm text-slate-900 outline-none transition focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20">
+                    <input type="text" id="nama_barang" name="nama_barang" required placeholder="Contoh: Dompet Kulit Hitam" class="w-full rounded-xl border border-slate-300 px-3.5 py-2.5 text-sm text-slate-900 outline-none transition focus:border-[#b12025] focus:ring-2 focus:ring-[#b12025]/20">
                 </div>
 
                 <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
                     <div>
                         <label for="kategori_id" class="mb-1.5 block text-sm font-medium text-slate-700">Kategori</label>
-                        <select id="kategori_id" name="kategori_id" required class="w-full rounded-xl border border-slate-300 bg-white px-3.5 py-2.5 text-sm text-slate-900 outline-none transition focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20">
+                        <select id="kategori_id" name="kategori_id" required class="w-full rounded-xl border border-slate-300 bg-white px-3.5 py-2.5 text-sm text-slate-900 outline-none transition focus:border-[#b12025] focus:ring-2 focus:ring-[#b12025]/20">
                             <option value="">Pilih Kategori</option>
                             @foreach ($kategori as $kat)
                                 <option value="{{ $kat->id }}">{{ $kat->nama_kategori }}</option>
@@ -155,23 +155,23 @@
 
                     <div>
                         <label for="tanggal_hilang" class="mb-1.5 block text-sm font-medium text-slate-700">Tanggal Hilang</label>
-                        <input type="date" id="tanggal_hilang" name="tanggal_hilang" required max="{{ date('Y-m-d') }}" class="w-full rounded-xl border border-slate-300 px-3.5 py-2.5 text-sm text-slate-900 outline-none transition focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20">
+                        <input type="date" id="tanggal_hilang" name="tanggal_hilang" required max="{{ date('Y-m-d') }}" class="w-full rounded-xl border border-slate-300 px-3.5 py-2.5 text-sm text-slate-900 outline-none transition focus:border-[#b12025] focus:ring-2 focus:ring-[#b12025]/20">
                     </div>
                 </div>
 
                 <div>
                     <label for="lokasi_hilang" class="mb-1.5 block text-sm font-medium text-slate-700">Perkiraan Lokasi Hilang</label>
-                    <input type="text" id="lokasi_hilang" name="lokasi_hilang" required placeholder="Contoh: Parkiran Gedung Fakultas Ilmu Komputer" class="w-full rounded-xl border border-slate-300 px-3.5 py-2.5 text-sm text-slate-900 outline-none transition focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20">
+                    <input type="text" id="lokasi_hilang" name="lokasi_hilang" required placeholder="Contoh: Parkiran Gedung Fakultas Ilmu Komputer" class="w-full rounded-xl border border-slate-300 px-3.5 py-2.5 text-sm text-slate-900 outline-none transition focus:border-[#b12025] focus:ring-2 focus:ring-[#b12025]/20">
                 </div>
 
                 <div>
                     <label for="deskripsi" class="mb-1.5 block text-sm font-medium text-slate-700">Deskripsi & Ciri-Ciri</label>
-                    <textarea id="deskripsi" name="deskripsi" rows="3" required placeholder="Jelaskan warna, merek, atau ciri khusus barang..." class="w-full rounded-xl border border-slate-300 px-3.5 py-2.5 text-sm text-slate-900 outline-none transition focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20"></textarea>
+                    <textarea id="deskripsi" name="deskripsi" rows="3" required placeholder="Jelaskan warna, merek, atau ciri khusus barang..." class="w-full rounded-xl border border-slate-300 px-3.5 py-2.5 text-sm text-slate-900 outline-none transition focus:border-[#b12025] focus:ring-2 focus:ring-[#b12025]/20"></textarea>
                 </div>
 
                 <div>
                     <label for="foto_barang" class="mb-1.5 block text-sm font-medium text-slate-700">Foto Barang (Opsional)</label>
-                    <input type="file" id="foto_barang" name="foto_barang" accept=".jpg,.jpeg,.png,.webp" class="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm text-slate-600 file:mr-3 file:rounded-lg file:border-0 file:bg-emerald-50 file:px-3 file:py-1.5 file:text-xs file:font-semibold file:text-emerald-700 hover:file:bg-emerald-100">
+                    <input type="file" id="foto_barang" name="foto_barang" accept=".jpg,.jpeg,.png,.webp" class="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm text-slate-600 file:mr-3 file:rounded-lg file:border-0 file:bg-red-50 file:px-3 file:py-1.5 file:text-xs file:font-semibold file:text-[#94191d] hover:file:bg-red-50">
                     <p id="foto-hint" class="mt-1 text-xs text-slate-500">Format JPG, PNG, atau WEBP maksimal 2MB.</p>
                 </div>
 
@@ -179,7 +179,7 @@
                     <button type="button" onclick="closeLaporanModal()" class="rounded-xl border border-slate-300 px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50">
                         Batal
                     </button>
-                    <button type="submit" id="btn-submit-laporan" class="rounded-xl bg-emerald-600 px-5 py-2 text-sm font-semibold text-white transition hover:bg-emerald-700">
+                    <button type="submit" id="btn-submit-laporan" class="rounded-full bg-[#c41230] focus-visible:ring-2 focus-visible:ring-[#c41230] focus-visible:ring-offset-2 px-5 py-2 text-sm font-semibold text-white transition hover:bg-[#9b1028]">
                         Simpan Laporan
                     </button>
                 </div>

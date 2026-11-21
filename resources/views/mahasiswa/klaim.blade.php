@@ -24,14 +24,14 @@
                 </svg>
                 <h3 class="mt-3 text-base font-semibold text-slate-900">Belum ada pengajuan klaim</h3>
                 <p class="mt-1 text-sm text-slate-500">Temukan barang milik Anda di halaman beranda dan ajukan klaim kepemilikan.</p>
-                <a href="{{ route('home') }}" class="mt-5 inline-flex items-center gap-2 rounded-xl bg-emerald-600 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-emerald-700">
+                <a href="{{ route('home') }}" class="mt-5 inline-flex items-center gap-2 rounded-full bg-[#c41230] focus-visible:ring-2 focus-visible:ring-[#c41230] focus-visible:ring-offset-2 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-[#9b1028]">
                     Lihat Barang Temuan
                 </a>
             </div>
         @else
             <div class="space-y-4">
                 @foreach ($klaim as $item)
-                    <div class="overflow-hidden rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+                    <div class="overflow-hidden rounded-2xl border border-slate-200/80 bg-white p-5">
                         <div class="flex flex-col gap-5 md:flex-row">
                             <div class="h-36 w-full shrink-0 overflow-hidden rounded-xl bg-slate-100 md:h-32 md:w-40">
                                 <img src="{{ asset('storage/' . $item->barangTemuan->foto_barang) }}" alt="{{ $item->barangTemuan->nama_barang }}" class="h-full w-full object-cover">
@@ -40,7 +40,7 @@
                             <div class="flex-1 space-y-3">
                                 <div class="flex flex-col justify-between gap-2 sm:flex-row sm:items-start">
                                     <div>
-                                        <span class="text-xs font-semibold text-emerald-600">{{ $item->barangTemuan->kategori->nama_kategori }}</span>
+                                        <span class="text-xs font-semibold text-[#b12025]">{{ $item->barangTemuan->kategori->nama_kategori }}</span>
                                         <h2 class="text-lg font-bold text-slate-900">{{ $item->barangTemuan->nama_barang }}</h2>
                                         <p class="text-xs text-slate-500">
                                             Ditemukan di {{ $item->barangTemuan->lokasi_ditemukan }} · Diajukan {{ $item->created_at->format('d M Y, H:i') }}
@@ -60,7 +60,7 @@
                                             Ditolak
                                         </span>
                                     @else
-                                        <span class="inline-flex w-fit items-center rounded-full bg-emerald-100 px-3 py-1 text-xs font-semibold text-emerald-800">
+                                        <span class="inline-flex w-fit items-center rounded-full bg-blue-100 px-3 py-1 text-xs font-semibold text-[#17365d]">
                                             Selesai Diambil
                                         </span>
                                     @endif
@@ -88,10 +88,10 @@
                                 @endif
 
                                 @if ($item->status === 'selesai')
-                                    <div class="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-emerald-200 bg-emerald-50 p-3.5 text-sm text-emerald-900">
+                                    <div class="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-slate-200 bg-slate-50 p-3.5 text-sm text-slate-800">
                                         <span>Barang telah diambil pada <strong>{{ $item->tanggal_diambil?->format('d M Y, H:i') }}</strong></span>
                                         @if ($item->foto_serah_terima)
-                                            <a href="{{ asset('storage/' . $item->foto_serah_terima) }}" target="_blank" class="inline-flex items-center gap-1.5 font-semibold text-emerald-700 underline hover:text-emerald-800">
+                                            <a href="{{ asset('storage/' . $item->foto_serah_terima) }}" target="_blank" class="inline-flex items-center gap-1.5 font-semibold text-[#94191d] underline hover:text-red-800">
                                                 Lihat Bukti Serah Terima
                                             </a>
                                         @endif

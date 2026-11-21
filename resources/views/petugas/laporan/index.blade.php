@@ -15,33 +15,33 @@
 
     <div class="space-y-6">
         <div class="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5 print:hidden">
-            <div class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+            <div class="rounded-2xl border border-slate-200/80 bg-white p-4">
                 <p class="text-xs font-medium text-slate-500">Total Temuan</p>
                 <p class="mt-1 text-2xl font-bold text-slate-900">{{ $ringkasan['total_temuan'] }}</p>
             </div>
-            <div class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+            <div class="rounded-2xl border border-slate-200/80 bg-white p-4">
                 <p class="text-xs font-medium text-slate-500">Temuan Tersedia</p>
-                <p class="mt-1 text-2xl font-bold text-emerald-600">{{ $ringkasan['total_tersedia'] }}</p>
+                <p class="mt-1 text-2xl font-bold text-[#b12025]">{{ $ringkasan['total_tersedia'] }}</p>
             </div>
-            <div class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+            <div class="rounded-2xl border border-slate-200/80 bg-white p-4">
                 <p class="text-xs font-medium text-slate-500">Dikembalikan</p>
-                <p class="mt-1 text-2xl font-bold text-teal-600">{{ $ringkasan['total_dikembalikan'] }}</p>
+                <p class="mt-1 text-2xl font-bold text-[#17365d]">{{ $ringkasan['total_dikembalikan'] }}</p>
             </div>
-            <div class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+            <div class="rounded-2xl border border-slate-200/80 bg-white p-4">
                 <p class="text-xs font-medium text-slate-500">Total Kehilangan</p>
                 <p class="mt-1 text-2xl font-bold text-amber-600">{{ $ringkasan['total_hilang'] }}</p>
             </div>
-            <div class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+            <div class="rounded-2xl border border-slate-200/80 bg-white p-4">
                 <p class="text-xs font-medium text-slate-500">Klaim Selesai</p>
                 <p class="mt-1 text-2xl font-bold text-blue-600">{{ $ringkasan['total_klaim_selesai'] }}</p>
             </div>
         </div>
 
-        <form action="{{ route('petugas.laporan.index') }}" method="GET" class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm print:hidden">
+        <form action="{{ route('petugas.laporan.index') }}" method="GET" class="rounded-2xl border border-slate-200/80 bg-white p-4 print:hidden">
             <div class="grid grid-cols-1 gap-3 md:grid-cols-12">
                 <div class="md:col-span-3">
                     <label for="jenis" class="mb-1 block text-xs font-medium text-slate-600">Jenis Laporan</label>
-                    <select id="jenis" name="jenis" onchange="updateStatusOptions()" class="w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm text-slate-800 outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20">
+                    <select id="jenis" name="jenis" onchange="updateStatusOptions()" class="w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm text-slate-800 outline-none focus:border-[#b12025] focus:ring-2 focus:ring-[#b12025]/20">
                         <option value="barang_temuan" {{ $jenis === 'barang_temuan' ? 'selected' : '' }}>Barang Temuan</option>
                         <option value="laporan_kehilangan" {{ $jenis === 'laporan_kehilangan' ? 'selected' : '' }}>Laporan Kehilangan</option>
                         <option value="klaim" {{ $jenis === 'klaim' ? 'selected' : '' }}>Verifikasi Klaim</option>
@@ -50,23 +50,23 @@
 
                 <div class="md:col-span-2">
                     <label for="tanggal_mulai" class="mb-1 block text-xs font-medium text-slate-600">Dari Tanggal</label>
-                    <input type="date" id="tanggal_mulai" name="tanggal_mulai" value="{{ $tanggalMulai }}" class="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm text-slate-800 outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20">
+                    <input type="date" id="tanggal_mulai" name="tanggal_mulai" value="{{ $tanggalMulai }}" class="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm text-slate-800 outline-none focus:border-[#b12025] focus:ring-2 focus:ring-[#b12025]/20">
                 </div>
 
                 <div class="md:col-span-2">
                     <label for="tanggal_selesai" class="mb-1 block text-xs font-medium text-slate-600">Sampai Tanggal</label>
-                    <input type="date" id="tanggal_selesai" name="tanggal_selesai" value="{{ $tanggalSelesai }}" class="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm text-slate-800 outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20">
+                    <input type="date" id="tanggal_selesai" name="tanggal_selesai" value="{{ $tanggalSelesai }}" class="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm text-slate-800 outline-none focus:border-[#b12025] focus:ring-2 focus:ring-[#b12025]/20">
                 </div>
 
                 <div class="md:col-span-2">
                     <label for="status" class="mb-1 block text-xs font-medium text-slate-600">Status</label>
-                    <select id="status" name="status" class="w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm text-slate-800 outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20">
+                    <select id="status" name="status" class="w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm text-slate-800 outline-none focus:border-[#b12025] focus:ring-2 focus:ring-[#b12025]/20">
                         <option value="">Semua Status</option>
                     </select>
                 </div>
 
                 <div class="flex items-end gap-2 md:col-span-3">
-                    <button type="submit" class="flex-1 rounded-xl bg-emerald-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-emerald-700">
+                    <button type="submit" class="flex-1 rounded-full bg-[#c41230] focus-visible:ring-2 focus-visible:ring-[#c41230] focus-visible:ring-offset-2 px-4 py-2 text-sm font-semibold text-white transition hover:bg-[#9b1028]">
                         Tampilkan
                     </button>
                     <button type="button" onclick="window.print()" class="inline-flex items-center justify-center gap-1.5 rounded-xl bg-slate-900 px-4 py-2 text-sm font-semibold text-white transition hover:bg-slate-800">
@@ -79,11 +79,11 @@
             </div>
         </form>
 
-        <div class="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm print:rounded-none print:border-0 print:shadow-none">
+        <div class="overflow-hidden rounded-2xl border border-slate-200/80 bg-white print:rounded-none print:border-0 print:shadow-none">
             <div class="border-b border-slate-200 px-6 py-5 print:border-b-2 print:border-slate-900 print:px-0">
                 <div class="flex flex-col justify-between gap-2 sm:flex-row sm:items-end">
                     <div>
-                        <p class="text-xs font-bold uppercase tracking-wider text-emerald-700 print:text-slate-700">FindIT · Pos Keamanan Utama Universitas Jember</p>
+                        <p class="text-xs font-bold uppercase tracking-wider text-[#94191d] print:text-slate-700">FindIT · Pos Keamanan Utama Universitas Jember</p>
                         <h2 class="mt-1 text-lg font-bold text-slate-900">{{ $judulLaporan }}</h2>
                         <p class="mt-0.5 text-xs text-slate-500">
                             Periode: {{ $tanggalMulai ? \Carbon\Carbon::parse($tanggalMulai)->format('d M Y') : 'Awal' }} s/d {{ $tanggalSelesai ? \Carbon\Carbon::parse($tanggalSelesai)->format('d M Y') : 'Sekarang' }}
@@ -210,6 +210,18 @@
 
         const currentStatus = "{{ $status ?? '' }}";
 
+        function syncStatusCustomSelect(statusSelect) {
+            if (!window.finditHydrateSelects) return;
+            const wrapper = statusSelect.closest('[data-fi-select]');
+            if (wrapper && wrapper.parentNode) {
+                wrapper.parentNode.insertBefore(statusSelect, wrapper);
+                wrapper.remove();
+            }
+            delete statusSelect.dataset.fiSelectReady;
+            statusSelect.className = 'w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm text-slate-800 outline-none focus:border-[#b12025] focus:ring-2 focus:ring-[#b12025]/20';
+            window.finditHydrateSelects();
+        }
+
         function updateStatusOptions(preserveSelected = false) {
             const jenis = document.getElementById('jenis').value;
             const statusSelect = document.getElementById('status');
@@ -226,6 +238,8 @@
                 }
                 statusSelect.appendChild(optionEl);
             });
+
+            syncStatusCustomSelect(statusSelect);
         }
 
         document.addEventListener('DOMContentLoaded', function () {
