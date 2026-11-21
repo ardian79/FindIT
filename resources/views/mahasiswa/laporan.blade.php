@@ -37,7 +37,7 @@
                                 <th class="px-5 py-3.5">Barang</th>
                                 <th class="px-5 py-3.5">Lokasi & Tanggal Hilang</th>
                                 <th class="px-5 py-3.5">Status</th>
-                                <th class="px-5 py-3.5 text-right">Aksi</th>
+                                <th class="px-5 py-3.5 text-center">Aksi</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-slate-200 bg-white">
@@ -76,8 +76,8 @@
                                             </span>
                                         @endif
                                     </td>
-                                    <td class="px-5 py-4">
-                                        <div class="flex items-center justify-end gap-2">
+                                    <td class="px-5 py-4 text-center">
+                                        <div class="flex items-center justify-center gap-2">
                                             @if ($item->status === 'dicari')
                                                 <form action="{{ route('mahasiswa.laporan.ditemukan', $item) }}" method="POST" onsubmit="return confirm('Tandai barang ini sudah ditemukan?')">
                                                     @csrf

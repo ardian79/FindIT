@@ -46,10 +46,10 @@
                         <thead class="bg-slate-50 text-xs font-semibold uppercase tracking-wider text-slate-500">
                             <tr>
                                 <th class="px-5 py-3.5">Mahasiswa</th>
-                                <th class="px-5 py-3.5">Kontak WA / HP</th>
+                                <th class="px-5 py-3.5 text-center">Kontak WA / HP</th>
                                 <th class="px-5 py-3.5 text-center">Aktivitas</th>
-                                <th class="px-5 py-3.5">Status Akun</th>
-                                <th class="px-5 py-3.5 text-right">Aksi</th>
+                                <th class="px-5 py-3.5 text-center">Status Akun</th>
+                                <th class="px-5 py-3.5 text-center">Aksi</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-slate-200 bg-white">
@@ -69,9 +69,9 @@
                                             </div>
                                         </div>
                                     </td>
-                                    <td class="px-5 py-4">
+                                    <td class="px-5 py-4 text-center">
                                         @if ($wa)
-                                            <div class="flex items-center gap-2">
+                                            <div class="inline-flex items-center justify-center gap-2">
                                                 <p class="text-slate-800">{{ $item->no_hp }}</p>
                                                 <a href="https://wa.me/{{ $wa }}" target="_blank" rel="noopener" aria-label="Chat WhatsApp {{ $item->nama }}" title="Chat WhatsApp" class="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#25D366] text-white shadow-sm transition duration-200 hover:bg-[#1fb85a] hover:shadow-md active:scale-[0.96] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#25D366] focus-visible:ring-offset-2">
                                                     <svg class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -84,12 +84,12 @@
                                         @endif
                                     </td>
                                     <td class="px-5 py-4 text-center">
-                                        <div class="inline-flex items-center gap-2 text-xs">
+                                        <div class="inline-flex items-center justify-center gap-2 text-xs">
                                             <span class="rounded-lg bg-slate-100 px-2.5 py-1 font-medium text-slate-700">{{ $item->laporan_kehilangan_count }} Laporan</span>
                                             <span class="rounded-lg bg-slate-100 px-2.5 py-1 font-medium text-slate-700">{{ $item->klaim_count }} Klaim</span>
                                         </div>
                                     </td>
-                                    <td class="px-5 py-4">
+                                    <td class="px-5 py-4 text-center">
                                         @if ($item->is_active)
                                             <span class="inline-flex rounded-full bg-blue-100 px-2.5 py-1 text-xs font-semibold text-[#17365d]">
                                                 Aktif
@@ -100,8 +100,8 @@
                                             </span>
                                         @endif
                                     </td>
-                                    <td class="px-5 py-4 text-right">
-                                        <form action="{{ route('petugas.pengguna.toggle-status', $item) }}" method="POST" onsubmit="return confirm('{{ $item->is_active ? 'Nonaktifkan akun ' . $item->nama . '?' : 'Aktifkan kembali akun ' . $item->nama . '?' }}')">
+                                    <td class="px-5 py-4 text-center">
+                                        <form action="{{ route('petugas.pengguna.toggle-status', $item) }}" method="POST" class="inline-flex justify-center" onsubmit="return confirm('{{ $item->is_active ? 'Nonaktifkan akun ' . $item->nama . '?' : 'Aktifkan kembali akun ' . $item->nama . '?' }}')">
                                             @csrf
                                             @method('PATCH')
                                             @if ($item->is_active)
