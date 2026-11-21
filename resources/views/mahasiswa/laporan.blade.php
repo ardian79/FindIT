@@ -7,7 +7,7 @@
         <div class="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <div>
                 <h1 class="text-2xl font-bold text-slate-900">Laporan Kehilangan Saya</h1>
-                <p class="mt-1 text-sm text-slate-500">Kelola daftar barang hilang yang Anda laporkan agar dapat dipantau
+                <p class="mt-1 text-sm text-slate-500">Kelola daftar barang hilang yang anda laporkan agar dapat dipantau
                     petugas dan sivitas kampus.</p>
             </div>
             <button type="button" onclick="openCreateModal()"
