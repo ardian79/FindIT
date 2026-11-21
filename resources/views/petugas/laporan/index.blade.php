@@ -108,28 +108,28 @@
                                 <tr>
                                     <th class="w-12 px-4 py-3">No</th>
                                     <th class="px-4 py-3">Nama Barang</th>
-                                    <th class="px-4 py-3">Kategori</th>
+                                    <th class="px-4 py-3 text-center">Kategori</th>
                                     <th class="px-4 py-3">Lokasi Ditemukan</th>
-                                    <th class="px-4 py-3">Tanggal</th>
-                                    <th class="px-4 py-3">Status</th>
+                                    <th class="px-4 py-3 text-center">Tanggal</th>
+                                    <th class="px-4 py-3 text-center">Status</th>
                                 </tr>
                             @elseif ($jenis === 'laporan_kehilangan')
                                 <tr>
                                     <th class="w-12 px-4 py-3">No</th>
                                     <th class="px-4 py-3">Nama Barang</th>
-                                    <th class="px-4 py-3">Kategori</th>
+                                    <th class="px-4 py-3 text-center">Kategori</th>
                                     <th class="px-4 py-3">Pelapor</th>
-                                    <th class="px-4 py-3">Lokasi & Tanggal Hilang</th>
-                                    <th class="px-4 py-3">Status</th>
+                                    <th class="px-4 py-3 text-center">Lokasi & Tanggal Hilang</th>
+                                    <th class="px-4 py-3 text-center">Status</th>
                                 </tr>
                             @else
                                 <tr>
                                     <th class="w-12 px-4 py-3">No</th>
                                     <th class="px-4 py-3">Barang Temuan</th>
                                     <th class="px-4 py-3">Pengklaim</th>
-                                    <th class="px-4 py-3">Tanggal Klaim</th>
-                                    <th class="px-4 py-3">Tanggal Diambil</th>
-                                    <th class="px-4 py-3">Status</th>
+                                    <th class="px-4 py-3 text-center">Tanggal Klaim</th>
+                                    <th class="px-4 py-3 text-center">Tanggal Diambil</th>
+                                    <th class="px-4 py-3 text-center">Status</th>
                                 </tr>
                             @endif
                         </thead>
@@ -140,22 +140,22 @@
 
                                     @if ($jenis === 'barang_temuan')
                                         <td class="px-4 py-3 font-medium text-slate-900">{{ $item->nama_barang }}</td>
-                                        <td class="px-4 py-3 text-slate-600">{{ $item->kategori->nama_kategori }}</td>
+                                        <td class="px-4 py-3 text-center text-slate-600">{{ $item->kategori->nama_kategori }}</td>
                                         <td class="px-4 py-3 text-slate-600">{{ $item->lokasi_ditemukan }}</td>
-                                        <td class="px-4 py-3 text-slate-600">{{ $item->tanggal_ditemukan->format('d M Y') }}</td>
-                                        <td class="px-4 py-3 font-semibold text-slate-800">{{ ucfirst($item->status) }}</td>
+                                        <td class="px-4 py-3 text-center text-slate-600">{{ $item->tanggal_ditemukan->format('d M Y') }}</td>
+                                        <td class="px-4 py-3 text-center font-semibold text-slate-800">{{ ucfirst($item->status) }}</td>
                                     @elseif ($jenis === 'laporan_kehilangan')
                                         <td class="px-4 py-3 font-medium text-slate-900">{{ $item->nama_barang }}</td>
-                                        <td class="px-4 py-3 text-slate-600">{{ $item->kategori->nama_kategori }}</td>
+                                        <td class="px-4 py-3 text-center text-slate-600">{{ $item->kategori->nama_kategori }}</td>
                                         <td class="px-4 py-3 text-slate-600">
                                             <p class="font-medium text-slate-800">{{ $item->pengguna->nama }}</p>
                                             <p class="text-xs text-slate-500">{{ $item->pengguna->nim }}</p>
                                         </td>
-                                        <td class="px-4 py-3 text-slate-600">
+                                        <td class="px-4 py-3 text-center text-slate-600">
                                             <p>{{ $item->lokasi_hilang }}</p>
                                             <p class="text-xs text-slate-500">{{ $item->tanggal_hilang->format('d M Y') }}</p>
                                         </td>
-                                        <td class="px-4 py-3 font-semibold text-slate-800">{{ ucfirst($item->status) }}</td>
+                                        <td class="px-4 py-3 text-center font-semibold text-slate-800">{{ ucfirst($item->status) }}</td>
                                     @else
                                         <td class="px-4 py-3">
                                             <p class="font-medium text-slate-900">{{ $item->barangTemuan->nama_barang }}</p>
@@ -165,9 +165,9 @@
                                             <p class="font-medium text-slate-800">{{ $item->pengguna->nama }}</p>
                                             <p class="text-xs text-slate-500">{{ $item->pengguna->nim }}</p>
                                         </td>
-                                        <td class="px-4 py-3 text-slate-600">{{ $item->created_at->format('d M Y') }}</td>
-                                        <td class="px-4 py-3 text-slate-600">{{ $item->tanggal_diambil ? $item->tanggal_diambil->format('d M Y, H:i') : '-' }}</td>
-                                        <td class="px-4 py-3 font-semibold text-slate-800">{{ ucfirst($item->status) }}</td>
+                                        <td class="px-4 py-3 text-center text-slate-600">{{ $item->created_at->format('d M Y') }}</td>
+                                        <td class="px-4 py-3 text-center text-slate-600">{{ $item->tanggal_diambil ? $item->tanggal_diambil->format('d M Y, H:i') : '-' }}</td>
+                                        <td class="px-4 py-3 text-center font-semibold text-slate-800">{{ ucfirst($item->status) }}</td>
                                     @endif
                                 </tr>
                             @endforeach

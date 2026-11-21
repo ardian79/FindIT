@@ -29,7 +29,7 @@
                                 <th class="px-5 py-3.5">Nama Kategori</th>
                                 <th class="px-5 py-3.5 text-center">Barang Temuan</th>
                                 <th class="px-5 py-3.5 text-center">Laporan Kehilangan</th>
-                                <th class="px-5 py-3.5 text-right">Aksi</th>
+                                <th class="px-5 py-3.5 text-center">Aksi</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-slate-200 bg-white">
@@ -48,7 +48,7 @@
                                         </span>
                                     </td>
                                     <td class="px-5 py-4">
-                                        <div class="flex items-center justify-end gap-2">
+                                        <div class="flex items-center justify-center gap-2">
                                             <a href="{{ route('petugas.kategori.edit', $item) }}" class="rounded-lg border border-slate-300 px-3 py-1.5 text-xs font-semibold text-slate-700 transition hover:bg-slate-100">
                                                 Edit
                                             </a>
