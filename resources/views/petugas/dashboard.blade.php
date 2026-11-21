@@ -8,9 +8,8 @@
     <div class="space-y-6">
         <div class="flex flex-col gap-4 rounded-2xl border border-red-200 bg-red-50 p-6 text-slate-900 sm:flex-row sm:items-center sm:justify-between">
             <div>
-                <p class="text-xs font-bold uppercase tracking-wider text-[#94191d]">Pos Keamanan Utama UNEJ</p>
+                <p class="text-xs font-bold uppercase tracking-wider text-[#94191d]">Pos Keamanan UNEJ</p>
                 <h2 class="mt-1 text-xl font-bold">Selamat datang, {{ Auth::user()->nama }}</h2>
-                <p class="mt-1 text-sm text-slate-600">Pantau inventaris barang temuan, klaim yang perlu diverifikasi, dan laporan kehilangan terbaru.</p>
             </div>
             <div class="flex flex-wrap gap-2.5">
                 <a href="{{ route('petugas.barang-temuan.create') }}" class="inline-flex items-center gap-2 rounded-xl bg-white px-4 py-2.5 text-sm font-semibold text-[#94191d] transition hover:bg-red-50">
