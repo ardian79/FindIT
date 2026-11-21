@@ -37,7 +37,7 @@
     <x-navbar />
 
     <main class="flex-1 pt-[68px]">
-        <div class="mx-auto w-full max-w-[1160px] px-4 sm:px-6 lg:px-8 pt-4">
+        <div class="mx-auto w-full max-w-[1160px] px-4 sm:px-6 lg:px-8">
             <x-alert />
         </div>
         @yield('content')

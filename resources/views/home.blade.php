@@ -14,7 +14,7 @@
         $hasFeatureImage = is_file(public_path($featurePath));
     @endphp
 
-    <section class="relative isolate -mt-[68px] overflow-hidden bg-ink-deep text-white">
+    <section class="relative isolate -mt-[80px] overflow-hidden bg-ink-deep text-white">
         @if ($hasHeroImage)
             <img src="{{ asset($heroPath) }}" alt="Layanan Lost & Found Universitas Jember"
                 class="absolute inset-0 h-full w-full object-cover">
