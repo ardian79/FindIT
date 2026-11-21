@@ -193,8 +193,8 @@
                         <div class="rounded-2xl bg-[#f7f8fb] p-4">
                             <p class="text-sm font-bold text-[#172033]">Penyerahan & Pengambilan Barang</p>
                             <p class="mt-1 text-sm leading-6 text-[#5e6a7d]">
-                                Barang temuan diserahkan dan diambil melalui Pos Keamanan Utama Universitas Jember setelah
-                                proses verifikasi selesai.
+                                Barang temuan diserahkan dan diambil melalui Pos Keamanan Universitas Jember setelah
+                                proses verifikasi selesai dilakukan.
                             </p>
                         </div>
                     </div>
