@@ -89,8 +89,10 @@
             <div class="mx-auto max-w-2xl text-center">
                 <p class="inline-flex items-center gap-2 text-[#c41230] text-[12px] font-bold tracking-[.16em] uppercase">
                     Cara kerja</p>
-                <h2 class="mt-3 font-heading text-3xl font-extrabold tracking-tight text-ink sm:text-4xl">Satu alur dari
-                    laporan sampai serah terima</h2>
+                <h2
+                    class="mt-3 font-heading text-2xl font-extrabold tracking-tight text-ink sm:text-3xl md:whitespace-nowrap lg:text-4xl">
+                    Satu alur dari laporan sampai serah terima
+                </h2>
                 <p class="mx-auto mt-3 max-w-xl text-sm leading-7 text-ink-muted">Tiga langkah mudah yang diverifikasi
                     langsung oleh Pos Keamanan Universitas Jember.</p>
             </div>

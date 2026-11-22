@@ -25,8 +25,19 @@
     }
 </script>
 
-<div x-data="{ mobile: false, account: false, scrolled: window.scrollY > 12, active: 'Beranda', ready: false }" x-init="const updateActive = () => {
+<div x-data="{
+    mobile: false,
+    account: false,
+    isHome: @json(request()->routeIs('home')),
+    scrolled: window.scrollY > 12,
+    active: @json(request()->routeIs('home')) ? 'Beranda' : null,
+    ready: false
+}" x-init="const updateActive = () => {
     scrolled = window.scrollY > 12;
+    if (!isHome) {
+        active = null;
+        return;
+    }
     if (window.scrollY < 180) {
         active = 'Beranda';
     } else {
@@ -177,7 +188,7 @@ window.addEventListener('scroll', updateActive, { passive: true });" @keydown.es
 
     <div id="mobile-menu" x-show="mobile" x-cloak x-transition.origin.top.duration.200ms
         @click.outside="mobile = false" :class="scrolled ? 'mx-auto mt-4 max-w-[1160px]' : 'mx-0 mt-1.5 max-w-none'"
-        class="w-full rounded-3xl border border-[#e7ebf2] bg-white/98 shadow-lift backdrop-blur-md lg:hidden">
+        class="w-full rounded-3xl border border-[#e7ebf2] bg-white shadow-lift lg:hidden">
         <div class="flex flex-col gap-1.5 px-4 py-3 sm:px-6">
             <a href="{{ route('home') }}" @click="navigateFromNavbar($event, 'top'); mobile = false"
                 :class="active === 'Beranda' ? 'bg-[#fdecee] text-[#c41230]' :

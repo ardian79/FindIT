@@ -21,23 +21,24 @@ class LaporanKehilanganSeeder extends Seeder
             $penggunaIds = User::pluck('id')->values();
         }
 
-        $katAt = fn (int $index) => $kategoriIds[$index % max($kategoriIds->count(), 1)] ?? 1;
-        $userAt = fn (int $index) => $penggunaIds[$index % max($penggunaIds->count(), 1)] ?? 1;
+        $katAt = fn(int $index) => $kategoriIds[$index % max($kategoriIds->count(), 1)] ?? 1;
+        $userAt = fn(int $index) => $penggunaIds[$index % max($penggunaIds->count(), 1)] ?? 1;
 
         $publishFoto = function (?string $seedFile, string $targetFolder): ?string {
             if (! $seedFile) {
                 return null;
             }
 
-            $sourcePath = 'seed-barang/' . ltrim($seedFile, '/');
-            $targetPath = trim($targetFolder, '/') . '/' . basename($seedFile);
+            $cleanName = basename($seedFile);
+            $sourceDiskPath = public_path('seed-barang/' . $cleanName);
+            $targetPath = trim($targetFolder, '/') . '/' . $cleanName;
 
-            if (Storage::disk('public')->exists($sourcePath)) {
-                Storage::disk('public')->copy($sourcePath, $targetPath);
+            if (is_file($sourceDiskPath)) {
+                Storage::disk('public')->put($targetPath, file_get_contents($sourceDiskPath));
                 return $targetPath;
             }
 
-            return $sourcePath;
+            return null;
         };
 
         $items = [
