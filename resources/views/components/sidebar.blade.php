@@ -1,5 +1,5 @@
 @php
-    $linkCls = 'flex items-center gap-3 rounded-[14px] px-3 py-2.5 text-sm font-semibold text-[#4b5870] transition-colors hover:bg-[#f4f6f9] hover:text-ink';
+    $linkBase = 'flex items-center gap-3 rounded-xl px-3 py-2 text-sm transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink-navy/30';
     $sections = [
         'Operasional' => [
             ['petugas.dashboard', 'petugas.dashboard', 'Dashboard', 'M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z'],
@@ -24,25 +24,30 @@
 <aside id="sidebar" class="fixed inset-y-0 left-0 z-50 flex w-[248px] -translate-x-full flex-col border-r border-[#e7ebf2] bg-white transition-transform duration-200 lg:translate-x-0 print:hidden">
     <div class="h-1 bg-brand"></div>
     <div class="flex h-16 items-center justify-between px-4">
-        <a href="{{ route('petugas.dashboard') }}" class="flex items-center gap-2.5">
+        <a href="{{ route('petugas.dashboard') }}" class="flex items-center gap-2 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink-navy/30">
             <img src="{{ asset('images/logo-findit.svg') }}" alt="Logo FindIT" class="h-8 w-auto object-contain">
-            <span class="text-base font-extrabold leading-tight tracking-tight text-ink">Find<span class="text-brand">IT</span></span>
+            <span class="text-base font-bold leading-tight tracking-tight text-ink">Find<span class="text-brand">IT</span></span>
         </a>
-        <button type="button" onclick="toggleSidebar()" aria-label="Tutup sidebar" class="flex h-10 w-10 items-center justify-center rounded-xl text-ink-muted hover:bg-[#f3f5f8] lg:hidden">
-            <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <button type="button" onclick="toggleSidebar()" aria-label="Tutup sidebar"
+            class="flex h-9 w-9 items-center justify-center rounded-lg text-ink-muted transition-colors hover:bg-[#f3f5f8] hover:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink-navy/30 lg:hidden">
+            <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75" aria-hidden="true">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
             </svg>
         </button>
     </div>
 
-    <nav class="flex-1 space-y-6 overflow-y-auto px-3 py-2">
+    <nav class="flex-1 space-y-6 overflow-y-auto px-3 py-3">
         @foreach ($sections as $heading => $links)
             <div>
-                <p class="px-3 pb-2 text-[11px] font-bold uppercase tracking-[0.14em] text-ink-muted">{{ $heading }}</p>
+                <p class="px-3 pb-2 text-xs font-medium text-ink-muted">{{ $heading }}</p>
                 <div class="space-y-1">
                     @foreach ($links as [$route, $pattern, $label, $path])
-                        <a href="{{ route($route) }}" class="{{ $linkCls }} {{ request()->routeIs($pattern) ? 'bg-brand-soft text-brand' : '' }}">
-                            <svg class="h-5 w-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="{{ $path }}" /></svg>
+                        @php
+                            $active = request()->routeIs($pattern);
+                        @endphp
+                        <a href="{{ route($route) }}"
+                            class="{{ $linkBase }} {{ $active ? 'bg-brand-soft font-semibold text-brand' : 'font-medium text-[#3d4b60] hover:bg-[#f3f5f8] hover:text-ink' }}">
+                            <svg class="h-[18px] w-[18px] shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="{{ $path }}" /></svg>
                             {{ $label }}
                         </a>
                     @endforeach
@@ -53,15 +58,19 @@
 
     <div class="space-y-1 border-t border-[#e7ebf2] p-3">
         @foreach ($footerLinks as [$route, $pattern, $label, $path])
-            <a href="{{ route($route) }}" class="{{ $linkCls }} {{ $pattern && request()->routeIs($pattern) ? 'bg-brand-soft text-brand' : '' }}">
-                <svg class="h-5 w-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="{{ $path }}" /></svg>
+            @php
+                $active = $pattern && request()->routeIs($pattern);
+            @endphp
+            <a href="{{ route($route) }}"
+                class="{{ $linkBase }} {{ $active ? 'bg-brand-soft font-semibold text-brand' : 'font-medium text-[#3d4b60] hover:bg-[#f3f5f8] hover:text-ink' }}">
+                <svg class="h-[18px] w-[18px] shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="{{ $path }}" /></svg>
                 {{ $label }}
             </a>
         @endforeach
         <form action="{{ route('logout') }}" method="POST">
             @csrf
-            <button type="submit" class="flex w-full items-center gap-3 rounded-[14px] px-3 py-2.5 text-sm font-semibold text-brand transition-colors hover:bg-brand-soft">
-                <svg class="h-5 w-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9" /></svg>
+            <button type="submit" class="{{ $linkBase }} w-full font-medium text-brand hover:bg-brand-soft focus-visible:ring-brand/30">
+                <svg class="h-[18px] w-[18px] shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9" /></svg>
                 Keluar
             </button>
         </form>

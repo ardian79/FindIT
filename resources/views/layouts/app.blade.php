@@ -87,14 +87,14 @@
                     trigger.disabled = select.disabled;
                     trigger.setAttribute('aria-haspopup', 'listbox');
                     trigger.setAttribute('aria-expanded', 'false');
-                    trigger.className = 'relative flex min-h-[42px] w-full items-center justify-between gap-3 rounded-[14px] border border-[#d7dde7] bg-white px-3.5 py-2.5 pr-10 text-left text-sm text-ink outline-none transition hover:border-[#b7c1d0] focus:border-brand focus:ring-4 focus:ring-brand/10 disabled:cursor-not-allowed disabled:bg-[#f3f5f8] disabled:text-[#6b7585] disabled:opacity-80';
-                    trigger.innerHTML = '<span></span><span data-fi-arrow class="absolute right-3.5 top-1/2 h-4 w-4 -translate-y-1/2 transition-transform duration-200"><svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="#102a4c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>';
+                    trigger.className = 'relative flex min-h-[42px] w-full items-center justify-between gap-3 rounded-xl border border-[#d7dde7] bg-white px-3.5 py-2.5 pr-10 text-left text-sm text-ink outline-none transition-colors duration-150 hover:border-[#b7c1d0] focus:border-ink-navy focus:ring-4 focus:ring-ink-navy/10 disabled:cursor-not-allowed disabled:bg-[#f3f5f8] disabled:text-[#6b7585] disabled:opacity-80';
+                    trigger.innerHTML = '<span></span><span data-fi-arrow class="absolute right-3.5 top-1/2 h-4 w-4 -translate-y-1/2 transition-transform duration-150"><svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="#5e6a7d" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>';
 
                     const label = trigger.firstElementChild;
                     const menu = document.createElement('div');
                     menu.setAttribute('data-fi-select-menu', '');
                     menu.setAttribute('role', 'listbox');
-                    menu.className = 'invisible pointer-events-none absolute left-0 top-[calc(100%+8px)] z-[60] max-h-60 w-full scale-[.985] overflow-y-auto rounded-[14px] border border-[#dfe4ec] bg-white p-1.5 opacity-0 shadow-[0_14px_34px_rgba(16,42,76,.14)] transition duration-150 ease-out';
+                    menu.className = 'invisible pointer-events-none absolute left-0 top-[calc(100%+8px)] z-[60] max-h-60 w-full scale-[.985] overflow-y-auto rounded-xl border border-[#e7ebf2] bg-white p-1.5 opacity-0 shadow-lift transition duration-150 ease-out';
 
                     const refresh = () => {
                         menu.innerHTML = '';
@@ -105,7 +105,7 @@
                             item.setAttribute('role', 'option');
                             item.setAttribute('aria-selected', String(opt.selected));
                             item.textContent = opt.text;
-                            item.className = `flex min-h-10 w-full items-center rounded-[10px] px-3 py-2 text-left text-sm transition hover:bg-[#f3f5f8] hover:text-ink-navy ${opt.selected ? 'bg-brand-soft font-bold text-brand-dark' : 'bg-white text-ink'}`;
+                            item.className = `flex min-h-9 w-full items-center rounded-lg px-3 py-2 text-left text-sm transition-colors duration-150 hover:bg-[#f3f5f8] hover:text-ink-navy ${opt.selected ? 'bg-brand-soft font-medium text-brand-dark' : 'bg-white text-ink'}`;
                             item.addEventListener('click', () => {
                                 select.value = opt.value;
                                 select.dispatchEvent(new Event('input', { bubbles: true }));

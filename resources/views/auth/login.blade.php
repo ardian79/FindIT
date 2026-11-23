@@ -4,19 +4,19 @@
 
 @section('content')
     @php
-        $label = 'mb-1.5 block text-[13px] font-semibold text-[#243044]';
-        $input = 'w-full rounded-[14px] border border-[#d7dde7] bg-white px-3.5 py-3 text-sm text-ink outline-none transition focus:border-ink-navy focus:ring-4 focus:ring-ink-navy/10 disabled:cursor-not-allowed disabled:bg-[#f3f5f8] disabled:text-[#6b7585]';
+        $label = 'mb-1.5 block text-sm font-medium text-ink';
+        $input = 'w-full rounded-xl border border-[#d7dde7] bg-white px-3.5 py-2.5 text-sm text-ink outline-none transition-colors duration-150 focus:border-ink-navy focus:ring-4 focus:ring-ink-navy/10 disabled:cursor-not-allowed disabled:bg-[#f3f5f8] disabled:text-[#6b7585]';
     @endphp
 
     <div class="mx-auto w-full max-w-[1160px] px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
-        <div class="mx-auto grid max-w-5xl overflow-hidden rounded-[28px] border border-[#e7ebf2] bg-white shadow-card lg:grid-cols-[.9fr_1.1fr]">
-            <div class="relative hidden min-h-[560px] overflow-hidden bg-ink-deep lg:block">
+        <div class="mx-auto grid max-w-5xl overflow-hidden rounded-2xl border border-[#e7ebf2] bg-white shadow-card lg:grid-cols-[.9fr_1.1fr]">
+            <div class="relative hidden min-h-[540px] overflow-hidden bg-ink-deep lg:block">
                 <img src="{{ asset('images/background.svg') }}" alt="Latar Belakang FindIT" class="absolute inset-0 h-full w-full object-cover">
             </div>
 
             <div class="p-6 sm:p-10">
-                <p class="text-xs font-bold uppercase tracking-[.16em] text-brand">Akun FindIT</p>
-                <h1 class="mt-2 font-heading text-2xl font-extrabold text-ink">Masuk</h1>
+                <p class="text-xs font-semibold text-brand">Akun FindIT</p>
+                <h1 class="mt-2 font-heading text-2xl font-semibold tracking-tight text-ink">Masuk</h1>
 
                 <form action="{{ route('login') }}" method="POST" class="mt-8 space-y-4">
                     @csrf
@@ -35,14 +35,14 @@
                         <span>Ingat saya</span>
                     </label>
                     <button type="submit"
-                        class="inline-flex w-full items-center justify-center rounded-full bg-brand px-5 py-3 text-sm font-bold text-white shadow-[0_6px_14px_rgba(196,18,48,.14)] transition hover:-translate-y-px hover:bg-brand-dark active:scale-[.98]">
+                        class="inline-flex w-full items-center justify-center rounded-xl bg-brand px-5 py-2.5 text-sm font-medium text-white transition-colors duration-150 hover:bg-brand-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 active:scale-[0.98]">
                         Masuk
                     </button>
                 </form>
 
                 <p class="mt-6 text-center text-sm text-ink-muted">
                     Belum punya akun mahasiswa?
-                    <a href="{{ route('register') }}" class="font-bold text-brand hover:text-brand-dark">Daftar di sini</a>
+                    <a href="{{ route('register') }}" class="font-medium text-brand hover:text-brand-dark">Daftar di sini</a>
                 </p>
             </div>
         </div>

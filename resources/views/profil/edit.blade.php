@@ -6,23 +6,23 @@
 @section('content')
     @php
         $isPetugas = $user->role === 'petugas';
-        $label = 'mb-1.5 block text-[13px] font-semibold text-[#243044]';
-        $input = 'w-full rounded-[14px] border border-[#d7dde7] bg-white px-3.5 py-3 text-sm text-ink outline-none transition focus:border-ink-navy focus:ring-4 focus:ring-ink-navy/10 disabled:cursor-not-allowed disabled:bg-[#f3f5f8] disabled:text-[#6b7585]';
+        $label = 'mb-1.5 block text-sm font-medium text-ink';
+        $input = 'w-full rounded-xl border border-[#d7dde7] bg-white px-3.5 py-2.5 text-sm text-ink outline-none transition-colors duration-150 focus:border-ink-navy focus:ring-4 focus:ring-ink-navy/10 disabled:cursor-not-allowed disabled:bg-[#f3f5f8] disabled:text-[#6b7585]';
     @endphp
 
     <div class="{{ $isPetugas ? 'mx-auto max-w-3xl' : 'mx-auto w-full max-w-[1160px] px-4 py-8 sm:px-6 lg:px-8' }}">
-        <div class="overflow-hidden rounded-[24px] border border-[#e7ebf2]/95 bg-white shadow-[0_10px_30px_rgba(16,42,76,.05)]">
+        <div class="overflow-hidden rounded-2xl border border-[#e7ebf2] bg-white">
             <div class="flex flex-col gap-4 border-b border-[#e7ebf2] bg-[#f7f8fb] p-6 sm:flex-row sm:items-center sm:justify-between">
                 <div class="flex items-center gap-4">
-                    <div class="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-brand text-xl font-extrabold text-white">
+                    <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-brand text-lg font-semibold text-white">
                         {{ strtoupper(substr($user->nama, 0, 1)) }}
                     </div>
                     <div>
-                        <h2 class="text-lg font-extrabold text-ink">{{ $user->nama }}</h2>
-                        <p class="text-sm text-ink-muted">{{ $isPetugas ? $user->email : 'NIM: ' . $user->nim }}</p>
+                        <h2 class="text-lg font-semibold text-ink">{{ $user->nama }}</h2>
+                        <p class="text-sm tabular-nums text-ink-muted">{{ $isPetugas ? $user->email : 'NIM: ' . $user->nim }}</p>
                     </div>
                 </div>
-                <span class="inline-flex w-fit items-center rounded-full px-2.5 py-1 text-xs font-bold {{ $isPetugas ? 'bg-brand-soft text-brand-dark' : 'bg-[#e8eef6] text-ink-navy' }}">
+                <span class="inline-flex w-fit items-center rounded-lg px-2.5 py-1 text-xs font-medium {{ $isPetugas ? 'bg-brand-soft text-brand-dark' : 'bg-[#e8eef6] text-ink-navy' }}">
                     {{ $isPetugas ? 'Petugas Keamanan' : 'Mahasiswa' }}
                 </span>
             </div>
@@ -34,11 +34,11 @@
                 <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
                     <div>
                         <label class="{{ $label }}">{{ $isPetugas ? 'Email' : 'NIM' }}</label>
-                        <input type="text" value="{{ $isPetugas ? $user->email : $user->nim }}" disabled class="{{ $input }}">
+                        <input type="text" value="{{ $isPetugas ? $user->email : $user->nim }}" disabled class="{{ $input }} tabular-nums">
                     </div>
                     <div>
                         <label for="no_hp" class="{{ $label }}">Nomor WhatsApp / HP</label>
-                        <input type="text" id="no_hp" name="no_hp" value="{{ old('no_hp', $user->no_hp) }}" required class="{{ $input }}">
+                        <input type="text" id="no_hp" name="no_hp" value="{{ old('no_hp', $user->no_hp) }}" required class="{{ $input }} tabular-nums">
                     </div>
                 </div>
 
@@ -48,7 +48,7 @@
                 </div>
 
                 <div class="border-t border-[#e7ebf2] pt-5">
-                    <h3 class="text-sm font-extrabold text-ink">Ubah password</h3>
+                    <h3 class="text-sm font-semibold text-ink">Ubah password</h3>
                     <p class="mt-0.5 text-xs text-ink-muted">Kosongkan kolom di bawah ini jika tidak ingin mengganti password.</p>
                     <div class="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
                         <div>
@@ -64,7 +64,7 @@
 
                 <div class="flex justify-end pt-2">
                     <button type="submit"
-                        class="inline-flex items-center justify-center rounded-full bg-brand px-5 py-3 text-sm font-bold text-white shadow-[0_6px_14px_rgba(196,18,48,.14)] transition hover:-translate-y-px hover:bg-brand-dark active:scale-[.98]">
+                        class="inline-flex items-center justify-center rounded-xl bg-brand px-5 py-2.5 text-sm font-medium text-white transition-colors duration-150 hover:bg-brand-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 active:scale-[0.98]">
                         Simpan perubahan
                     </button>
                 </div>

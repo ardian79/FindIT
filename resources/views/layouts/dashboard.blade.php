@@ -36,29 +36,29 @@
 
     <div class="flex min-h-screen flex-col lg:pl-[248px] print:pl-0">
         <div x-data="{ scrolled: false }" x-init="addEventListener('scroll', () => scrolled = scrollY > 8, { passive: true })"
-            class="sticky top-0 z-30 px-3 pt-3 sm:px-4 sm:pt-4 print:hidden">
+            class="sticky top-0 z-30 px-4 pt-4 sm:px-6 lg:px-8 print:hidden">
             <header
-                :class="scrolled ? 'border-[#dfe5ec] bg-white/95 shadow-[0_10px_28px_rgba(16,42,76,.10)]' : 'border-[#e7ebf2] bg-white/90 shadow-[0_4px_14px_rgba(16,42,76,.05)]'"
-                class="mx-auto flex h-16 w-full items-center justify-between rounded-full border px-4 backdrop-blur-md transition duration-300 ease-out sm:px-5 lg:px-6">
+                :class="scrolled ? 'border-[#d7dde7] bg-white/95 shadow-card' : 'border-[#e7ebf2] bg-white'"
+                class="mx-auto flex h-16 w-full items-center justify-between rounded-2xl border px-4 backdrop-blur-md transition-[background-color,border-color,box-shadow] duration-200 sm:px-5 lg:px-6">
                 <div class="flex min-w-0 items-center gap-3">
                     <button type="button" onclick="toggleSidebar()" aria-label="Buka sidebar"
-                        class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-ink-muted transition hover:bg-[#f3f5f8] hover:text-ink active:scale-95 lg:hidden">
-                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                        class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl text-ink-muted transition-colors duration-150 hover:bg-[#f3f5f8] hover:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink-navy/30 lg:hidden">
+                        <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75" aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
                         </svg>
                     </button>
                     <div class="min-w-0">
-                        <p class="text-[11px] font-bold uppercase tracking-[0.14em] text-ink-muted">Panel Petugas</p>
-                        <h1 class="truncate text-base font-extrabold text-ink sm:text-lg">@yield('header', 'Dashboard')</h1>
+                        <p class="text-xs font-medium text-ink-muted">Panel Petugas</p>
+                        <h1 class="truncate text-base font-semibold text-ink sm:text-lg">@yield('header', 'Dashboard')</h1>
                     </div>
                 </div>
 
-                <div class="group/profile flex cursor-default items-center gap-2 rounded-full px-1 py-1 transition hover:bg-[#f7f8fb] sm:gap-3 sm:px-2">
+                <div class="flex items-center gap-3">
                     <div class="hidden text-right sm:block">
-                        <p class="max-w-[180px] truncate text-sm font-bold text-ink">{{ Auth::user()->nama }}</p>
+                        <p class="max-w-[180px] truncate text-sm font-medium text-ink">{{ Auth::user()->nama }}</p>
                         <p class="text-xs text-ink-muted">Petugas Keamanan</p>
                     </div>
-                    <div class="flex h-10 w-10 items-center justify-center rounded-full bg-brand text-sm font-extrabold text-white shadow-[0_6px_14px_rgba(196,18,48,.18)] transition group-hover/profile:scale-[1.08] group-hover/profile:shadow-[0_8px_18px_rgba(196,18,48,.24)]">
+                    <div class="flex h-9 w-9 items-center justify-center rounded-full bg-brand text-xs font-semibold text-white">
                         {{ strtoupper(substr(Auth::user()->nama, 0, 1)) }}
                     </div>
                 </div>
@@ -119,14 +119,14 @@
                     trigger.disabled = select.disabled;
                     trigger.setAttribute('aria-haspopup', 'listbox');
                     trigger.setAttribute('aria-expanded', 'false');
-                    trigger.className = 'relative flex min-h-[42px] w-full items-center justify-between gap-3 rounded-[14px] border border-[#d7dde7] bg-white px-3.5 py-2.5 pr-10 text-left text-sm text-ink outline-none transition hover:border-[#b7c1d0] focus:border-brand focus:ring-4 focus:ring-brand/10 disabled:cursor-not-allowed disabled:bg-[#f3f5f8] disabled:text-[#6b7585] disabled:opacity-80';
-                    trigger.innerHTML = '<span></span><span data-fi-arrow class="absolute right-3.5 top-1/2 h-4 w-4 -translate-y-1/2 transition-transform duration-200"><svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="#102a4c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>';
+                    trigger.className = 'relative flex min-h-[42px] w-full items-center justify-between gap-3 rounded-xl border border-[#d7dde7] bg-white px-3.5 py-2.5 pr-10 text-left text-sm text-ink outline-none transition-colors duration-150 hover:border-[#b7c1d0] focus:border-ink-navy focus:ring-4 focus:ring-ink-navy/10 disabled:cursor-not-allowed disabled:bg-[#f3f5f8] disabled:text-[#6b7585] disabled:opacity-80';
+                    trigger.innerHTML = '<span></span><span data-fi-arrow class="absolute right-3.5 top-1/2 h-4 w-4 -translate-y-1/2 transition-transform duration-150"><svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="#5e6a7d" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>';
 
                     const label = trigger.firstElementChild;
                     const menu = document.createElement('div');
                     menu.setAttribute('data-fi-select-menu', '');
                     menu.setAttribute('role', 'listbox');
-                    menu.className = 'invisible pointer-events-none absolute left-0 top-[calc(100%+8px)] z-[60] max-h-60 w-full scale-[.985] overflow-y-auto rounded-[14px] border border-[#dfe4ec] bg-white p-1.5 opacity-0 shadow-[0_14px_34px_rgba(16,42,76,.14)] transition duration-150 ease-out';
+                    menu.className = 'invisible pointer-events-none absolute left-0 top-[calc(100%+8px)] z-[60] max-h-60 w-full scale-[.985] overflow-y-auto rounded-xl border border-[#e7ebf2] bg-white p-1.5 opacity-0 shadow-lift transition duration-150 ease-out';
 
                     const refresh = () => {
                         menu.innerHTML = '';
@@ -137,7 +137,7 @@
                             item.setAttribute('role', 'option');
                             item.setAttribute('aria-selected', String(opt.selected));
                             item.textContent = opt.text;
-                            item.className = `flex min-h-10 w-full items-center rounded-[10px] px-3 py-2 text-left text-sm transition hover:bg-[#f3f5f8] hover:text-ink-navy ${opt.selected ? 'bg-brand-soft font-bold text-brand-dark' : 'bg-white text-ink'}`;
+                            item.className = `flex min-h-9 w-full items-center rounded-lg px-3 py-2 text-left text-sm transition-colors duration-150 hover:bg-[#f3f5f8] hover:text-ink-navy ${opt.selected ? 'bg-brand-soft font-medium text-brand-dark' : 'bg-white text-ink'}`;
                             item.addEventListener('click', () => {
                                 select.value = opt.value;
                                 select.dispatchEvent(new Event('input', { bubbles: true }));
