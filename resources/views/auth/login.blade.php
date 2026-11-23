@@ -11,7 +11,7 @@
     <div class="mx-auto w-full max-w-[1160px] px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
         <div class="mx-auto grid max-w-5xl overflow-hidden rounded-2xl border border-[#e7ebf2] bg-white shadow-card lg:grid-cols-[.9fr_1.1fr]">
             <div class="relative hidden min-h-[540px] overflow-hidden bg-ink-deep lg:block">
-                <img src="{{ asset('images/background.svg') }}" alt="Latar Belakang FindIT" class="absolute inset-0 h-full w-full object-cover">
+                <img src="{{ asset('images/gambar-login.svg') }}" alt="Latar Belakang FindIT" class="absolute inset-0 h-full w-full object-cover">
             </div>
 
             <div class="p-6 sm:p-10">
