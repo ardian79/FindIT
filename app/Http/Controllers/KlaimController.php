@@ -60,7 +60,7 @@ class KlaimController extends Controller
                     $b->where('nama_barang', 'like', "%{$search}%");
                 })->orWhereHas('pengguna', function ($u) use ($search) {
                     $u->where('nama', 'like', "%{$search}%")
-                      ->orWhere('nim', 'like', "%{$search}%");
+                        ->orWhere('nim', 'like', "%{$search}%");
                 });
             });
         }
@@ -69,7 +69,7 @@ class KlaimController extends Controller
             $query->where('status', $request->status);
         }
 
-        $klaim = $query->latest()->paginate(10)->withQueryString();
+        $klaim = $query->latest()->get();
 
         return view('petugas.verifikasi-klaim.index', compact('klaim'));
     }

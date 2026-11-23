@@ -16,6 +16,7 @@ class DatabaseSeeder extends Seeder
             PenggunaSeeder::class,
             BarangTemuanSeeder::class,
             LaporanKehilanganSeeder::class,
+            KlaimSeeder::class,
         ]);
     }
 }

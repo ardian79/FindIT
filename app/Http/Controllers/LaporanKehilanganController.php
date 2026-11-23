@@ -141,7 +141,7 @@ class LaporanKehilanganController extends Controller
             $query->where('status', $request->status);
         }
 
-        $laporan = $query->latest()->paginate(10)->withQueryString();
+        $laporan = $query->latest()->get();
         $kategori = Kategori::orderBy('nama_kategori')->get();
 
         return view('petugas.laporan-kehilangan.index', compact('laporan', 'kategori'));

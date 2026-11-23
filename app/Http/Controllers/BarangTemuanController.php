@@ -32,7 +32,7 @@ class BarangTemuanController extends Controller
             $query->where('status', $request->status);
         }
 
-        $barangTemuan = $query->latest()->paginate(10)->withQueryString();
+        $barangTemuan = $query->latest()->get();
         $kategori = Kategori::orderBy('nama_kategori')->get();
 
         return view('petugas.barang-temuan.index', compact('barangTemuan', 'kategori'));

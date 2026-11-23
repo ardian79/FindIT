@@ -131,6 +131,5 @@
             </div>
         @endif
 
-        <div class="mt-2">{{ $laporan->links() }}</div>
     </div>
 @endsection

@@ -98,6 +98,5 @@
             </div>
         @endif
 
-        <div class="mt-2">{{ $klaim->links() }}</div>
     </div>
 @endsection

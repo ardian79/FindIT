@@ -119,6 +119,5 @@
             </div>
         @endif
 
-        <div class="mt-2">{{ $barangTemuan->links() }}</div>
     </div>
 @endsection
