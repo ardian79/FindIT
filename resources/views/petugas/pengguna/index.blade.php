@@ -44,7 +44,7 @@
                         <thead class="bg-[#f7f8fb] text-xs font-medium text-ink-muted">
                             <tr>
                                 <th scope="col" class="px-5 py-3">Mahasiswa</th>
-                                <th scope="col" class="px-5 py-3">Kontak WA / HP</th>
+                                <th scope="col" class="px-5 py-3 text-center">Kontak WA / HP</th>
                                 <th scope="col" class="px-5 py-3 text-center">Aktivitas</th>
                                 <th scope="col" class="px-5 py-3 text-center">Status Akun</th>
                                 <th scope="col" class="w-px whitespace-nowrap px-5 py-3 text-center">Aksi</th>
@@ -67,7 +67,7 @@
                                             </div>
                                         </div>
                                     </td>
-                                    <td class="px-5 py-4">
+                                    <td class="px-5 py-4 text-center">
                                         @if ($wa)
                                             <div class="inline-flex items-center gap-2">
                                                 <span class="tabular-nums text-[#3d4b60]">{{ $item->no_hp }}</span>
@@ -109,6 +109,5 @@
             @endif
         </div>
 
-        <div>{{ $pengguna->links() }}</div>
     </div>
 @endsection

@@ -25,7 +25,7 @@ class PenggunaController extends Controller
             $query->where('is_active', $request->status === 'aktif');
         }
 
-        $pengguna = $query->latest()->paginate(10)->withQueryString();
+        $pengguna = $query->latest()->get();
 
         return view('petugas.pengguna.index', compact('pengguna'));
     }
