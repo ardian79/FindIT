@@ -65,7 +65,7 @@
                 <p class="mt-1 text-sm text-ink-muted">Belum ada data barang temuan yang sesuai dengan filter.</p>
             </div>
         @else
-            <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+            <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
                 @foreach ($barangTemuan as $item)
                     @php
                         $foto = $item->foto_barang ? ltrim(preg_replace('#^(public/|storage/)#', '', $item->foto_barang), '/') : null;
@@ -78,7 +78,7 @@
                     <article class="group flex h-full min-w-0 flex-col overflow-hidden rounded-2xl border border-[#e7ebf2] bg-white transition duration-200 hover:-translate-y-1 hover:border-[#cfd6e2] hover:shadow-card">
                         <div class="relative h-40 overflow-hidden bg-[#eef1f5]">
                             @if ($foto)
-                                <img src="{{ Illuminate\Support\Facades\Storage::disk('public')->url($foto) }}" alt="{{ $item->nama_barang }}"
+                                <img src="{{ asset('storage/' . $foto) }}" alt="{{ $item->nama_barang }}"
                                     onerror="this.hidden=true;this.nextElementSibling?.classList.remove('hidden')"
                                     class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.03]">
                             @endif
