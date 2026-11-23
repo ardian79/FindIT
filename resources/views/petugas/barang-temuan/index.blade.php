@@ -1,122 +1,116 @@
 @extends('layouts.dashboard')
 
 @section('title', 'Kelola Barang Temuan')
-
 @section('header', 'Kelola Barang Temuan')
 
 @section('content')
+    @php
+        $field = 'w-full rounded-xl border border-[#d7dde7] bg-white px-3.5 py-2.5 text-sm text-ink outline-none transition-colors duration-150 focus:border-ink-navy focus:ring-4 focus:ring-ink-navy/10';
+        $actionBtn = 'inline-flex h-9 w-full items-center justify-center rounded-lg border bg-white px-3 text-xs font-medium transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-1';
+    @endphp
+
     <div class="space-y-5">
-        <div class="flex items-center justify-start">
-            <a href="{{ route('petugas.barang-temuan.create') }}" class="inline-flex items-center justify-center gap-2 rounded-full bg-[#c41230] focus-visible:ring-2 focus-visible:ring-[#c41230] focus-visible:ring-offset-2 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-[#9b1028]">
-                <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <div>
+            <a href="{{ route('petugas.barang-temuan.create') }}"
+                class="inline-flex items-center justify-center gap-2 rounded-xl bg-brand px-4 py-2.5 text-sm font-medium text-white transition-colors duration-150 hover:bg-brand-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 active:scale-[0.98]">
+                <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75" aria-hidden="true">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                 </svg>
                 Tambah Barang Temuan
             </a>
         </div>
 
-        <form action="{{ route('petugas.barang-temuan.index') }}" method="GET" class="grid grid-cols-1 gap-3 rounded-2xl border border-slate-200/80 bg-white p-4 md:grid-cols-12">
+        <form action="{{ route('petugas.barang-temuan.index') }}" method="GET" class="grid grid-cols-1 gap-3 rounded-2xl border border-[#e7ebf2] bg-white p-4 md:grid-cols-12">
             <div class="relative md:col-span-5">
-                <svg class="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <svg class="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-muted" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75" aria-hidden="true">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
                 </svg>
-                <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari nama barang atau lokasi..." class="w-full rounded-xl border border-slate-300 py-2 pl-10 pr-3.5 text-sm text-slate-900 outline-none transition focus:border-[#b12025] focus:ring-2 focus:ring-[#b12025]/20">
+                <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari nama barang atau lokasi" class="{{ $field }} pl-10">
             </div>
 
             <div class="md:col-span-3">
-                <select name="kategori_id" class="w-full rounded-xl border border-slate-300 bg-white px-3.5 py-2 text-sm text-slate-700 outline-none transition focus:border-[#b12025] focus:ring-2 focus:ring-[#b12025]/20">
+                <select name="kategori_id" class="{{ $field }}">
                     <option value="">Semua Kategori</option>
                     @foreach ($kategori as $kat)
-                        <option value="{{ $kat->id }}" {{ request('kategori_id') == $kat->id ? 'selected' : '' }}>
-                            {{ $kat->nama_kategori }}
-                        </option>
+                        <option value="{{ $kat->id }}" @selected(request('kategori_id') == $kat->id)>{{ $kat->nama_kategori }}</option>
                     @endforeach
                 </select>
             </div>
 
             <div class="md:col-span-2">
-                <select name="status" class="w-full rounded-xl border border-slate-300 bg-white px-3.5 py-2 text-sm text-slate-700 outline-none transition focus:border-[#b12025] focus:ring-2 focus:ring-[#b12025]/20">
+                <select name="status" class="{{ $field }}">
                     <option value="">Semua Status</option>
-                    <option value="tersedia" {{ request('status') === 'tersedia' ? 'selected' : '' }}>Tersedia</option>
-                    <option value="diklaim" {{ request('status') === 'diklaim' ? 'selected' : '' }}>Diklaim</option>
-                    <option value="dikembalikan" {{ request('status') === 'dikembalikan' ? 'selected' : '' }}>Dikembalikan</option>
+                    @foreach (['tersedia' => 'Tersedia', 'diklaim' => 'Diklaim', 'dikembalikan' => 'Dikembalikan'] as $val => $label)
+                        <option value="{{ $val }}" @selected(request('status') === $val)>{{ $label }}</option>
+                    @endforeach
                 </select>
             </div>
 
             <div class="flex gap-2 md:col-span-2">
-                <button type="submit" class="flex-1 rounded-full bg-[#c41230] focus-visible:ring-2 focus-visible:ring-[#c41230] focus-visible:ring-offset-2 px-4 py-2 text-sm font-semibold text-white transition hover:bg-[#9b1028]">
-                    Filter
-                </button>
-                @if (request()->filled('search') || request()->filled('kategori_id') || request()->filled('status'))
-                    <a href="{{ route('petugas.barang-temuan.index') }}" class="rounded-xl border border-slate-300 px-3 py-2 text-center text-sm font-medium text-slate-600 transition hover:bg-slate-50">
-                        Reset
-                    </a>
+                <button type="submit" class="flex-1 rounded-xl bg-brand px-4 py-2.5 text-sm font-medium text-white transition-colors duration-150 hover:bg-brand-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 active:scale-[0.98]">Filter</button>
+                @if (request()->anyFilled(['search', 'kategori_id', 'status']))
+                    <a href="{{ route('petugas.barang-temuan.index') }}" class="inline-flex items-center justify-center rounded-xl border border-[#d7dde7] bg-white px-3 py-2.5 text-sm font-medium text-ink transition-colors duration-150 hover:bg-[#f7f8fb] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink-navy/30">Reset</a>
                 @endif
             </div>
         </form>
 
         @if ($barangTemuan->isEmpty())
-            <div class="rounded-[24px] border border-dashed border-slate-300 bg-white px-6 py-16 text-center">
-                <div class="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-[#f3f5f8] text-slate-400">
-                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.7">
+            <div class="rounded-2xl border border-dashed border-[#d7dde7] bg-white px-6 py-16 text-center">
+                <div class="mx-auto flex h-12 w-12 items-center justify-center rounded-xl bg-[#f3f5f8] text-ink-muted">
+                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3.75h16.5v16.5H3.75zM3.75 16.5l4.5-4.5 3.75 3.75 2.25-2.25 6 6" />
                     </svg>
                 </div>
-                <h3 class="mt-3 text-base font-extrabold text-slate-900">Belum ada barang temuan</h3>
-                <p class="mt-1 text-sm text-slate-500">Belum ada data barang temuan yang sesuai dengan filter.</p>
+                <h2 class="mt-3 text-base font-semibold text-ink">Belum ada barang temuan</h2>
+                <p class="mt-1 text-sm text-ink-muted">Belum ada data barang temuan yang sesuai dengan filter.</p>
             </div>
         @else
-            <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+            <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
                 @foreach ($barangTemuan as $item)
-                    <article class="group flex h-full min-w-0 flex-col overflow-hidden rounded-2xl border border-[#e7ebf2] bg-white shadow-[0_6px_18px_rgba(16,42,76,.04)] transition-[transform,box-shadow,border-color] duration-300 ease-[cubic-bezier(.22,1,.36,1)] hover:-translate-y-1 hover:border-[#d8dee8] hover:shadow-[0_14px_28px_rgba(16,42,76,.1)]">
-                        <div class="relative h-[150px] overflow-hidden bg-[#eef1f5] sm:h-[160px]">
-                            @if ($item->foto_barang)
-                                @php
-                                    $fotoBarang = ltrim(preg_replace('#^(public/|storage/)#', '', $item->foto_barang), '/');
-                                @endphp
-                                <img src="{{ Illuminate\Support\Facades\Storage::disk('public')->url($fotoBarang) }}" alt="{{ $item->nama_barang }}" onerror="this.hidden=true;this.nextElementSibling?.classList.remove('hidden')" class="h-full w-full object-cover transition duration-300 group-hover:scale-[1.025]">
-                                <div class="hidden absolute inset-0 flex items-center justify-center text-slate-400">
-                                    <svg class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3.75h16.5v16.5H3.75zM3.75 16.5l4.5-4.5 3.75 3.75 2.25-2.25 6 6" />
-                                    </svg>
-                                </div>
-                            @else
-                                <div class="absolute inset-0 flex items-center justify-center text-slate-400">
-                                    <svg class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3.75h16.5v16.5H3.75zM3.75 16.5l4.5-4.5 3.75 3.75 2.25-2.25 6 6" />
-                                    </svg>
-                                </div>
+                    @php
+                        $foto = $item->foto_barang ? ltrim(preg_replace('#^(public/|storage/)#', '', $item->foto_barang), '/') : null;
+                        [$badgeCls, $badgeLabel] = match ($item->status) {
+                            'tersedia' => ['bg-ink-navy text-white', 'Tersedia'],
+                            'diklaim' => ['bg-[#e8eef6] text-ink-navy', 'Diklaim'],
+                            default => ['bg-[#f3f5f8] text-[#3d4b60]', 'Dikembalikan'],
+                        };
+                    @endphp
+                    <article class="flex h-full min-w-0 flex-col overflow-hidden rounded-2xl border border-[#e7ebf2] bg-white transition-colors duration-150 hover:border-[#cfd6e2]">
+                        <div class="relative h-40 overflow-hidden bg-[#eef1f5]">
+                            @if ($foto)
+                                <img src="{{ Illuminate\Support\Facades\Storage::disk('public')->url($foto) }}" alt="{{ $item->nama_barang }}"
+                                    onerror="this.hidden=true;this.nextElementSibling?.classList.remove('hidden')"
+                                    class="h-full w-full object-cover">
                             @endif
-                            <span class="absolute left-3 top-3 inline-flex rounded-full bg-white/95 px-2.5 py-1 text-xs font-bold text-[#17365d] shadow-sm">{{ $item->kategori->nama_kategori }}</span>
-                            @if ($item->status === 'tersedia')
-                                <span class="absolute right-3 top-3 inline-flex rounded-full bg-[#102a4c] px-2.5 py-1 text-xs font-bold text-white">Tersedia</span>
-                            @elseif ($item->status === 'diklaim')
-                                <span class="absolute right-3 top-3 inline-flex rounded-full bg-[#e8eef6] px-2.5 py-1 text-xs font-bold text-[#17365d]">Diklaim</span>
-                            @else
-                                <span class="absolute right-3 top-3 inline-flex rounded-full bg-slate-100 px-2.5 py-1 text-xs font-bold text-slate-700">Dikembalikan</span>
-                            @endif
+                            <div class="{{ $foto ? 'hidden' : '' }} absolute inset-0 flex items-center justify-center text-ink-muted/60">
+                                <svg class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3.75h16.5v16.5H3.75zM3.75 16.5l4.5-4.5 3.75 3.75 2.25-2.25 6 6" />
+                                </svg>
+                            </div>
+                            <span class="absolute left-3 top-3 rounded-lg bg-white/95 px-2 py-0.5 text-xs font-medium text-ink shadow-sm">{{ $item->kategori->nama_kategori }}</span>
+                            <span class="absolute right-3 top-3 rounded-lg px-2 py-0.5 text-xs font-medium {{ $badgeCls }}">{{ $badgeLabel }}</span>
                         </div>
 
-                        <div class="flex min-h-0 flex-1 flex-col p-3">
-                            <h2 class="line-clamp-2 min-h-10 text-sm font-extrabold leading-5 text-slate-900">{{ $item->nama_barang }}</h2>
-                            <div class="mt-2 space-y-1.5 text-[11px] text-slate-500">
+                        <div class="flex min-h-0 flex-1 flex-col p-4">
+                            <h2 class="line-clamp-2 min-h-10 text-sm font-semibold leading-5 text-ink">{{ $item->nama_barang }}</h2>
+                            <div class="mt-2 space-y-1 text-xs text-ink-muted">
                                 <p class="flex items-start gap-2">
-                                    <svg class="mt-0.5 h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.7"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"/></svg>
+                                    <svg class="mt-0.5 h-3.5 w-3.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"/></svg>
                                     <span class="line-clamp-1">{{ $item->lokasi_ditemukan }}</span>
                                 </p>
-                                <p class="flex items-start gap-2">
-                                    <svg class="mt-0.5 h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.7"><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3.75 8.25h16.5M4.5 4.5h15A1.5 1.5 0 0121 6v13.5A1.5 1.5 0 0119.5 21h-15A1.5 1.5 0 013 19.5V6A1.5 1.5 0 014.5 4.5z"/></svg>
+                                <p class="flex items-start gap-2 tabular-nums">
+                                    <svg class="mt-0.5 h-3.5 w-3.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3.75 8.25h16.5M4.5 4.5h15A1.5 1.5 0 0121 6v13.5A1.5 1.5 0 0119.5 21h-15A1.5 1.5 0 013 19.5V6A1.5 1.5 0 014.5 4.5z"/></svg>
                                     <span>{{ $item->tanggal_ditemukan->format('d M Y') }}</span>
                                 </p>
                             </div>
                             <p class="mt-2 line-clamp-2 min-h-10 flex-1 text-xs leading-5 text-[#3d4b60]">{{ $item->deskripsi ?: 'Tidak ada deskripsi barang.' }}</p>
 
-                            <div class="mt-3 grid grid-cols-2 gap-1.5 border-t border-[#e7ebf2] pt-3">
-                                <a href="{{ route('petugas.barang-temuan.edit', $item) }}" class="inline-flex min-h-9 items-center justify-center rounded-full border border-[#d7dde7] bg-white px-2 text-[11px] font-bold text-[#243044] transition duration-200 hover:border-[#102a4c] hover:bg-[#f8fafc] hover:text-[#102a4c] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#c41230] focus-visible:ring-offset-2 active:scale-[.98]">Edit</a>
+                            <div class="mt-3 grid grid-cols-2 gap-2 border-t border-[#e7ebf2] pt-3">
+                                <a href="{{ route('petugas.barang-temuan.edit', $item) }}" class="{{ $actionBtn }} border-[#d7dde7] text-ink hover:border-ink-navy hover:bg-[#f7f8fb] hover:text-ink-navy focus-visible:ring-ink-navy/30">Edit</a>
                                 <form action="{{ route('petugas.barang-temuan.destroy', $item) }}" method="POST" onsubmit="return confirm('Hapus barang temuan {{ $item->nama_barang }}?')">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="inline-flex min-h-9 w-full items-center justify-center rounded-full border border-[#f3c3c0] bg-white px-2 text-[11px] font-bold text-[#b42318] transition duration-200 hover:border-[#c41230] hover:bg-[#fef3f2] hover:text-[#912018] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#c41230] focus-visible:ring-offset-2 active:scale-[.98]">Hapus</button>
+                                    <button type="submit" class="{{ $actionBtn }} border-[#f3c3c0] text-[#b42318] hover:border-brand hover:bg-[#fef3f2] focus-visible:ring-brand/30">Hapus</button>
                                 </form>
                             </div>
                         </div>
