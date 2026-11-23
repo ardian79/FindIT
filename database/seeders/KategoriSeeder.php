@@ -14,7 +14,7 @@ class KategoriSeeder extends Seeder
     {
         $kategori = [
             ['nama_kategori' => 'Elektronik', 'created_at' => now(), 'updated_at' => now()],
-            ['nama_kategori' => 'Dokumen & Kartu (KTM/KTP/SIM)', 'created_at' => now(), 'updated_at' => now()],
+            ['nama_kategori' => 'Dokumen & Kartu', 'created_at' => now(), 'updated_at' => now()],
             ['nama_kategori' => 'Dompet & Tas', 'created_at' => now(), 'updated_at' => now()],
             ['nama_kategori' => 'Kunci & Aksesori', 'created_at' => now(), 'updated_at' => now()],
             ['nama_kategori' => 'Alat Tulis & Buku', 'created_at' => now(), 'updated_at' => now()],
