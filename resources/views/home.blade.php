@@ -19,7 +19,7 @@
         $container = 'mx-auto w-full max-w-[1160px] px-4 sm:px-6 lg:px-8';
         $eyebrow = 'text-xs font-semibold text-brand';
         $btnBase =
-            'inline-flex items-center justify-center gap-2 border px-5 py-2.5 text-sm font-medium leading-tight transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 active:scale-[0.98]';
+            'inline-flex items-center justify-center gap-2 border px-5 py-2.5 text-sm font-medium leading-tight transition duration-150 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 active:translate-y-0 active:scale-[0.98]';
         $btnHeroBrand = "$btnBase rounded-full border-transparent bg-brand px-6 py-3 font-semibold text-white hover:bg-brand-dark focus-visible:ring-brand";
         $btnHeroWhite = "$btnBase rounded-full border-transparent bg-white px-6 py-3 font-semibold text-ink-navy hover:bg-[#f4f6f8] focus-visible:ring-white";
         $btnBrand = "$btnBase rounded-xl border-transparent bg-brand text-white hover:bg-brand-dark focus-visible:ring-brand";
@@ -120,7 +120,7 @@
             </div>
             <div class="mt-10 grid grid-cols-1 gap-4 md:grid-cols-3">
                 @foreach ($steps as $i => [$badgeBg, $title, $desc])
-                    <article class="rounded-2xl border border-[#e7ebf2] bg-white p-6 sm:p-8">
+                    <article class="rounded-2xl border border-[#e7ebf2] bg-white p-6 transition duration-200 hover:-translate-y-0.5 hover:border-[#cfd6e2] hover:shadow-card sm:p-8">
                         <span
                             class="flex h-10 w-10 items-center justify-center rounded-xl {{ $badgeBg }} text-sm font-semibold tabular-nums text-white">{{ $i + 1 }}</span>
                         <h3 class="mt-6 font-heading text-lg font-semibold text-ink">{{ $title }}</h3>
@@ -133,9 +133,9 @@
 
     <section class="bg-white">
         <div class="{{ $container }} grid items-center gap-10 py-16 lg:grid-cols-2 lg:py-20">
-            <div class="overflow-hidden rounded-2xl border border-[#e7ebf2] bg-[#f3f5f8]">
+            <div class="group overflow-hidden rounded-2xl border border-[#e7ebf2] bg-[#f3f5f8] transition duration-200 hover:-translate-y-0.5 hover:border-[#cfd6e2] hover:shadow-card">
                 <img src="{{ asset('images/campus-activity.svg') }}" alt="Ilustrasi pencarian barang FindIT"
-                    class="aspect-[4/3] w-full object-cover">
+                    class="aspect-[4/3] w-full object-cover transition-transform duration-300 group-hover:scale-[1.03]">
             </div>
             <div>
                 <p class="{{ $eyebrow }}">Pencarian yang terarah</p>
@@ -289,12 +289,12 @@
                             $pelapor = $isHilang ? $item->pengguna?->nama ?? '-' : '';
                         @endphp
                         <article
-                            class="flex flex-col overflow-hidden rounded-2xl border border-[#e7ebf2] bg-white transition-colors duration-150 hover:border-[#cfd6e2]">
+                            class="group flex flex-col overflow-hidden rounded-2xl border border-[#e7ebf2] bg-white transition duration-200 hover:-translate-y-1 hover:border-[#cfd6e2] hover:shadow-card">
                             <div
                                 class="relative flex aspect-[16/10] items-center justify-center overflow-hidden bg-[#eef1f5]">
                                 @if ($fotoUrl)
                                     <img src="{{ $fotoUrl }}" alt="{{ $item->nama_barang }}"
-                                        class="h-full w-full object-cover">
+                                        class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.03]">
                                 @else
                                     <span class="text-xs font-medium text-ink-muted">Tanpa foto</span>
                                 @endif
@@ -334,7 +334,7 @@
                 @if ($lastPage > 1)
                     @php
                         $pageBtn =
-                            'inline-flex h-10 items-center justify-center gap-1 rounded-xl border border-[#d7dde7] bg-white px-4 text-xs font-medium text-ink transition-colors duration-150 hover:border-ink-navy hover:bg-[#f7f8fb] hover:text-ink-navy focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink-navy/30';
+                            'inline-flex h-10 items-center justify-center gap-1 rounded-xl border border-[#d7dde7] bg-white px-4 text-xs font-medium text-ink transition duration-150 hover:-translate-y-0.5 hover:border-ink-navy hover:bg-[#f7f8fb] hover:text-ink-navy focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink-navy/30';
                         $window = 5;
                         $startPage = min($currPage, max(1, $lastPage - $window + 1));
                         $endPage = min($lastPage, $startPage + $window - 1);
@@ -353,7 +353,7 @@
 
                         @for ($p = $startPage; $p <= $endPage; $p++)
                             <a href="{{ $pageUrl($p) }}" @if ($p === $currPage) aria-current="page" @endif
-                                class="inline-flex h-10 min-w-10 items-center justify-center rounded-xl px-3 text-xs font-semibold tabular-nums transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 {{ $p === $currPage ? 'bg-brand text-white hover:bg-brand-dark focus-visible:ring-brand/40' : 'border border-[#e7ebf2] bg-white text-ink hover:border-ink-navy hover:bg-[#f7f8fb] hover:text-ink-navy focus-visible:ring-ink-navy/30' }}">
+                                class="inline-flex h-10 min-w-10 items-center justify-center rounded-xl px-3 text-xs font-semibold tabular-nums transition duration-150 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 {{ $p === $currPage ? 'bg-brand text-white hover:bg-brand-dark focus-visible:ring-brand/40' : 'border border-[#e7ebf2] bg-white text-ink hover:border-ink-navy hover:bg-[#f7f8fb] hover:text-ink-navy focus-visible:ring-ink-navy/30' }}">
                                 {{ $p }}
                             </a>
                         @endfor

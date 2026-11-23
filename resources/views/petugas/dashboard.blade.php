@@ -20,7 +20,6 @@
             <div>
                 <p class="text-xs font-medium text-ink-muted">Pos Keamanan Utama UNEJ · {{ now()->format('d M Y') }}</p>
                 <h2 class="mt-1 text-xl font-semibold tracking-tight text-ink">Ringkasan Operasional</h2>
-                <p class="mt-0.5 text-sm text-ink-muted">Petugas jaga: {{ Auth::user()->nama }}</p>
             </div>
             <div class="flex flex-wrap gap-2">
                 <a href="{{ route('petugas.barang-temuan.create') }}"
@@ -40,13 +39,13 @@
         <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
             @foreach ($statCards as [$href, $title, $value, $hint, $highlight, $path])
                 <a href="{{ $href }}"
-                    class="flex items-center justify-between rounded-2xl border border-[#e7ebf2] bg-white p-5 transition-colors duration-150 hover:border-[#cfd6e2] hover:bg-[#fafbfd] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink-navy/30">
+                    class="group flex items-center justify-between rounded-2xl border border-[#e7ebf2] bg-white p-5 transition duration-200 hover:-translate-y-0.5 hover:border-[#cfd6e2] hover:bg-[#fafbfd] hover:shadow-card focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink-navy/30">
                     <div>
                         <p class="text-xs font-medium text-ink-muted">{{ $title }}</p>
                         <p class="mt-2 text-3xl font-semibold tabular-nums {{ $highlight ? 'text-brand' : 'text-ink' }}">{{ $value }}</p>
                         <p class="mt-1 text-xs text-ink-muted">{{ $hint }}</p>
                     </div>
-                    <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl {{ $highlight ? 'bg-brand-soft text-brand' : 'bg-[#f3f5f8] text-ink-muted' }}">
+                    <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl transition-transform duration-200 group-hover:scale-105 {{ $highlight ? 'bg-brand-soft text-brand' : 'bg-[#f3f5f8] text-ink-muted' }}">
                         <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" d="{{ $path }}" />
                         </svg>
