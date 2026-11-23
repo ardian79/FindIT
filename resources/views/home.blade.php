@@ -437,7 +437,7 @@
                 <div><span class="block text-xs text-ink-muted">Tanggal ditemukan</span><span id="temuan-tanggal"
                         class="font-medium tabular-nums text-ink"></span></div>
                 <div class="sm:col-span-2"><span class="block text-xs text-ink-muted">Lokasi penyimpanan</span><span
-                        class="font-medium text-ink-navy">Pos Keamanan Utama Universitas Jember</span></div>
+                        class="font-medium text-ink-navy">Pos Keamanan Universitas Jember</span></div>
             </div>
             <div class="mt-4">
                 <h4 class="text-xs font-medium text-ink-muted">Deskripsi barang</h4>
