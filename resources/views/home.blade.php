@@ -554,7 +554,6 @@
                 });
             });
 
-            // Light-dismiss fallback for browsers without native <dialog closedby="any"> (e.g. Safari)
             if (!('closedBy' in HTMLDialogElement.prototype)) {
                 const outside = (e, el) => {
                     const r = el.getBoundingClientRect();

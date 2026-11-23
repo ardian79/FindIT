@@ -33,6 +33,7 @@
     <style>
         dialog:modal { overscroll-behavior: contain; }
         dialog::backdrop { overflow: hidden; overscroll-behavior: contain; }
+        [x-cloak] { display: none !important; }
     </style>
 </head>
 <body class="flex min-h-screen flex-col overflow-x-hidden bg-[#f5f6f8] font-sans text-ink antialiased">
