@@ -31,10 +31,76 @@
         }
     </script>
     <style>
-        /* ponytail: native base-select + scroll-driven navbar capsule + scroll-spy replaces JS */
+        /* ponytail: native base-select + scroll-driven animations + scroll-spy replaces JS */
         html, body { overflow-anchor: none; }
         @media (prefers-reduced-motion: no-preference) {
-            html:focus-within { scroll-behavior: smooth; }
+            html:has(a[href^="#"]:hover, a[href^="#"]:focus, a[href^="#"]:active) {
+                scroll-behavior: smooth;
+            }
+            .fi-hero-in {
+                animation: fi-fade-up 650ms cubic-bezier(.22, 1, .36, 1) both;
+            }
+            .fi-hero-in-1 { animation-delay: 60ms; }
+            .fi-hero-in-2 { animation-delay: 160ms; }
+            .fi-hero-in-3 { animation-delay: 260ms; }
+        }
+        @keyframes fi-fade-up {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @media (prefers-reduced-motion: no-preference) {
+            @supports (animation-timeline: scroll()) {
+                .fi-hero-bg {
+                    animation: fi-hero-parallax linear both;
+                    animation-timeline: scroll(root);
+                    animation-range: 0px 100vh;
+                }
+            }
+            @supports (animation-timeline: view()) {
+                .fi-reveal {
+                    animation: fi-reveal-up linear both;
+                    animation-timeline: view();
+                    animation-range: entry 0% cover 24%;
+                }
+                .fi-reveal-left {
+                    animation: fi-reveal-from-left linear both;
+                    animation-timeline: view();
+                    animation-range: entry 0% cover 28%;
+                }
+                .fi-reveal-right {
+                    animation: fi-reveal-from-right linear both;
+                    animation-timeline: view();
+                    animation-range: entry 0% cover 28%;
+                }
+                .fi-reveal-scale {
+                    animation: fi-reveal-pop linear both;
+                    animation-timeline: view();
+                    animation-range: entry 0% cover 26%;
+                }
+                .fi-r1 { animation-range: entry 0% cover 22%; }
+                .fi-r2 { animation-range: entry 6% cover 28%; }
+                .fi-r3 { animation-range: entry 12% cover 34%; }
+            }
+        }
+        @keyframes fi-hero-parallax {
+            from { transform: translateY(0) scale(1); }
+            to { transform: translateY(14%) scale(1.08); }
+        }
+        @keyframes fi-reveal-up {
+            from { opacity: 0; transform: translateY(28px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fi-reveal-from-left {
+            from { opacity: 0; transform: translateX(-32px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes fi-reveal-from-right {
+            from { opacity: 0; transform: translateX(32px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes fi-reveal-pop {
+            from { opacity: 0; transform: translateY(22px) scale(0.96); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
         }
         [popover]::backdrop { overscroll-behavior: contain; }
         select:not([multiple]) {

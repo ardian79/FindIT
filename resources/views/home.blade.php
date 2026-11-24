@@ -26,12 +26,6 @@
         $btnNavy = "$btnBase rounded-xl border-transparent bg-ink-navy text-white hover:bg-ink-deep focus-visible:ring-ink-navy";
         $btnOutline = "$btnBase rounded-xl border-[#d7dde7] bg-white text-ink hover:border-ink-navy hover:bg-[#f7f8fb] hover:text-ink-navy focus-visible:ring-ink-navy/30";
 
-        $stats = [
-            [$totalTersedia, 'Barang temuan tersedia'],
-            [$totalDicari, 'Laporan sedang dicari'],
-            [$totalDikembalikan, 'Barang sudah kembali'],
-        ];
-
         $steps = [
             [
                 'bg-brand',
@@ -65,21 +59,22 @@
         $pageUrl = fn(int $p) => route('home', [...request()->except($pageName), 'tab' => $activeTab, $pageName => $p]);
     @endphp
 
-    <section id="beranda" class="relative isolate -mt-20 scroll-mt-24 overflow-hidden bg-ink-deep text-white">
+    <section id="beranda"
+        class="relative isolate -mt-[68px] flex min-h-screen scroll-mt-0 items-center overflow-hidden bg-ink-deep text-white">
         <img src="{{ asset('images/banner-unej.svg') }}" alt="Layanan Lost & Found Universitas Jember"
-            class="absolute inset-0 h-full w-full object-cover">
-        <div class="absolute inset-0 bg-gradient-to-b from-ink-deep/75 via-ink-deep/70 to-ink-deep/85"></div>
+            class="fi-hero-bg absolute inset-0 h-full w-full object-cover">
+        <div class="absolute inset-0 bg-gradient-to-b from-ink-deep/75 via-ink-deep/65 to-ink-deep/85"></div>
 
-        <div
-            class="{{ $container }} relative z-10 flex min-h-[520px] flex-col items-center justify-center py-20 text-center sm:min-h-[580px] sm:py-24">
+        <div class="{{ $container }} relative z-10 flex flex-col items-center justify-center pb-20 pt-[100px] text-center">
             <h1
-                class="mt-4 max-w-3xl font-heading text-4xl font-bold leading-[1.08] tracking-tight sm:text-5xl lg:text-[56px]">
+                class="fi-hero-in fi-hero-in-1 max-w-3xl font-heading text-4xl font-bold leading-[1.08] tracking-tight sm:text-5xl lg:text-[56px]">
                 Temukan Kembali Barang Berharga Anda di UNEJ
             </h1>
-            <p class="mx-auto mt-4 max-w-2xl text-sm leading-7 text-white/85 sm:text-base">
+            <p class="fi-hero-in fi-hero-in-2 mx-auto mt-5 max-w-2xl text-sm leading-7 text-white/85 sm:text-base">
                 Layanan resmi untuk melaporkan kehilangan dan menemukan barang temuan secara terverifikasi.
             </p>
-            <div class="mt-8 flex w-full flex-col items-stretch justify-center gap-3 sm:w-auto sm:flex-row sm:items-center">
+            <div
+                class="fi-hero-in fi-hero-in-3 mt-8 flex w-full flex-col items-stretch justify-center gap-3 sm:w-auto sm:flex-row sm:items-center">
                 <a href="#katalog" class="{{ $btnHeroBrand }}">
                     <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75"
                         aria-hidden="true">
@@ -93,23 +88,19 @@
                 </a>
             </div>
         </div>
+
+        <a href="#cara-kerja" aria-label="Gulir ke Cara Kerja"
+            class="absolute bottom-7 left-1/2 z-10 inline-flex h-10 w-10 -translate-x-1/2 items-center justify-center rounded-full border border-white/25 bg-white/10 text-white/85 backdrop-blur-sm transition hover:bg-white/20 hover:text-white">
+            <svg class="h-4 w-4 animate-bounce" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"
+                aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+            </svg>
+        </a>
     </section>
 
-    <section class="{{ $container }} relative z-20 -mt-8">
-        <div
-            class="grid grid-cols-1 gap-3 rounded-2xl border border-[#e7ebf2] bg-white p-3 shadow-card sm:grid-cols-3 sm:p-4">
-            @foreach ($stats as [$total, $label])
-                <div class="rounded-xl bg-[#f7f8fb] px-5 py-4">
-                    <p class="text-2xl font-semibold tabular-nums text-ink">{{ $total }}</p>
-                    <p class="mt-1 text-sm text-ink-muted">{{ $label }}</p>
-                </div>
-            @endforeach
-        </div>
-    </section>
-
-    <section id="cara-kerja" class="scroll-mt-24 py-16 lg:py-20">
+    <section id="cara-kerja" class="scroll-mt-24 bg-white py-20 lg:py-24">
         <div class="{{ $container }}">
-            <div class="mx-auto max-w-2xl text-center">
+            <div class="fi-reveal mx-auto max-w-2xl text-center">
                 <p class="{{ $eyebrow }}">Cara kerja</p>
                 <h2 class="mt-2 font-heading text-2xl font-semibold tracking-tight text-ink sm:text-3xl lg:text-4xl">
                     Satu alur dari laporan sampai serah terima
@@ -120,7 +111,8 @@
             </div>
             <div class="mt-10 grid grid-cols-1 gap-4 md:grid-cols-3">
                 @foreach ($steps as $i => [$badgeBg, $title, $desc])
-                    <article class="rounded-2xl border border-[#e7ebf2] bg-white p-6 transition duration-200 hover:-translate-y-0.5 hover:border-[#cfd6e2] hover:shadow-card sm:p-8">
+                    <article
+                        class="fi-reveal-scale fi-r{{ $i + 1 }} rounded-2xl border border-[#e7ebf2] bg-[#f7f8fb] p-6 transition duration-200 hover:-translate-y-1 hover:border-[#cfd6e2] hover:bg-white hover:shadow-card sm:p-8">
                         <span
                             class="flex h-10 w-10 items-center justify-center rounded-xl {{ $badgeBg }} text-sm font-semibold tabular-nums text-white">{{ $i + 1 }}</span>
                         <h3 class="mt-6 font-heading text-lg font-semibold text-ink">{{ $title }}</h3>
@@ -131,13 +123,14 @@
         </div>
     </section>
 
-    <section class="bg-white">
-        <div class="{{ $container }} grid items-center gap-10 py-16 lg:grid-cols-2 lg:py-20">
-            <div class="group overflow-hidden rounded-2xl border border-[#e7ebf2] bg-[#f3f5f8] transition duration-200 hover:-translate-y-0.5 hover:border-[#cfd6e2] hover:shadow-card">
+    <section class="overflow-x-clip bg-[#f5f6f8]">
+        <div class="{{ $container }} grid items-center gap-10 py-20 lg:grid-cols-2 lg:py-24">
+            <div
+                class="fi-reveal-left group overflow-hidden rounded-2xl border border-[#e7ebf2] bg-white p-2 shadow-card transition duration-200 hover:-translate-y-0.5 hover:border-[#cfd6e2]">
                 <img src="{{ asset('images/campus-activity.svg') }}" alt="Ilustrasi pencarian barang FindIT"
-                    class="aspect-[4/3] w-full object-cover transition-transform duration-300 group-hover:scale-[1.03]">
+                    class="aspect-[4/3] w-full rounded-xl object-cover transition-transform duration-300 group-hover:scale-[1.03]">
             </div>
-            <div>
+            <div class="fi-reveal-right">
                 <p class="{{ $eyebrow }}">Pencarian yang terarah</p>
                 <h2 class="mt-2 font-heading text-3xl font-semibold tracking-tight text-ink sm:text-4xl">
                     Temukan barang lewat katalog yang mudah dipindai
@@ -148,7 +141,7 @@
                 </p>
                 <ul class="mt-6 space-y-3 text-sm text-[#3d4b60]">
                     @foreach ($features as $i => $text)
-                        <li class="flex gap-3">
+                        <li class="fi-reveal fi-r{{ $i + 1 }} flex gap-3">
                             <span
                                 class="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-brand-soft text-xs font-semibold tabular-nums text-brand-dark">{{ $i + 1 }}</span>
                             <span>{{ $text }}</span>
@@ -159,9 +152,9 @@
         </div>
     </section>
 
-    <section id="lokasi" class="scroll-mt-24 bg-[#f7f8fb] py-16 lg:py-20">
+    <section id="lokasi" class="scroll-mt-24 overflow-x-clip bg-white py-20 lg:py-24">
         <div class="{{ $container }}">
-            <div class="mx-auto mb-8 max-w-2xl text-center">
+            <div class="fi-reveal mx-auto mb-8 max-w-2xl text-center">
                 <p class="{{ $eyebrow }}">Lokasi layanan</p>
                 <h2 class="mt-2 font-heading text-3xl font-semibold tracking-tight text-ink sm:text-4xl">
                     Pos Keamanan Universitas Jember
@@ -172,7 +165,7 @@
             </div>
 
             <div
-                class="grid overflow-hidden rounded-2xl border border-[#e7ebf2] bg-white shadow-card lg:grid-cols-[.9fr_1.1fr]">
+                class="fi-reveal-scale grid overflow-hidden rounded-2xl border border-[#e7ebf2] bg-white shadow-card lg:grid-cols-[.9fr_1.1fr]">
                 <div class="flex flex-col justify-between p-6 sm:p-8">
                     <div class="space-y-5">
                         <div>
@@ -216,9 +209,9 @@
         </div>
     </section>
 
-    <section id="katalog" class="scroll-mt-24 py-16 lg:py-20">
+    <section id="katalog" class="scroll-mt-24 bg-[#f5f6f8] py-20 lg:py-24">
         <div class="{{ $container }}">
-            <div class="mx-auto mb-8 max-w-2xl text-center">
+            <div class="fi-reveal mx-auto mb-8 max-w-2xl text-center">
                 <p class="{{ $eyebrow }}">Katalog</p>
                 <h2 class="mt-2 font-heading text-3xl font-semibold tracking-tight text-ink sm:text-4xl">
                     Barang temuan dan laporan hilang
@@ -231,7 +224,7 @@
             {{-- ponytail: innerHTML swap into permanent min-h containers + overflow-anchor:none prevents scroll jumps --}}
             <div id="catalog-content">
                 <div id="catalog-content-body">
-                    <div class="relative z-20 rounded-2xl border border-[#e7ebf2] bg-white p-4 sm:p-5">
+                    <div class="fi-reveal-scale relative z-20 rounded-2xl border border-[#e7ebf2] bg-white p-4 shadow-card sm:p-5">
                         <div id="catalog-tabs" class="relative mx-auto flex max-w-lg rounded-full bg-[#f3f5f8] p-1"
                             data-active-tab="{{ $activeTab }}">
                             <span id="catalog-tab-indicator" aria-hidden="true"
@@ -498,8 +491,8 @@
         </div>
     </section>
 
-    <section class="{{ $container }} pb-16">
-        <div class="overflow-hidden rounded-2xl bg-brand px-6 py-10 text-white sm:px-10 lg:px-12">
+    <section class="{{ $container }} pb-4">
+        <div class="fi-reveal-scale overflow-hidden rounded-2xl bg-brand px-6 py-10 text-white shadow-card sm:px-10 lg:px-12">
             <div class="grid items-center gap-8 lg:grid-cols-[1fr_auto]">
                 <div>
                     <p class="text-xs font-medium text-white/80">Pos Keamanan Utama UNEJ</p>
