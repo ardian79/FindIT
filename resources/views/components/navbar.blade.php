@@ -1,7 +1,7 @@
 @php
     $isHome = request()->routeIs('home');
     $navLinks = [
-        ['Beranda', $isHome ? '#top' : route('home'), 'top'],
+        ['Beranda', $isHome ? '#beranda' : route('home'), 'beranda'],
         ['Cara Kerja', $isHome ? '#cara-kerja' : route('home') . '#cara-kerja', 'cara-kerja'],
         ['Lokasi', $isHome ? '#lokasi' : route('home') . '#lokasi', 'lokasi'],
         ['Katalog', $isHome ? '#katalog' : route('home') . '#katalog', 'katalog'],
@@ -10,11 +10,11 @@
     $btnBrand = 'inline-flex items-center justify-center gap-2 rounded-full bg-brand text-white transition-colors duration-150 hover:bg-brand-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 active:scale-[0.98]';
 @endphp
 
-{{-- ponytail: native checkbox peer + details/summary replaces navbar JS/Alpine --}}
-<div class="fixed inset-x-0 top-0 z-40 print:hidden">
+{{-- ponytail: native checkbox peer + details/summary + CSS scroll-target-group replaces navbar JS/Alpine --}}
+<div class="fi-nav-wrap fixed inset-x-0 top-0 z-40 print:hidden">
     <input type="checkbox" id="nav-mobile-toggle" class="peer hidden" aria-hidden="true">
 
-    <nav class="relative w-full border-b border-[#e7ebf2] bg-white/95 shadow-card backdrop-blur-md peer-checked:[&_.nav-icon-close]:block peer-checked:[&_.nav-icon-open]:hidden">
+    <nav class="fi-nav-bar relative mx-auto w-full border border-[#e7ebf2] bg-white backdrop-blur-md peer-checked:[&_.nav-icon-close]:block peer-checked:[&_.nav-icon-open]:hidden">
         <div class="mx-auto w-full max-w-[1160px] px-3 sm:px-5">
             <div class="flex min-h-[68px] items-center justify-between gap-3 lg:grid lg:grid-cols-[1fr_auto_1fr] lg:gap-6">
                 <a href="{{ route('home') }}" class="flex shrink-0 items-center gap-2 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink-navy/30 lg:justify-self-start">
@@ -22,11 +22,10 @@
                     <span class="text-lg font-bold leading-tight tracking-tight text-ink">Find<span class="text-brand">IT</span></span>
                 </a>
 
-                <div class="relative hidden items-center justify-center gap-1 lg:flex">
+                <div class="{{ $isHome ? 'fi-nav-links' : '' }} relative hidden items-center justify-center gap-1 lg:flex">
                     @foreach ($navLinks as [$label, $href, $target])
-                        @php $isActive = $isHome && $target === 'top'; @endphp
                         <a href="{{ $href }}"
-                            class="inline-flex min-h-10 items-center justify-center rounded-full px-4 py-2 text-sm transition-colors duration-150 hover:bg-[#f3f5f8] hover:text-ink-navy focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink-navy/30 {{ $isActive ? 'bg-brand-soft font-semibold text-brand' : 'font-medium text-ink-navy' }}">
+                            class="inline-flex min-h-10 items-center justify-center rounded-full px-4 py-2 text-sm font-medium text-ink-navy transition-colors duration-150 hover:bg-[#f3f5f8] hover:text-ink-navy focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink-navy/30">
                             {{ $label }}
                         </a>
                     @endforeach
@@ -74,12 +73,11 @@
         </div>
     </nav>
 
-    <div id="mobile-menu" class="mx-0 mt-1.5 hidden w-full rounded-2xl border border-[#e7ebf2] bg-white shadow-lift peer-checked:block lg:hidden">
-        <div class="flex flex-col gap-1 px-4 py-3 sm:px-6">
+    <div id="mobile-menu" class="fi-nav-mobile mx-auto mt-1.5 hidden w-full rounded-2xl border border-[#e7ebf2] bg-white shadow-lift peer-checked:block lg:hidden">
+        <div class="{{ $isHome ? 'fi-nav-links' : '' }} flex flex-col gap-1 px-4 py-3 sm:px-6">
             @foreach ($navLinks as [$label, $href, $target])
-                @php $isActive = $isHome && $target === 'top'; @endphp
                 <a href="{{ $href }}"
-                    class="flex min-h-10 items-center rounded-xl px-4 py-2 text-sm transition-colors duration-150 {{ $isActive ? 'bg-brand-soft font-semibold text-brand' : 'bg-transparent font-medium text-ink-navy hover:bg-[#f3f5f8]' }}">
+                    class="flex min-h-10 items-center rounded-xl bg-transparent px-4 py-2 text-sm font-medium text-ink-navy transition-colors duration-150 hover:bg-[#f3f5f8]">
                     {{ $label }}
                 </a>
             @endforeach

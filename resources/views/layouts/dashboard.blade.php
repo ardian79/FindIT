@@ -30,6 +30,7 @@
         }
     </script>
     <style>
+        /* ponytail: native base-select styling replaces 100-line custom JS select */
         [popover]::backdrop { overscroll-behavior: contain; }
         select:not([multiple]) {
             appearance: none;
@@ -39,6 +40,69 @@
             background-size: 1rem 1rem;
             padding-right: 2.25rem;
             cursor: pointer;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        @supports (appearance: base-select) {
+            select:not([multiple]),
+            select:not([multiple])::picker(select) {
+                appearance: base-select;
+            }
+            select:not([multiple]) {
+                display: inline-flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 0.5rem;
+                background-image: none;
+                padding-right: 0.875rem;
+            }
+            select:not([multiple])::picker-icon {
+                content: "";
+                width: 1rem;
+                height: 1rem;
+                flex-shrink: 0;
+                background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%235e6a7d' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") center / 1rem 1rem no-repeat;
+                transition: transform 150ms ease;
+            }
+            select:not([multiple]):open::picker-icon {
+                transform: rotate(180deg);
+            }
+            select:not([multiple])::picker(select) {
+                margin-top: 0.5rem;
+                padding: 0.375rem;
+                border: 1px solid #e7ebf2;
+                border-radius: 0.75rem;
+                background-color: #ffffff;
+                box-shadow: 0 18px 40px rgba(16, 42, 76, 0.12);
+                max-height: 15rem;
+                min-width: anchor-size(width);
+            }
+            select:not([multiple]) option {
+                display: flex;
+                align-items: center;
+                min-height: 2.25rem;
+                padding: 0.5rem 0.75rem;
+                border-radius: 0.5rem;
+                font-size: 0.875rem;
+                color: #172033;
+                background-color: #ffffff;
+                cursor: pointer;
+                transition: background-color 150ms ease, color 150ms ease;
+            }
+            select:not([multiple]) option:hover,
+            select:not([multiple]) option:focus {
+                background-color: #f3f5f8;
+                color: #102a4c;
+            }
+            select:not([multiple]) option:checked {
+                background-color: #fdecee;
+                color: #9b1028;
+                font-weight: 500;
+            }
+            select:not([multiple]) option::checkmark {
+                display: none;
+            }
         }
     </style>
 </head>
