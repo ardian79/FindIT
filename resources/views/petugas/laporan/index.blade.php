@@ -87,7 +87,6 @@
             <div class="border-b border-[#e7ebf2] px-6 py-5 print:border-b-2 print:border-ink print:px-0">
                 <div class="flex flex-col justify-between gap-2 sm:flex-row sm:items-end">
                     <div>
-                        <p class="text-xs font-medium text-brand-dark print:text-ink-muted">FindIT · Pos Keamanan Utama Universitas Jember</p>
                         <h2 class="mt-1 text-lg font-semibold text-ink">{{ $judulLaporan }}</h2>
                         <p class="mt-0.5 text-xs tabular-nums text-ink-muted">
                             Periode: {{ $tanggalMulai ? \Carbon\Carbon::parse($tanggalMulai)->format('d M Y') : 'Awal' }} s/d {{ $tanggalSelesai ? \Carbon\Carbon::parse($tanggalSelesai)->format('d M Y') : 'Sekarang' }}
@@ -155,7 +154,7 @@
             <div class="hidden justify-end pt-10 print:flex">
                 <div class="text-center text-xs text-ink">
                     <p class="tabular-nums">Jember, {{ now()->format('d M Y') }}</p>
-                    <p class="mt-1">Petugas Pos Keamanan Utama UNEJ</p>
+                    <p class="mt-1">Petugas Pos Keamanan UNEJ</p>
                     <div class="h-16"></div>
                     <p class="font-semibold underline">{{ Auth::user()->nama }}</p>
                 </div>
