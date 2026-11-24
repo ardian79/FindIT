@@ -6,8 +6,7 @@
             <span class="text-lg font-bold tracking-tight text-ink">Find<span class="text-brand">IT</span></span>
         </a>
         <p class="mt-3 max-w-md text-sm leading-6 text-ink-muted">
-            Proyek Akhir Mata Kuliah Pemrograman Berbasis Website<br>
-            Kelompok 7
+            Proyek Akhir Mata Kuliah Pemrograman Berbasis Website
         </p>
     </div>
 </footer>
