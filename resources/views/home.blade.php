@@ -65,7 +65,8 @@
             class="fi-hero-bg absolute inset-0 h-full w-full object-cover">
         <div class="absolute inset-0 bg-gradient-to-b from-ink-deep/75 via-ink-deep/65 to-ink-deep/85"></div>
 
-        <div class="{{ $container }} relative z-10 flex flex-col items-center justify-center pb-20 pt-[100px] text-center">
+        <div
+            class="{{ $container }} relative z-10 flex flex-col items-center justify-center pb-20 pt-[100px] text-center">
             <h1
                 class="fi-hero-in fi-hero-in-1 max-w-3xl font-heading text-4xl font-bold leading-[1.08] tracking-tight sm:text-5xl lg:text-[56px]">
                 Temukan Kembali Barang Berharga Anda di UNEJ
@@ -216,7 +217,8 @@
             {{-- ponytail: innerHTML swap into permanent min-h containers + overflow-anchor:none prevents scroll jumps --}}
             <div id="catalog-content">
                 <div id="catalog-content-body">
-                    <div class="fi-reveal-scale relative z-20 rounded-2xl border border-[#e7ebf2] bg-white p-4 shadow-card sm:p-5">
+                    <div
+                        class="fi-reveal-scale relative z-20 rounded-2xl border border-[#e7ebf2] bg-white p-4 shadow-card sm:p-5">
                         <div id="catalog-tabs" class="relative mx-auto flex max-w-lg rounded-full bg-[#f3f5f8] p-1"
                             data-active-tab="{{ $activeTab }}">
                             <span id="catalog-tab-indicator" aria-hidden="true"
@@ -253,7 +255,8 @@
                                 class="h-[42px] w-full rounded-xl border border-[#d7dde7] bg-white px-3.5 text-sm text-ink outline-none transition-colors duration-150 focus:border-ink-navy focus:ring-4 focus:ring-ink-navy/10 lg:w-52">
                                 <option value="">Semua Kategori</option>
                                 @foreach ($kategori as $kat)
-                                    <option value="{{ $kat->id }}" @selected(request('kategori_id') == $kat->id)>{{ $kat->nama_kategori }}
+                                    <option value="{{ $kat->id }}" @selected(request('kategori_id') == $kat->id)>
+                                        {{ $kat->nama_kategori }}
                                     </option>
                                 @endforeach
                             </select>
@@ -270,212 +273,258 @@
                     <div id="catalog-results" class="min-h-[480px]">
                         <div id="catalog-results-body">
 
-            @if ($items->isEmpty())
-                <div class="mt-6 rounded-2xl border border-dashed border-[#d7dde7] bg-white p-14 text-center">
-                    <h3 class="text-base font-semibold text-ink">
-                        {{ $isHilang ? 'Belum ada laporan barang hilang yang sesuai' : 'Belum ada barang temuan yang sesuai' }}
-                    </h3>
-                    <p class="mt-1 text-sm text-ink-muted">
-                        {{ $isHilang ? 'Semua laporan kehilangan yang sedang dicari akan tampil di sini.' : 'Coba ubah kata kunci pencarian atau periksa kembali nanti.' }}
-                    </p>
-                </div>
-            @else
-                <div class="mt-6 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-                    @foreach ($items as $item)
-                        @php
-                            $katNama = $item->kategori?->nama_kategori ?? 'Umum';
-                            $fotoUrl = $item->foto_barang ? asset('storage/' . $item->foto_barang) : '';
-                            $lokasi = $isHilang ? $item->lokasi_hilang : $item->lokasi_ditemukan;
-                            $tanggal = ($isHilang ? $item->tanggal_hilang : $item->tanggal_ditemukan)->format('d M Y');
-                            $pelapor = $isHilang ? $item->pengguna?->nama ?? '-' : '';
-                        @endphp
-                        <article
-                            class="group flex flex-col overflow-hidden rounded-2xl border border-[#e7ebf2] bg-white transition duration-200 hover:-translate-y-1 hover:border-[#cfd6e2] hover:shadow-card">
-                            <div
-                                class="relative flex aspect-[16/10] items-center justify-center overflow-hidden bg-[#eef1f5]">
-                                @if ($fotoUrl)
-                                    <img src="{{ $fotoUrl }}" alt="{{ $item->nama_barang }}"
-                                        class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.03]">
-                                @else
-                                    <span class="text-xs font-medium text-ink-muted">Tanpa foto</span>
-                                @endif
-                                <span
-                                    class="absolute left-3 top-3 rounded-lg bg-white/95 px-2.5 py-1 text-xs font-medium text-ink shadow-sm">{{ $katNama }}</span>
-                                <span
-                                    class="absolute right-3 top-3 rounded-lg px-2.5 py-1 text-xs font-medium {{ $isHilang ? 'bg-brand-soft text-brand-dark' : 'bg-ink-navy text-white' }}">
-                                    {{ $isHilang ? 'Dicari' : 'Tersedia' }}
-                                </span>
-                            </div>
-                            <div class="flex flex-1 flex-col p-5">
-                                <h3 class="text-base font-semibold text-ink">{{ $item->nama_barang }}</h3>
-                                <div class="mt-2 space-y-1 text-xs text-ink-muted">
-                                    <p class="truncate">{{ $lokasi }}</p>
-                                    <p class="tabular-nums">{{ $isHilang ? 'Hilang' : 'Ditemukan' }} {{ $tanggal }}
+                            @if ($items->isEmpty())
+                                <div
+                                    class="mt-6 rounded-2xl border border-dashed border-[#d7dde7] bg-white p-14 text-center">
+                                    <h3 class="text-base font-semibold text-ink">
+                                        {{ $isHilang ? 'Belum ada laporan barang hilang yang sesuai' : 'Belum ada barang temuan yang sesuai' }}
+                                    </h3>
+                                    <p class="mt-1 text-sm text-ink-muted">
+                                        {{ $isHilang ? 'Semua laporan kehilangan yang sedang dicari akan tampil di sini.' : 'Coba ubah kata kunci pencarian atau periksa kembali nanti.' }}
                                     </p>
-                                    @if ($isHilang)
-                                        <p class="truncate">Pelapor: {{ $pelapor }}</p>
-                                    @endif
                                 </div>
-                                <p class="mt-3 line-clamp-2 flex-1 text-sm leading-6 text-[#3d4b60]">
-                                    {{ $item->deskripsi }}</p>
-                                <button type="button" popovertarget="modal-{{ $activeTab }}-{{ $item->id }}"
-                                    class="{{ $isHilang ? $btnOutline : $btnNavy }} mt-4 w-full">
-                                    Lihat Detail
-                                </button>
-                            </div>
-                        </article>
-                    @endforeach
-                </div>
-
-                @if ($lastPage > 1)
-                    @php
-                        $pageBtn =
-                            'inline-flex h-10 items-center justify-center gap-1 rounded-xl border border-[#d7dde7] bg-white px-4 text-xs font-medium text-ink transition duration-150 hover:-translate-y-0.5 hover:border-ink-navy hover:bg-[#f7f8fb] hover:text-ink-navy focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink-navy/30';
-                        $window = 5;
-                        $startPage = min($currPage, max(1, $lastPage - $window + 1));
-                        $endPage = min($lastPage, $startPage + $window - 1);
-                    @endphp
-                    <nav aria-label="Navigasi halaman barang {{ $activeTab }}"
-                        hx-target="#catalog-results" hx-select="#catalog-results-body"
-                        hx-swap="innerHTML show:none focus-scroll:false" hx-push-url="true"
-                        class="mt-8 flex flex-wrap items-center justify-center gap-2">
-                        @if ($currPage > 1)
-                            <a href="{{ $pageUrl($currPage - 1) }}" hx-get="{{ $pageUrl($currPage - 1) }}" class="{{ $pageBtn }}">&lsaquo; Prev</a>
-                        @endif
-
-                        @if ($startPage > 1)
-                            <span
-                                class="inline-flex h-10 select-none items-center justify-center px-1.5 text-xs font-semibold text-ink-muted"
-                                aria-hidden="true">&hellip;</span>
-                        @endif
-
-                        @for ($p = $startPage; $p <= $endPage; $p++)
-                            <a href="{{ $pageUrl($p) }}" hx-get="{{ $pageUrl($p) }}" @if ($p === $currPage) aria-current="page" @endif
-                                class="inline-flex h-10 min-w-10 items-center justify-center rounded-xl px-3 text-xs font-semibold tabular-nums transition duration-150 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 {{ $p === $currPage ? 'bg-brand text-white hover:bg-brand-dark focus-visible:ring-brand/40' : 'border border-[#e7ebf2] bg-white text-ink hover:border-ink-navy hover:bg-[#f7f8fb] hover:text-ink-navy focus-visible:ring-ink-navy/30' }}">
-                                {{ $p }}
-                            </a>
-                        @endfor
-
-                        @if ($endPage < $lastPage)
-                            <span
-                                class="inline-flex h-10 select-none items-center justify-center px-1.5 text-xs font-semibold text-ink-muted"
-                                aria-hidden="true">&hellip;</span>
-                        @endif
-
-                        @if ($currPage < $lastPage)
-                            <a href="{{ $pageUrl($currPage + 1) }}" hx-get="{{ $pageUrl($currPage + 1) }}" class="{{ $pageBtn }}">Next &rsaquo;</a>
-                        @endif
-                    </nav>
-                @endif
-            @endif
-        @php
-            $dialogClass =
-                'm-0 mt-auto max-h-[92vh] w-full max-w-full overflow-y-auto rounded-t-2xl border border-[#e7ebf2] bg-white p-0 text-left backdrop:bg-ink-deep/60 sm:m-auto sm:w-[calc(100%-2rem)] sm:rounded-2xl';
-            $closeBtnClass =
-                'flex h-9 w-9 items-center justify-center rounded-lg text-ink-muted transition-colors duration-150 hover:bg-[#f3f5f8] hover:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink-navy/30';
-        @endphp
-
-        @foreach ($items as $item)
-            @php
-                $modalId = "modal-{$activeTab}-{$item->id}";
-                $katNama = $item->kategori?->nama_kategori ?? 'Umum';
-                $fotoUrl = $item->foto_barang ? asset('storage/' . $item->foto_barang) : '';
-                $lokasi = $isHilang ? $item->lokasi_hilang : $item->lokasi_ditemukan;
-                $tanggal = ($isHilang ? $item->tanggal_hilang : $item->tanggal_ditemukan)->format('d M Y');
-                $pelapor = $isHilang ? $item->pengguna?->nama ?? '-' : '';
-                $waPelapor = $isHilang ? $toWa($item->pengguna?->no_hp) : '';
-            @endphp
-
-            <div id="{{ $modalId }}" popover hx-boost="false" aria-labelledby="{{ $modalId }}-title"
-                class="{{ $dialogClass }} {{ $isHilang ? 'sm:max-w-xl' : 'sm:max-w-2xl' }}">
-                <div class="sticky top-0 z-10 flex items-start justify-between gap-4 border-b border-[#e7ebf2] bg-white px-5 py-4 sm:px-6">
-                    <div>
-                        <span class="text-xs font-medium text-brand-dark">{{ $katNama }}</span>
-                        <h3 id="{{ $modalId }}-title" class="mt-0.5 text-lg font-semibold text-ink">{{ $item->nama_barang }}</h3>
-                    </div>
-                    <button type="button" popovertarget="{{ $modalId }}" popovertargetaction="hide" class="{{ $closeBtnClass }}" aria-label="Tutup">
-                        <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75" aria-hidden="true">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-                        </svg>
-                    </button>
-                </div>
-
-                <div class="p-5 sm:p-6">
-                    @if ($fotoUrl)
-                        <div class="mb-4 overflow-hidden rounded-xl {{ $isHilang ? 'border border-[#e7ebf2]' : '' }} bg-[#eef1f5]">
-                            <img src="{{ $fotoUrl }}" alt="{{ $item->nama_barang }}" class="max-h-80 w-full object-contain">
-                        </div>
-                    @endif
-
-                    <div class="grid grid-cols-1 gap-3 rounded-xl bg-[#f7f8fb] p-4 text-sm sm:grid-cols-2">
-                        <div>
-                            <span class="block text-xs text-ink-muted">{{ $isHilang ? 'Perkiraan lokasi hilang' : 'Lokasi ditemukan' }}</span>
-                            <span class="font-medium text-ink">{{ $lokasi }}</span>
-                        </div>
-                        <div>
-                            <span class="block text-xs text-ink-muted">{{ $isHilang ? 'Tanggal hilang' : 'Tanggal ditemukan' }}</span>
-                            <span class="font-medium tabular-nums text-ink">{{ $tanggal }}</span>
-                        </div>
-                        <div class="sm:col-span-2">
-                            <span class="block text-xs text-ink-muted">{{ $isHilang ? 'Pelapor' : 'Lokasi penyimpanan' }}</span>
-                            <span class="font-medium {{ $isHilang ? 'text-ink' : 'text-ink-navy' }}">
-                                {{ $isHilang ? $pelapor : 'Pos Keamanan Universitas Jember' }}
-                            </span>
-                        </div>
-                    </div>
-
-                    <div class="mt-4">
-                        <h4 class="text-xs font-medium text-ink-muted">{{ $isHilang ? 'Deskripsi dan ciri-ciri' : 'Deskripsi barang' }}</h4>
-                        <p class="mt-1.5 whitespace-pre-line text-sm leading-7 text-[#3d4b60]">{{ $item->deskripsi }}</p>
-                    </div>
-
-                    @if ($isHilang)
-                        <div class="mt-6 flex flex-col gap-2 border-t border-[#e7ebf2] pt-4 sm:flex-row sm:justify-end">
-                            <button type="button" popovertarget="{{ $modalId }}" popovertargetaction="hide" class="{{ $btnOutline }}">Tutup</button>
-                            @if ($waPelapor)
-                                <a href="https://wa.me/{{ $waPelapor }}?text={{ urlencode('Halo ' . $pelapor . ', saya melihat laporan kehilangan "' . $item->nama_barang . '" di FindIT UNEJ.') }}"
-                                    target="_blank" rel="noopener"
-                                    class="{{ $btnBase }} rounded-xl border-transparent bg-[#25D366] text-white hover:bg-[#1fb85a] focus-visible:ring-[#25D366]">
-                                    <svg class="h-4 w-4 shrink-0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                                        <path d="M20.52 3.48A11.86 11.86 0 0012.07 0C5.52 0 .18 5.33.18 11.89c0 2.1.55 4.15 1.59 5.95L.11 24l6.3-1.65a11.87 11.87 0 005.65 1.44h.01c6.55 0 11.89-5.33 11.89-11.89a11.8 11.8 0 00-3.44-8.42zm-8.45 18.28h-.01a9.86 9.86 0 01-5.03-1.38l-.36-.21-3.74.98 1-3.65-.24-.38a9.83 9.83 0 01-1.51-5.24c0-5.44 4.43-9.87 9.88-9.87a9.8 9.8 0 019.87 9.87c0 5.45-4.43 9.88-9.86 9.88zm5.42-7.4c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.64.07-.3-.15-1.26-.46-2.39-1.48-.88-.79-1.48-1.76-1.65-2.06-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.88 1.22 3.08c.15.2 2.1 3.21 5.09 4.5.71.31 1.27.49 1.7.63.71.23 1.36.2 1.87.12.57-.08 1.76-.72 2.01-1.42.25-.7.25-1.29.17-1.42-.07-.12-.27-.2-.57-.35z" />
-                                    </svg>
-                                    <span>Hubungi Pelapor via WhatsApp</span>
-                                </a>
-                            @endif
-                        </div>
-                    @else
-                        <div class="mt-6 border-t border-[#e7ebf2] pt-5">
-                            @auth
-                                @if ($isPetugas)
-                                    <div class="flex flex-col gap-3 rounded-xl bg-[#f7f8fb] p-4 text-sm text-[#3d4b60] sm:flex-row sm:items-center sm:justify-between">
-                                        <span>Anda masuk sebagai petugas keamanan.</span>
-                                        <a href="{{ route('petugas.barang-temuan.index') }}" class="font-medium text-ink-navy underline underline-offset-4 hover:text-brand">Kelola barang temuan</a>
-                                    </div>
-                                @else
-                                    <h4 class="text-sm font-semibold text-ink">Ajukan klaim kepemilikan</h4>
-                                    <p class="mt-1 text-xs leading-5 text-ink-muted">Jelaskan ciri khusus barang agar petugas dapat mencocokkan kepemilikan.</p>
-                                    <form action="{{ route('mahasiswa.klaim.store', $item) }}" method="POST" class="mt-3 space-y-3">
-                                        @csrf
-                                        <textarea name="keterangan_klaim" rows="3" required
-                                            placeholder="Tuliskan ciri spesifik atau bukti kepemilikan barang"
-                                            class="min-h-24 w-full resize-y rounded-xl border border-[#d7dde7] bg-white px-3.5 py-2.5 text-sm text-ink outline-none transition-colors duration-150 focus:border-ink-navy focus:ring-4 focus:ring-ink-navy/10"></textarea>
-                                        <div class="flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
-                                            <button type="button" popovertarget="{{ $modalId }}" popovertargetaction="hide" class="{{ $btnOutline }}">Batal</button>
-                                            <button type="submit" class="{{ $btnBrand }}">Kirim Pengajuan Klaim</button>
-                                        </div>
-                                    </form>
-                                @endif
                             @else
-                                <div class="flex flex-col items-start justify-between gap-3 rounded-xl bg-[#f7f8fb] p-4 sm:flex-row sm:items-center">
-                                    <p class="text-sm text-ink">Masuk dengan akun mahasiswa untuk mengajukan klaim.</p>
-                                    <a href="{{ route('login') }}" class="{{ $btnBrand }} px-4 py-2 text-xs">Masuk</a>
+                                <div class="mt-6 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+                                    @foreach ($items as $item)
+                                        @php
+                                            $katNama = $item->kategori?->nama_kategori ?? 'Umum';
+                                            $fotoUrl = $item->foto_barang ? asset('storage/' . $item->foto_barang) : '';
+                                            $lokasi = $isHilang ? $item->lokasi_hilang : $item->lokasi_ditemukan;
+                                            $tanggal = ($isHilang
+                                                ? $item->tanggal_hilang
+                                                : $item->tanggal_ditemukan
+                                            )->format('d M Y');
+                                            $pelapor = $isHilang ? $item->pengguna?->nama ?? '-' : '';
+                                        @endphp
+                                        <article
+                                            class="group flex flex-col overflow-hidden rounded-2xl border border-[#e7ebf2] bg-white transition duration-200 hover:-translate-y-1 hover:border-[#cfd6e2] hover:shadow-card">
+                                            <div
+                                                class="relative flex aspect-[16/10] items-center justify-center overflow-hidden bg-[#eef1f5]">
+                                                @if ($fotoUrl)
+                                                    <img src="{{ $fotoUrl }}" alt="{{ $item->nama_barang }}"
+                                                        class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.03]">
+                                                @else
+                                                    <span class="text-xs font-medium text-ink-muted">Tanpa foto</span>
+                                                @endif
+                                                <span
+                                                    class="absolute left-3 top-3 rounded-lg bg-white/95 px-2.5 py-1 text-xs font-medium text-ink shadow-sm">{{ $katNama }}</span>
+                                                <span
+                                                    class="absolute right-3 top-3 rounded-lg px-2.5 py-1 text-xs font-medium {{ $isHilang ? 'bg-brand-soft text-brand-dark' : 'bg-ink-navy text-white' }}">
+                                                    {{ $isHilang ? 'Dicari' : 'Tersedia' }}
+                                                </span>
+                                            </div>
+                                            <div class="flex flex-1 flex-col p-5">
+                                                <h3 class="text-base font-semibold text-ink">{{ $item->nama_barang }}</h3>
+                                                <div class="mt-2 space-y-1 text-xs text-ink-muted">
+                                                    <p class="truncate">{{ $lokasi }}</p>
+                                                    <p class="tabular-nums">{{ $isHilang ? 'Hilang' : 'Ditemukan' }}
+                                                        {{ $tanggal }}
+                                                    </p>
+                                                    @if ($isHilang)
+                                                        <p class="truncate">Pelapor: {{ $pelapor }}</p>
+                                                    @endif
+                                                </div>
+                                                <p class="mt-1.5 text-sm leading-7 text-[#3d4b60]">
+                                                    {!! nl2br(e(trim($item->deskripsi))) !!}
+                                                </p>
+                                                <button type="button"
+                                                    popovertarget="modal-{{ $activeTab }}-{{ $item->id }}"
+                                                    class="{{ $isHilang ? $btnOutline : $btnNavy }} mt-4 w-full">
+                                                    Lihat Detail
+                                                </button>
+                                            </div>
+                                        </article>
+                                    @endforeach
                                 </div>
-                            @endauth
-                        </div>
-                    @endif
-                </div>
-            </div>
-        @endforeach
+
+                                @if ($lastPage > 1)
+                                    @php
+                                        $pageBtn =
+                                            'inline-flex h-10 items-center justify-center gap-1 rounded-xl border border-[#d7dde7] bg-white px-4 text-xs font-medium text-ink transition duration-150 hover:-translate-y-0.5 hover:border-ink-navy hover:bg-[#f7f8fb] hover:text-ink-navy focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink-navy/30';
+                                        $window = 5;
+                                        $startPage = min($currPage, max(1, $lastPage - $window + 1));
+                                        $endPage = min($lastPage, $startPage + $window - 1);
+                                    @endphp
+                                    <nav aria-label="Navigasi halaman barang {{ $activeTab }}"
+                                        hx-target="#catalog-results" hx-select="#catalog-results-body"
+                                        hx-swap="innerHTML show:none focus-scroll:false" hx-push-url="true"
+                                        class="mt-8 flex flex-wrap items-center justify-center gap-2">
+                                        @if ($currPage > 1)
+                                            <a href="{{ $pageUrl($currPage - 1) }}"
+                                                hx-get="{{ $pageUrl($currPage - 1) }}"
+                                                class="{{ $pageBtn }}">&lsaquo; Prev</a>
+                                        @endif
+
+                                        @if ($startPage > 1)
+                                            <span
+                                                class="inline-flex h-10 select-none items-center justify-center px-1.5 text-xs font-semibold text-ink-muted"
+                                                aria-hidden="true">&hellip;</span>
+                                        @endif
+
+                                        @for ($p = $startPage; $p <= $endPage; $p++)
+                                            <a href="{{ $pageUrl($p) }}" hx-get="{{ $pageUrl($p) }}"
+                                                @if ($p === $currPage) aria-current="page" @endif
+                                                class="inline-flex h-10 min-w-10 items-center justify-center rounded-xl px-3 text-xs font-semibold tabular-nums transition duration-150 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 {{ $p === $currPage ? 'bg-brand text-white hover:bg-brand-dark focus-visible:ring-brand/40' : 'border border-[#e7ebf2] bg-white text-ink hover:border-ink-navy hover:bg-[#f7f8fb] hover:text-ink-navy focus-visible:ring-ink-navy/30' }}">
+                                                {{ $p }}
+                                            </a>
+                                        @endfor
+
+                                        @if ($endPage < $lastPage)
+                                            <span
+                                                class="inline-flex h-10 select-none items-center justify-center px-1.5 text-xs font-semibold text-ink-muted"
+                                                aria-hidden="true">&hellip;</span>
+                                        @endif
+
+                                        @if ($currPage < $lastPage)
+                                            <a href="{{ $pageUrl($currPage + 1) }}"
+                                                hx-get="{{ $pageUrl($currPage + 1) }}" class="{{ $pageBtn }}">Next
+                                                &rsaquo;</a>
+                                        @endif
+                                    </nav>
+                                @endif
+                            @endif
+                            @php
+                                $dialogClass =
+                                    'm-0 mt-auto max-h-[92vh] w-full max-w-full overflow-y-auto rounded-t-2xl border border-[#e7ebf2] bg-white p-0 text-left backdrop:bg-ink-deep/60 sm:m-auto sm:w-[calc(100%-2rem)] sm:rounded-2xl';
+                                $closeBtnClass =
+                                    'flex h-9 w-9 items-center justify-center rounded-lg text-ink-muted transition-colors duration-150 hover:bg-[#f3f5f8] hover:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink-navy/30';
+                            @endphp
+
+                            @foreach ($items as $item)
+                                @php
+                                    $modalId = "modal-{$activeTab}-{$item->id}";
+                                    $katNama = $item->kategori?->nama_kategori ?? 'Umum';
+                                    $fotoUrl = $item->foto_barang ? asset('storage/' . $item->foto_barang) : '';
+                                    $lokasi = $isHilang ? $item->lokasi_hilang : $item->lokasi_ditemukan;
+                                    $tanggal = ($isHilang ? $item->tanggal_hilang : $item->tanggal_ditemukan)->format(
+                                        'd M Y',
+                                    );
+                                    $pelapor = $isHilang ? $item->pengguna?->nama ?? '-' : '';
+                                    $waPelapor = $isHilang ? $toWa($item->pengguna?->no_hp) : '';
+                                @endphp
+
+                                <div id="{{ $modalId }}" popover hx-boost="false"
+                                    aria-labelledby="{{ $modalId }}-title"
+                                    class="{{ $dialogClass }} {{ $isHilang ? 'sm:max-w-xl' : 'sm:max-w-2xl' }}">
+                                    <div
+                                        class="sticky top-0 z-10 flex items-start justify-between gap-4 border-b border-[#e7ebf2] bg-white px-5 py-4 sm:px-6">
+                                        <div>
+                                            <span class="text-xs font-medium text-brand-dark">{{ $katNama }}</span>
+                                            <h3 id="{{ $modalId }}-title"
+                                                class="mt-0.5 text-lg font-semibold text-ink">{{ $item->nama_barang }}
+                                            </h3>
+                                        </div>
+                                        <button type="button" popovertarget="{{ $modalId }}"
+                                            popovertargetaction="hide" class="{{ $closeBtnClass }}" aria-label="Tutup">
+                                            <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                                                stroke="currentColor" stroke-width="1.75" aria-hidden="true">
+                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                    d="M6 18L18 6M6 6l12 12" />
+                                            </svg>
+                                        </button>
+                                    </div>
+
+                                    <div class="p-5 sm:p-6">
+                                        @if ($fotoUrl)
+                                            <div
+                                                class="mb-4 overflow-hidden rounded-xl {{ $isHilang ? 'border border-[#e7ebf2]' : '' }} bg-[#eef1f5]">
+                                                <img src="{{ $fotoUrl }}" alt="{{ $item->nama_barang }}"
+                                                    class="max-h-80 w-full object-contain">
+                                            </div>
+                                        @endif
+
+                                        <div
+                                            class="grid grid-cols-1 gap-3 rounded-xl bg-[#f7f8fb] p-4 text-sm sm:grid-cols-2">
+                                            <div>
+                                                <span
+                                                    class="block text-xs text-ink-muted">{{ $isHilang ? 'Perkiraan lokasi hilang' : 'Lokasi ditemukan' }}</span>
+                                                <span class="font-medium text-ink">{{ $lokasi }}</span>
+                                            </div>
+                                            <div>
+                                                <span
+                                                    class="block text-xs text-ink-muted">{{ $isHilang ? 'Tanggal hilang' : 'Tanggal ditemukan' }}</span>
+                                                <span class="font-medium tabular-nums text-ink">{{ $tanggal }}</span>
+                                            </div>
+                                            <div class="sm:col-span-2">
+                                                <span
+                                                    class="block text-xs text-ink-muted">{{ $isHilang ? 'Pelapor' : 'Lokasi penyimpanan' }}</span>
+                                                <span class="font-medium {{ $isHilang ? 'text-ink' : 'text-ink-navy' }}">
+                                                    {{ $isHilang ? $pelapor : 'Pos Keamanan Universitas Jember' }}
+                                                </span>
+                                            </div>
+                                        </div>
+
+                                        <div class="mt-4">
+                                            <h4 class="text-xs font-medium text-ink-muted">
+                                                {{ $isHilang ? 'Deskripsi dan ciri-ciri' : 'Deskripsi barang' }}</h4>
+                                            <p class="mt-1.5 whitespace-pre-line text-sm leading-7 text-[#3d4b60]">
+                                                {{ $item->deskripsi }}</p>
+                                        </div>
+
+                                        @if ($isHilang)
+                                            <div
+                                                class="mt-6 flex flex-col gap-2 border-t border-[#e7ebf2] pt-4 sm:flex-row sm:justify-end">
+                                                <button type="button" popovertarget="{{ $modalId }}"
+                                                    popovertargetaction="hide" class="{{ $btnOutline }}">Tutup</button>
+                                                @if ($waPelapor)
+                                                    <a href="https://wa.me/{{ $waPelapor }}?text={{ urlencode('Halo ' . $pelapor . ', saya melihat laporan kehilangan "' . $item->nama_barang . '" di FindIT UNEJ.') }}"
+                                                        target="_blank" rel="noopener"
+                                                        class="{{ $btnBase }} rounded-xl border-transparent bg-[#25D366] text-white hover:bg-[#1fb85a] focus-visible:ring-[#25D366]">
+                                                        <svg class="h-4 w-4 shrink-0" viewBox="0 0 24 24"
+                                                            fill="currentColor" aria-hidden="true">
+                                                            <path
+                                                                d="M20.52 3.48A11.86 11.86 0 0012.07 0C5.52 0 .18 5.33.18 11.89c0 2.1.55 4.15 1.59 5.95L.11 24l6.3-1.65a11.87 11.87 0 005.65 1.44h.01c6.55 0 11.89-5.33 11.89-11.89a11.8 11.8 0 00-3.44-8.42zm-8.45 18.28h-.01a9.86 9.86 0 01-5.03-1.38l-.36-.21-3.74.98 1-3.65-.24-.38a9.83 9.83 0 01-1.51-5.24c0-5.44 4.43-9.87 9.88-9.87a9.8 9.8 0 019.87 9.87c0 5.45-4.43 9.88-9.86 9.88zm5.42-7.4c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.64.07-.3-.15-1.26-.46-2.39-1.48-.88-.79-1.48-1.76-1.65-2.06-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.88 1.22 3.08c.15.2 2.1 3.21 5.09 4.5.71.31 1.27.49 1.7.63.71.23 1.36.2 1.87.12.57-.08 1.76-.72 2.01-1.42.25-.7.25-1.29.17-1.42-.07-.12-.27-.2-.57-.35z" />
+                                                        </svg>
+                                                        <span>Hubungi Pelapor via WhatsApp</span>
+                                                    </a>
+                                                @endif
+                                            </div>
+                                        @else
+                                            <div class="mt-6 border-t border-[#e7ebf2] pt-5">
+                                                @auth
+                                                    @if ($isPetugas)
+                                                        <div
+                                                            class="flex flex-col gap-3 rounded-xl bg-[#f7f8fb] p-4 text-sm text-[#3d4b60] sm:flex-row sm:items-center sm:justify-between">
+                                                            <span>Anda masuk sebagai petugas keamanan.</span>
+                                                            <a href="{{ route('petugas.barang-temuan.index') }}"
+                                                                class="font-medium text-ink-navy underline underline-offset-4 hover:text-brand">Kelola
+                                                                barang temuan</a>
+                                                        </div>
+                                                    @else
+                                                        <h4 class="text-sm font-semibold text-ink">Ajukan klaim kepemilikan
+                                                        </h4>
+                                                        <p class="mt-1 text-xs leading-5 text-ink-muted">Jelaskan ciri khusus
+                                                            barang agar petugas dapat mencocokkan kepemilikan.</p>
+                                                        <form action="{{ route('mahasiswa.klaim.store', $item) }}"
+                                                            method="POST" class="mt-3 space-y-3">
+                                                            @csrf
+                                                            <textarea name="keterangan_klaim" rows="3" required
+                                                                placeholder="Tuliskan ciri spesifik atau bukti kepemilikan barang"
+                                                                class="min-h-24 w-full resize-y rounded-xl border border-[#d7dde7] bg-white px-3.5 py-2.5 text-sm text-ink outline-none transition-colors duration-150 focus:border-ink-navy focus:ring-4 focus:ring-ink-navy/10"></textarea>
+                                                            <div
+                                                                class="flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
+                                                                <button type="button" popovertarget="{{ $modalId }}"
+                                                                    popovertargetaction="hide"
+                                                                    class="{{ $btnOutline }}">Batal</button>
+                                                                <button type="submit" class="{{ $btnBrand }}">Kirim
+                                                                    Pengajuan Klaim</button>
+                                                            </div>
+                                                        </form>
+                                                    @endif
+                                                @else
+                                                    <div
+                                                        class="flex flex-col items-start justify-between gap-3 rounded-xl bg-[#f7f8fb] p-4 sm:flex-row sm:items-center">
+                                                        <p class="text-sm text-ink">Masuk dengan akun mahasiswa untuk
+                                                            mengajukan klaim.</p>
+                                                        <a href="{{ route('login') }}"
+                                                            class="{{ $btnBrand }} px-4 py-2 text-xs">Masuk</a>
+                                                    </div>
+                                                @endauth
+                                            </div>
+                                        @endif
+                                    </div>
+                                </div>
+                            @endforeach
                         </div>
                     </div>
                 </div>
@@ -484,14 +533,15 @@
     </section>
 
     <section class="{{ $container }} pb-4">
-        <div class="fi-reveal-scale overflow-hidden rounded-2xl bg-brand px-6 py-10 text-white shadow-card sm:px-10 lg:px-12">
+        <div
+            class="fi-reveal-scale overflow-hidden rounded-2xl bg-brand px-6 py-10 text-white shadow-card sm:px-10 lg:px-12">
             <div class="grid items-center gap-8 lg:grid-cols-[1fr_auto]">
                 <div>
                     <p class="text-xs font-medium text-white/80">Pos Keamanan Utama UNEJ</p>
                     <h2 class="mt-2 font-heading text-2xl font-semibold leading-tight sm:text-3xl md:whitespace-nowrap">
                         Mulai cari, atau laporkan barang yang hilang hari ini
                     </h2>
-                    <p class="mt-3 max-w-xl text-sm leading-7 text-white/85">
+                    <p class="mt-3 text-sm leading-7 text-white/85 lg:whitespace-nowrap">
                         Pengambilan barang dilakukan di Pos Keamanan Utama Universitas Jember dengan identitas resmi.
                     </p>
                     @if ($waPetugas)
