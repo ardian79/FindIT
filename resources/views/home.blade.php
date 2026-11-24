@@ -324,9 +324,8 @@
                                                         <p class="truncate">Pelapor: {{ $pelapor }}</p>
                                                     @endif
                                                 </div>
-                                                <p class="mt-1.5 text-sm leading-7 text-[#3d4b60]">
-                                                    {!! nl2br(e(trim($item->deskripsi))) !!}
-                                                </p>
+                                                <p class="mt-3 line-clamp-2 flex-1 text-sm leading-6 text-[#3d4b60]">
+                                                    {{ $item->deskripsi }}</p>
                                                 <button type="button"
                                                     popovertarget="modal-{{ $activeTab }}-{{ $item->id }}"
                                                     class="{{ $isHilang ? $btnOutline : $btnNavy }} mt-4 w-full">
@@ -457,8 +456,9 @@
                                         <div class="mt-4">
                                             <h4 class="text-xs font-medium text-ink-muted">
                                                 {{ $isHilang ? 'Deskripsi dan ciri-ciri' : 'Deskripsi barang' }}</h4>
-                                            <p class="mt-1.5 whitespace-pre-line text-sm leading-7 text-[#3d4b60]">
-                                                {{ $item->deskripsi }}</p>
+                                            <p class="mt-1.5 text-sm leading-7 text-[#3d4b60]">
+                                                {!! nl2br(e(trim($item->deskripsi))) !!}
+                                            </p>
                                         </div>
 
                                         @if ($isHilang)
