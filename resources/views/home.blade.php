@@ -235,7 +235,7 @@
                         <div id="catalog-tabs" class="relative mx-auto flex max-w-lg rounded-full bg-[#f3f5f8] p-1"
                             data-active-tab="{{ $activeTab }}">
                             <span id="catalog-tab-indicator" aria-hidden="true"
-                                class="pointer-events-none absolute top-1 {{ $isHilang ? 'left-1/2' : 'left-1' }} h-[calc(100%-8px)] w-[calc(50%-4px)] rounded-full bg-ink-navy transition-[left] duration-300 ease-[cubic-bezier(.22,1,.36,1)]"></span>
+                                class="pointer-events-none absolute top-1 {{ $isHilang ? 'left-1/2' : 'left-1' }} h-[calc(100%-8px)] w-[calc(50%-4px)] rounded-full bg-ink-navy transition-[left] duration-150 ease-[cubic-bezier(.22,1,.36,1)]"></span>
                             @foreach (['temuan' => ['Barang Temuan', $temuanUrl], 'hilang' => ['Barang Hilang', $hilangUrl]] as $key => [$label, $url])
                                 <a href="{{ $url }}" hx-get="{{ $url }}" hx-target="#catalog-content"
                                     hx-select="#catalog-content-body" hx-swap="innerHTML show:none focus-scroll:false"
