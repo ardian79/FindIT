@@ -1,4 +1,4 @@
-@extends(Auth::user()->role === 'petugas' ? 'layouts.dashboard' : 'layouts.app')
+@extends(Auth::user()->role === 'petugas' ? 'layouts.petugas' : 'layouts.app')
 
 @section('title', 'Profil Saya - FindIT UNEJ')
 @section('header', 'Profil Saya')

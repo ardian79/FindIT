@@ -1,4 +1,4 @@
-@extends('layouts.dashboard')
+@extends('layouts.petugas')
 
 @section('title', 'Pantau Laporan Kehilangan')
 @section('header', 'Laporan Kehilangan Mahasiswa')

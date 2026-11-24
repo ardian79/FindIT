@@ -1,4 +1,4 @@
-@extends('layouts.dashboard')
+@extends('layouts.petugas')
 
 @section('title', 'Rekap Laporan Operasional')
 @section('header', 'Rekap & Cetak Laporan')

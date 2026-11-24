@@ -71,7 +71,7 @@
                 Temukan Kembali Barang Berharga Anda di UNEJ
             </h1>
             <p class="fi-hero-in fi-hero-in-2 mx-auto mt-5 max-w-2xl text-sm leading-7 text-white/85 sm:text-base">
-                Layanan resmi untuk melaporkan kehilangan dan menemukan barang temuan secara terverifikasi.
+                Layanan resmi untuk melaporkan kehilangan dan menemukan barang temuan secara&nbsp;terverifikasi.
             </p>
             <div
                 class="fi-hero-in fi-hero-in-3 mt-8 flex w-full flex-col items-stretch justify-center gap-3 sm:w-auto sm:flex-row sm:items-center">
@@ -88,14 +88,6 @@
                 </a>
             </div>
         </div>
-
-        <a href="#cara-kerja" aria-label="Gulir ke Cara Kerja"
-            class="absolute bottom-7 left-1/2 z-10 inline-flex h-10 w-10 -translate-x-1/2 items-center justify-center rounded-full border border-white/25 bg-white/10 text-white/85 backdrop-blur-sm transition hover:bg-white/20 hover:text-white">
-            <svg class="h-4 w-4 animate-bounce" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"
-                aria-hidden="true">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
-            </svg>
-        </a>
     </section>
 
     <section id="cara-kerja" class="scroll-mt-24 bg-white py-20 lg:py-24">
@@ -126,9 +118,9 @@
     <section class="overflow-x-clip bg-[#f5f6f8]">
         <div class="{{ $container }} grid items-center gap-10 py-20 lg:grid-cols-2 lg:py-24">
             <div
-                class="fi-reveal-left group overflow-hidden rounded-2xl border border-[#e7ebf2] bg-white p-2 shadow-card transition duration-200 hover:-translate-y-0.5 hover:border-[#cfd6e2]">
+                class="fi-reveal-left group overflow-hidden rounded-2xl shadow-lift transition duration-300 hover:-translate-y-1 hover:shadow-[0_24px_50px_rgba(16,42,76,0.16)]">
                 <img src="{{ asset('images/campus-activity.svg') }}" alt="Ilustrasi pencarian barang FindIT"
-                    class="aspect-[4/3] w-full rounded-xl object-cover transition-transform duration-300 group-hover:scale-[1.03]">
+                    class="aspect-[4/3] w-full object-cover transition-transform duration-300 group-hover:scale-[1.03]">
             </div>
             <div class="fi-reveal-right">
                 <p class="{{ $eyebrow }}">Pencarian yang terarah</p>

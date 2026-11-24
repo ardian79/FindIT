@@ -43,19 +43,12 @@ class HomeController extends Controller
         $kategori = Kategori::orderBy('nama_kategori')->get();
         $petugas = User::where('role', 'petugas')->first();
 
-        $totalTersedia = BarangTemuan::where('status', 'tersedia')->count();
-        $totalDikembalikan = BarangTemuan::where('status', 'dikembalikan')->count();
-        $totalDicari = LaporanKehilangan::where('status', 'dicari')->count();
-
         return view('home', compact(
             'tab',
             'barangTemuan',
             'laporanKehilangan',
             'kategori',
-            'petugas',
-            'totalTersedia',
-            'totalDikembalikan',
-            'totalDicari'
+            'petugas'
         ));
     }
 }

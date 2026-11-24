@@ -1,4 +1,4 @@
-@extends('layouts.dashboard')
+@extends('layouts.petugas')
 
 @section('title', 'Master Kategori')
 @section('header', 'Master Kategori')
