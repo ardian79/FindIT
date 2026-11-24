@@ -8,6 +8,8 @@
         $btnSecondary = 'inline-flex items-center justify-center rounded-xl border border-[#d7dde7] bg-white px-4 py-2.5 text-sm font-medium text-ink transition-colors duration-150 hover:bg-[#f7f8fb] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink-navy/30';
         $label = 'mb-1.5 block text-sm font-medium text-ink';
         $input = 'w-full rounded-xl border border-[#d7dde7] bg-white px-3.5 py-2.5 text-sm text-ink outline-none transition-colors duration-150 focus:border-ink-navy focus:ring-4 focus:ring-ink-navy/10';
+        $modalCls = 'm-auto max-h-[90vh] w-[calc(100%-2rem)] max-w-lg overflow-y-auto rounded-2xl border border-[#e7ebf2] bg-white p-0 text-left backdrop:bg-ink-deep/60';
+        $confirmCls = 'm-auto w-[calc(100%-2rem)] max-w-sm rounded-2xl border border-[#e7ebf2] bg-white p-6 text-left backdrop:bg-ink-deep/60';
     @endphp
 
     <div class="mx-auto max-w-[1160px] px-4 py-8 sm:px-6 lg:px-8">
@@ -16,7 +18,7 @@
                 <h1 class="text-2xl font-semibold tracking-tight text-ink">Laporan Kehilangan Saya</h1>
                 <p class="mt-1 text-sm text-ink-muted">Kelola daftar barang hilang yang Anda laporkan agar dapat dipantau petugas dan sivitas kampus.</p>
             </div>
-            <button type="button" onclick="openLaporanModal()" class="{{ $btnPrimary }}">
+            <button type="button" popovertarget="modal-laporan-create" class="{{ $btnPrimary }}">
                 <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75" aria-hidden="true">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                 </svg>
@@ -31,7 +33,7 @@
                 </svg>
                 <h2 class="mt-3 text-base font-semibold text-ink">Belum ada laporan kehilangan</h2>
                 <p class="mt-1 text-sm text-ink-muted">Kehilangan barang di area kampus? Buat laporan agar lebih mudah ditemukan.</p>
-                <button type="button" onclick="openLaporanModal()" class="{{ $btnPrimary }} mt-5">Buat Laporan Pertama</button>
+                <button type="button" popovertarget="modal-laporan-create" class="{{ $btnPrimary }} mt-5">Buat Laporan Pertama</button>
             </div>
         @else
             <div class="overflow-hidden rounded-2xl border border-[#e7ebf2] bg-white">
@@ -81,38 +83,27 @@
                                         @endphp
                                         <div class="flex items-center justify-center gap-1.5">
                                             @if ($item->status === 'dicari')
-                                                <form action="{{ route('mahasiswa.laporan.ditemukan', $item) }}" method="POST" onsubmit="return confirm('Tandai barang ini sudah ditemukan?')">
-                                                    @csrf
-                                                    @method('PATCH')
-                                                    <button type="submit" title="Tandai sudah ditemukan" aria-label="Tandai {{ $item->nama_barang }} sudah ditemukan"
-                                                        class="{{ $iconBtn }} bg-[#e8eef6] text-ink-navy hover:bg-[#dce5f2] focus-visible:ring-ink-navy/30">
-                                                        <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75" aria-hidden="true">
-                                                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                                        </svg>
-                                                    </button>
-                                                </form>
+                                                <button type="button" popovertarget="confirm-ditemukan-{{ $item->id }}" title="Tandai sudah ditemukan" aria-label="Tandai {{ $item->nama_barang }} sudah ditemukan"
+                                                    class="{{ $iconBtn }} bg-[#e8eef6] text-ink-navy hover:bg-[#dce5f2] focus-visible:ring-ink-navy/30">
+                                                    <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75" aria-hidden="true">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                                    </svg>
+                                                </button>
                                             @endif
 
-                                            <button type="button" onclick="openLaporanModal(this)" title="Edit" aria-label="Edit {{ $item->nama_barang }}"
-                                                data-id="{{ $item->id }}" data-kategori="{{ $item->kategori_id }}"
-                                                data-nama="{{ $item->nama_barang }}" data-lokasi="{{ $item->lokasi_hilang }}"
-                                                data-tanggal="{{ $item->tanggal_hilang->format('Y-m-d') }}" data-deskripsi="{{ $item->deskripsi }}"
+                                            <button type="button" popovertarget="modal-laporan-edit-{{ $item->id }}" title="Edit" aria-label="Edit {{ $item->nama_barang }}"
                                                 class="{{ $iconBtn }} border border-[#d7dde7] bg-white text-ink hover:bg-[#f3f5f8] focus-visible:ring-ink-navy/30">
                                                 <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75" aria-hidden="true">
                                                     <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zM19.5 7.125L16.862 4.487M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
                                                 </svg>
                                             </button>
 
-                                            <form action="{{ route('mahasiswa.laporan.destroy', $item) }}" method="POST" onsubmit="return confirm('Hapus laporan kehilangan ini?')">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" title="Hapus" aria-label="Hapus {{ $item->nama_barang }}"
-                                                    class="{{ $iconBtn }} border border-[#f3c3c0] bg-white text-[#b42318] hover:border-brand hover:bg-[#fef3f2] focus-visible:ring-brand/30">
-                                                    <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75" aria-hidden="true">
-                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
-                                                    </svg>
-                                                </button>
-                                            </form>
+                                            <button type="button" popovertarget="confirm-hapus-{{ $item->id }}" title="Hapus" aria-label="Hapus {{ $item->nama_barang }}"
+                                                class="{{ $iconBtn }} border border-[#f3c3c0] bg-white text-[#b42318] hover:border-brand hover:bg-[#fef3f2] focus-visible:ring-brand/30">
+                                                <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75" aria-hidden="true">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                                                </svg>
+                                            </button>
                                         </div>
                                     </td>
                                 </tr>
@@ -126,11 +117,11 @@
         @endif
     </div>
 
-    <dialog id="modal-laporan" closedby="closerequest" aria-labelledby="modal-laporan-title"
-        class="m-auto max-h-[90vh] w-[calc(100%-2rem)] max-w-lg overflow-y-auto rounded-2xl border border-[#e7ebf2] bg-white p-0 text-left backdrop:bg-ink-deep/60">
+    {{-- ponytail: native HTML popovers replace openLaporanModal() & confirm() JS --}}
+    <div id="modal-laporan-create" popover aria-labelledby="modal-laporan-create-title" class="{{ $modalCls }}">
         <div class="sticky top-0 z-10 flex items-center justify-between border-b border-[#e7ebf2] bg-white px-6 py-4">
-            <h2 id="modal-laporan-title" class="text-base font-semibold text-ink">Buat Laporan Kehilangan</h2>
-            <button type="button" onclick="this.closest('dialog').close()" aria-label="Tutup"
+            <h2 id="modal-laporan-create-title" class="text-base font-semibold text-ink">Buat Laporan Kehilangan</h2>
+            <button type="button" popovertarget="modal-laporan-create" popovertargetaction="hide" aria-label="Tutup"
                 class="rounded-lg p-1.5 text-ink-muted transition-colors hover:bg-[#f3f5f8] hover:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink-navy/30">
                 <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75" aria-hidden="true">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -138,10 +129,8 @@
             </button>
         </div>
 
-        <form id="form-laporan" action="{{ route('mahasiswa.laporan.store') }}" method="POST" enctype="multipart/form-data" class="space-y-4 p-6">
+        <form action="{{ route('mahasiswa.laporan.store') }}" method="POST" enctype="multipart/form-data" class="space-y-4 p-6">
             @csrf
-            <input type="hidden" id="form-method" name="_method" value="PUT" disabled>
-
             <div>
                 <label for="nama_barang" class="{{ $label }}">Nama Barang</label>
                 <input type="text" id="nama_barang" name="nama_barang" required placeholder="Contoh: Dompet kulit hitam" class="{{ $input }}">
@@ -177,40 +166,102 @@
                 <label for="foto_barang" class="{{ $label }}">Foto Barang (Opsional)</label>
                 <input type="file" id="foto_barang" name="foto_barang" accept=".jpg,.jpeg,.png,.webp"
                     class="w-full rounded-xl border border-[#d7dde7] px-3 py-2 text-sm text-[#3d4b60] file:mr-3 file:rounded-lg file:border-0 file:bg-[#f3f5f8] file:px-3 file:py-1.5 file:text-xs file:font-medium file:text-ink hover:file:bg-[#e7ebf2]">
-                <p id="foto-hint" class="mt-1 text-xs text-ink-muted">Format JPG, PNG, atau WEBP maksimal 2MB.</p>
+                <p class="mt-1 text-xs text-ink-muted">Format JPG, PNG, atau WEBP maksimal 2MB.</p>
             </div>
 
             <div class="flex justify-end gap-2 border-t border-[#e7ebf2] pt-4">
-                <button type="button" onclick="this.closest('dialog').close()" class="{{ $btnSecondary }}">Batal</button>
-                <button type="submit" id="btn-submit-laporan" class="{{ $btnPrimary }}">Simpan Laporan</button>
+                <button type="button" popovertarget="modal-laporan-create" popovertargetaction="hide" class="{{ $btnSecondary }}">Batal</button>
+                <button type="submit" class="{{ $btnPrimary }}">Simpan Laporan</button>
             </div>
         </form>
-    </dialog>
+    </div>
+
+    @foreach ($laporan as $item)
+        <div id="modal-laporan-edit-{{ $item->id }}" popover aria-labelledby="modal-edit-title-{{ $item->id }}" class="{{ $modalCls }}">
+            <div class="sticky top-0 z-10 flex items-center justify-between border-b border-[#e7ebf2] bg-white px-6 py-4">
+                <h2 id="modal-edit-title-{{ $item->id }}" class="text-base font-semibold text-ink">Edit Laporan Kehilangan</h2>
+                <button type="button" popovertarget="modal-laporan-edit-{{ $item->id }}" popovertargetaction="hide" aria-label="Tutup"
+                    class="rounded-lg p-1.5 text-ink-muted transition-colors hover:bg-[#f3f5f8] hover:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink-navy/30">
+                    <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+
+            <form action="{{ route('mahasiswa.laporan.update', $item) }}" method="POST" enctype="multipart/form-data" class="space-y-4 p-6">
+                @csrf
+                @method('PUT')
+                <div>
+                    <label for="edit_nama_{{ $item->id }}" class="{{ $label }}">Nama Barang</label>
+                    <input type="text" id="edit_nama_{{ $item->id }}" name="nama_barang" value="{{ $item->nama_barang }}" required class="{{ $input }}">
+                </div>
+
+                <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                    <div>
+                        <label for="edit_kategori_{{ $item->id }}" class="{{ $label }}">Kategori</label>
+                        <select id="edit_kategori_{{ $item->id }}" name="kategori_id" required class="{{ $input }}">
+                            <option value="">Pilih Kategori</option>
+                            @foreach ($kategori as $kat)
+                                <option value="{{ $kat->id }}" @selected($item->kategori_id == $kat->id)>{{ $kat->nama_kategori }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div>
+                        <label for="edit_tanggal_{{ $item->id }}" class="{{ $label }}">Tanggal Hilang</label>
+                        <input type="date" id="edit_tanggal_{{ $item->id }}" name="tanggal_hilang" value="{{ $item->tanggal_hilang->format('Y-m-d') }}" required max="{{ date('Y-m-d') }}" class="{{ $input }} tabular-nums">
+                    </div>
+                </div>
+
+                <div>
+                    <label for="edit_lokasi_{{ $item->id }}" class="{{ $label }}">Perkiraan Lokasi Hilang</label>
+                    <input type="text" id="edit_lokasi_{{ $item->id }}" name="lokasi_hilang" value="{{ $item->lokasi_hilang }}" required class="{{ $input }}">
+                </div>
+
+                <div>
+                    <label for="edit_deskripsi_{{ $item->id }}" class="{{ $label }}">Deskripsi &amp; Ciri-Ciri</label>
+                    <textarea id="edit_deskripsi_{{ $item->id }}" name="deskripsi" rows="3" required class="{{ $input }}">{{ $item->deskripsi }}</textarea>
+                </div>
+
+                <div>
+                    <label for="edit_foto_{{ $item->id }}" class="{{ $label }}">Foto Barang (Opsional)</label>
+                    <input type="file" id="edit_foto_{{ $item->id }}" name="foto_barang" accept=".jpg,.jpeg,.png,.webp"
+                        class="w-full rounded-xl border border-[#d7dde7] px-3 py-2 text-sm text-[#3d4b60] file:mr-3 file:rounded-lg file:border-0 file:bg-[#f3f5f8] file:px-3 file:py-1.5 file:text-xs file:font-medium file:text-ink hover:file:bg-[#e7ebf2]">
+                    <p class="mt-1 text-xs text-ink-muted">Kosongkan jika tidak ingin mengganti foto lama. Maksimal 2MB.</p>
+                </div>
+
+                <div class="flex justify-end gap-2 border-t border-[#e7ebf2] pt-4">
+                    <button type="button" popovertarget="modal-laporan-edit-{{ $item->id }}" popovertargetaction="hide" class="{{ $btnSecondary }}">Batal</button>
+                    <button type="submit" class="{{ $btnPrimary }}">Perbarui Laporan</button>
+                </div>
+            </form>
+        </div>
+
+        @if ($item->status === 'dicari')
+            <div id="confirm-ditemukan-{{ $item->id }}" popover class="{{ $confirmCls }}">
+                <h3 class="text-base font-semibold text-ink">Konfirmasi Status</h3>
+                <p class="mt-2 text-sm text-ink-muted">Tandai barang <strong>{{ $item->nama_barang }}</strong> sudah ditemukan?</p>
+                <div class="mt-5 flex justify-end gap-2">
+                    <button type="button" popovertarget="confirm-ditemukan-{{ $item->id }}" popovertargetaction="hide" class="{{ $btnSecondary }}">Batal</button>
+                    <form action="{{ route('mahasiswa.laporan.ditemukan', $item) }}" method="POST">
+                        @csrf
+                        @method('PATCH')
+                        <button type="submit" class="inline-flex items-center justify-center rounded-xl bg-ink-navy px-4 py-2.5 text-sm font-medium text-white transition-colors hover:bg-ink-deep">Ya, Ditemukan</button>
+                    </form>
+                </div>
+            </div>
+        @endif
+
+        <div id="confirm-hapus-{{ $item->id }}" popover class="{{ $confirmCls }}">
+            <h3 class="text-base font-semibold text-ink">Hapus Laporan</h3>
+            <p class="mt-2 text-sm text-ink-muted">Hapus laporan kehilangan <strong>{{ $item->nama_barang }}</strong>?</p>
+            <div class="mt-5 flex justify-end gap-2">
+                <button type="button" popovertarget="confirm-hapus-{{ $item->id }}" popovertargetaction="hide" class="{{ $btnSecondary }}">Batal</button>
+                <form action="{{ route('mahasiswa.laporan.destroy', $item) }}" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="{{ $btnPrimary }}">Ya, Hapus</button>
+                </form>
+            </div>
+        </div>
+    @endforeach
 @endsection
-
-@push('scripts')
-    <script>
-        const storeUrl = @json(route('mahasiswa.laporan.store'));
-        const updateUrl = @json(route('mahasiswa.laporan.update', ['laporanKehilangan' => '__ID__']));
-
-        function openLaporanModal(btn = null) {
-            const form = document.getElementById('form-laporan');
-            const isEdit = Boolean(btn);
-            form.reset();
-            form.action = isEdit ? updateUrl.replace('__ID__', btn.dataset.id) : storeUrl;
-            document.getElementById('form-method').disabled = !isEdit;
-            document.getElementById('modal-laporan-title').textContent = isEdit ? 'Edit Laporan Kehilangan' : 'Buat Laporan Kehilangan';
-            document.getElementById('btn-submit-laporan').textContent = isEdit ? 'Perbarui Laporan' : 'Simpan Laporan';
-            document.getElementById('foto-hint').textContent = isEdit
-                ? 'Kosongkan jika tidak ingin mengganti foto lama. Maksimal 2MB.'
-                : 'Format JPG, PNG, atau WEBP maksimal 2MB.';
-
-            if (isEdit) {
-                const map = { nama_barang: 'nama', kategori_id: 'kategori', lokasi_hilang: 'lokasi', tanggal_hilang: 'tanggal', deskripsi: 'deskripsi' };
-                Object.entries(map).forEach(([id, key]) => { document.getElementById(id).value = btn.dataset[key] ?? ''; });
-            }
-            document.getElementById('kategori_id').dispatchEvent(new Event('change'));
-            document.getElementById('modal-laporan').showModal();
-        }
-    </script>
-@endpush

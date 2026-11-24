@@ -22,7 +22,12 @@
             'laporan_kehilangan' => [['Nama Barang', ''], ['Kategori', 'text-center'], ['Pelapor', ''], ['Lokasi & Tanggal Hilang', 'text-center']],
             default => [['Barang Temuan', ''], ['Pengklaim', ''], ['Tanggal Klaim', 'text-center'], ['Tanggal Diambil', 'text-center']],
         };
-        $field = 'w-full rounded-xl border border-[#d7dde7] bg-white px-3.5 py-2.5 text-sm text-ink outline-none transition-colors duration-150 focus:border-ink-navy focus:ring-4 focus:ring-ink-navy/10';
+        $statusOptions = match ($jenis) {
+            'laporan_kehilangan' => ['dicari' => 'Dicari', 'ditemukan' => 'Ditemukan'],
+            'klaim' => ['pending' => 'Pending', 'disetujui' => 'Disetujui', 'selesai' => 'Selesai', 'ditolak' => 'Ditolak'],
+            default => ['tersedia' => 'Tersedia', 'diklaim' => 'Diklaim', 'dikembalikan' => 'Dikembalikan'],
+        };
+        $field = 'h-[42px] w-full rounded-xl border border-[#d7dde7] bg-white px-3 text-sm text-ink outline-none transition-colors duration-150 focus:border-ink-navy focus:ring-4 focus:ring-ink-navy/10';
     @endphp
 
     <div class="space-y-6">
@@ -36,8 +41,8 @@
         </div>
 
         <form action="{{ route('petugas.laporan.index') }}" method="GET" class="rounded-2xl border border-[#e7ebf2] bg-white p-4 print:hidden">
-            <div class="grid grid-cols-1 gap-3 md:grid-cols-12">
-                <div class="md:col-span-3">
+            <div class="flex flex-wrap items-end gap-3">
+                <div class="min-w-[170px] flex-[1.2_1_170px]">
                     <label for="jenis" class="mb-1 block text-xs font-medium text-ink-muted">Jenis Laporan</label>
                     <select id="jenis" name="jenis" class="{{ $field }}">
                         @foreach (['barang_temuan' => 'Barang Temuan', 'laporan_kehilangan' => 'Laporan Kehilangan', 'klaim' => 'Verifikasi Klaim'] as $val => $text)
@@ -46,26 +51,30 @@
                     </select>
                 </div>
 
-                <div class="md:col-span-2">
+                <div class="min-w-[144px] flex-1">
                     <label for="tanggal_mulai" class="mb-1 block text-xs font-medium text-ink-muted">Dari Tanggal</label>
                     <input type="date" id="tanggal_mulai" name="tanggal_mulai" value="{{ $tanggalMulai }}" class="{{ $field }} tabular-nums">
                 </div>
 
-                <div class="md:col-span-2">
+                <div class="min-w-[144px] flex-1">
                     <label for="tanggal_selesai" class="mb-1 block text-xs font-medium text-ink-muted">Sampai Tanggal</label>
                     <input type="date" id="tanggal_selesai" name="tanggal_selesai" value="{{ $tanggalSelesai }}" class="{{ $field }} tabular-nums">
                 </div>
 
-                <div class="md:col-span-2">
+                <div class="min-w-[144px] flex-1">
                     <label for="status" class="mb-1 block text-xs font-medium text-ink-muted">Status</label>
                     <select id="status" name="status" class="{{ $field }}">
                         <option value="">Semua Status</option>
+                        @foreach ($statusOptions as $val => $label)
+                            <option value="{{ $val }}" @selected(($status ?? '') === $val)>{{ $label }}</option>
+                        @endforeach
                     </select>
                 </div>
 
-                <div class="flex items-end gap-2 md:col-span-3">
-                    <button type="submit" class="flex-1 rounded-xl bg-brand px-4 py-2.5 text-sm font-medium text-white transition-colors duration-150 hover:bg-brand-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 active:scale-[0.98]">Tampilkan</button>
-                    <button type="button" onclick="print()" class="inline-flex items-center justify-center gap-1.5 rounded-xl border border-[#d7dde7] bg-white px-4 py-2.5 text-sm font-medium text-ink transition-colors duration-150 hover:bg-[#f7f8fb] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink-navy/30">
+                <div class="flex w-full shrink-0 items-center gap-2 sm:ml-auto sm:w-auto">
+                    <button type="submit" class="inline-flex h-[42px] flex-1 items-center justify-center rounded-xl bg-brand px-5 text-sm font-medium text-white transition-colors duration-150 hover:bg-brand-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 active:scale-[0.98] sm:flex-none">Tampilkan</button>
+                    {{-- ponytail: pure HTML cannot invoke OS print dialog; popover guides Ctrl+P without JS --}}
+                    <button type="button" popovertarget="modal-cetak" class="inline-flex h-[42px] flex-1 items-center justify-center gap-1.5 rounded-xl border border-[#d7dde7] bg-white px-4 text-sm font-medium text-ink transition-colors duration-150 hover:bg-[#f7f8fb] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink-navy/30 sm:flex-none">
                         <svg class="h-4 w-4 text-ink-muted" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75" aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M6.72 13.829c-.24.03-.48.062-.72.096m.72-.096a42.415 42.415 0 0110.56 0m-10.56 0L6.34 18m10.94-4.171c.24.03.48.062.72.096m-.72-.096L17.66 18m0 0l.229 2.523a1.125 1.125 0 01-1.12 1.227H7.231c-.662 0-1.18-.568-1.12-1.227L6.34 18m11.318 0h1.091A2.25 2.25 0 0021 15.75V9.456c0-1.081-.768-2.015-1.837-2.175a48.055 48.055 0 00-1.913-.247M6.34 18H5.25A2.25 2.25 0 013 15.75V9.456c0-1.081.768-2.015 1.837-2.175a48.041 48.041 0 011.913-.247m10.5 0a48.536 48.536 0 00-10.5 0m10.5 0V3.375c0-.621-.504-1.125-1.125-1.125h-8.25c-.621 0-1.125.504-1.125 1.125v3.659M18 10.5h.008v.008H18V10.5zm-3 0h.008v.008H15V10.5z" />
                         </svg>
@@ -97,32 +106,32 @@
                     <table class="min-w-full divide-y divide-[#e7ebf2] text-left text-sm">
                         <thead class="bg-[#f7f8fb] text-xs font-medium text-ink-muted print:bg-slate-100">
                             <tr>
-                                <th scope="col" class="w-12 px-4 py-3">No</th>
+                                <th scope="col" class="w-12 whitespace-nowrap px-4 py-3">No</th>
                                 @foreach ($headers as [$col, $align])
-                                    <th scope="col" class="px-4 py-3 {{ $align }}">{{ $col }}</th>
+                                    <th scope="col" class="whitespace-nowrap px-4 py-3 {{ $align }}">{{ $col }}</th>
                                 @endforeach
-                                <th scope="col" class="px-4 py-3 text-center">Status</th>
+                                <th scope="col" class="whitespace-nowrap px-4 py-3 text-center">Status</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-[#e7ebf2] bg-white">
                             @foreach ($data as $index => $item)
                                 <tr>
-                                    <td class="px-4 py-3 tabular-nums text-ink-muted">{{ $index + 1 }}</td>
+                                    <td class="whitespace-nowrap px-4 py-3 tabular-nums text-ink-muted">{{ $index + 1 }}</td>
                                     @if ($jenis === 'barang_temuan')
                                         <td class="px-4 py-3 font-medium text-ink">{{ $item->nama_barang }}</td>
-                                        <td class="px-4 py-3 text-center text-[#3d4b60]">{{ $item->kategori->nama_kategori }}</td>
+                                        <td class="whitespace-nowrap px-4 py-3 text-center text-[#3d4b60]">{{ $item->kategori->nama_kategori }}</td>
                                         <td class="px-4 py-3 text-[#3d4b60]">{{ $item->lokasi_ditemukan }}</td>
-                                        <td class="px-4 py-3 text-center tabular-nums text-[#3d4b60]">{{ $item->tanggal_ditemukan->format('d M Y') }}</td>
+                                        <td class="whitespace-nowrap px-4 py-3 text-center tabular-nums text-[#3d4b60]">{{ $item->tanggal_ditemukan->format('d M Y') }}</td>
                                     @elseif ($jenis === 'laporan_kehilangan')
                                         <td class="px-4 py-3 font-medium text-ink">{{ $item->nama_barang }}</td>
-                                        <td class="px-4 py-3 text-center text-[#3d4b60]">{{ $item->kategori->nama_kategori }}</td>
+                                        <td class="whitespace-nowrap px-4 py-3 text-center text-[#3d4b60]">{{ $item->kategori->nama_kategori }}</td>
                                         <td class="px-4 py-3 text-[#3d4b60]">
                                             <p class="font-medium text-ink">{{ $item->pengguna->nama }}</p>
                                             <p class="text-xs tabular-nums text-ink-muted">{{ $item->pengguna->nim }}</p>
                                         </td>
                                         <td class="px-4 py-3 text-center text-[#3d4b60]">
                                             <p>{{ $item->lokasi_hilang }}</p>
-                                            <p class="text-xs tabular-nums text-ink-muted">{{ $item->tanggal_hilang->format('d M Y') }}</p>
+                                            <p class="whitespace-nowrap text-xs tabular-nums text-ink-muted">{{ $item->tanggal_hilang->format('d M Y') }}</p>
                                         </td>
                                     @else
                                         <td class="px-4 py-3">
@@ -133,10 +142,10 @@
                                             <p class="font-medium text-ink">{{ $item->pengguna->nama }}</p>
                                             <p class="text-xs tabular-nums text-ink-muted">{{ $item->pengguna->nim }}</p>
                                         </td>
-                                        <td class="px-4 py-3 text-center tabular-nums text-[#3d4b60]">{{ $item->created_at->format('d M Y') }}</td>
-                                        <td class="px-4 py-3 text-center tabular-nums text-[#3d4b60]">{{ $item->tanggal_diambil?->format('d M Y, H:i') ?? '-' }}</td>
+                                        <td class="whitespace-nowrap px-4 py-3 text-center tabular-nums text-[#3d4b60]">{{ $item->created_at->format('d M Y') }}</td>
+                                        <td class="whitespace-nowrap px-4 py-3 text-center tabular-nums text-[#3d4b60]">{{ $item->tanggal_diambil?->format('d M Y, H:i') ?? '-' }}</td>
                                     @endif
-                                    <td class="px-4 py-3 text-center font-medium text-ink">{{ ucfirst($item->status) }}</td>
+                                    <td class="whitespace-nowrap px-4 py-3 text-center font-medium text-ink">{{ ucfirst($item->status) }}</td>
                                 </tr>
                             @endforeach
                         </tbody>
@@ -153,31 +162,14 @@
                 </div>
             </div>
         </div>
+        <div id="modal-cetak" popover class="m-auto w-[calc(100%-2rem)] max-w-sm rounded-2xl border border-[#e7ebf2] bg-white p-6 text-left backdrop:bg-ink-deep/60 print:hidden">
+            <h3 class="text-base font-semibold text-ink">Cetak Laporan</h3>
+            <p class="mt-2 text-sm leading-6 text-ink-muted">
+                Tekan <kbd class="rounded border border-[#d7dde7] bg-[#f7f8fb] px-1.5 py-0.5 text-xs font-semibold text-ink">Ctrl</kbd> + <kbd class="rounded border border-[#d7dde7] bg-[#f7f8fb] px-1.5 py-0.5 text-xs font-semibold text-ink">P</kbd> (atau <kbd class="rounded border border-[#d7dde7] bg-[#f7f8fb] px-1.5 py-0.5 text-xs font-semibold text-ink">⌘</kbd> + <kbd class="rounded border border-[#d7dde7] bg-[#f7f8fb] px-1.5 py-0.5 text-xs font-semibold text-ink">P</kbd>) pada browser untuk mencetak atau menyimpan sebagai PDF.
+            </p>
+            <div class="mt-5 flex justify-end">
+                <button type="button" popovertarget="modal-cetak" popovertargetaction="hide" class="inline-flex h-10 items-center justify-center rounded-xl bg-ink-navy px-4 text-sm font-medium text-white hover:bg-ink-deep">Mengerti</button>
+            </div>
+        </div>
     </div>
 @endsection
-
-@push('scripts')
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const statusMap = {
-                barang_temuan: [['tersedia', 'Tersedia'], ['diklaim', 'Diklaim'], ['dikembalikan', 'Dikembalikan']],
-                laporan_kehilangan: [['dicari', 'Dicari'], ['ditemukan', 'Ditemukan']],
-                klaim: [['pending', 'Pending'], ['disetujui', 'Disetujui'], ['selesai', 'Selesai'], ['ditolak', 'Ditolak']],
-            };
-            const jenisEl = document.getElementById('jenis');
-            const statusEl = document.getElementById('status');
-            const initialStatus = @json($status ?? '');
-
-            const renderOptions = (keepSelected = false) => {
-                statusEl.innerHTML = '<option value="">Semua Status</option>';
-                (statusMap[jenisEl.value] || []).forEach(([val, label]) => {
-                    statusEl.add(new Option(label, val, false, keepSelected && val === initialStatus));
-                });
-                statusEl.dispatchEvent(new Event('change'));
-            };
-
-            jenisEl.addEventListener('change', () => renderOptions(false));
-            renderOptions(true);
-        });
-    </script>
-@endpush

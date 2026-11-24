@@ -5,7 +5,7 @@
 
 @section('content')
     @php
-        $field = 'w-full rounded-xl border border-[#d7dde7] bg-white px-3.5 py-2.5 text-sm text-ink outline-none transition-colors duration-150 focus:border-ink-navy focus:ring-4 focus:ring-ink-navy/10';
+        $field = 'h-[42px] w-full rounded-xl border border-[#d7dde7] bg-white px-3.5 text-sm text-ink outline-none transition-colors duration-150 focus:border-ink-navy focus:ring-4 focus:ring-ink-navy/10';
         $actionBtn = 'inline-flex h-9 w-full items-center justify-center rounded-lg border bg-white px-3 text-xs font-medium transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-1';
     @endphp
 
@@ -20,15 +20,15 @@
             </a>
         </div>
 
-        <form action="{{ route('petugas.barang-temuan.index') }}" method="GET" class="grid grid-cols-1 gap-3 rounded-2xl border border-[#e7ebf2] bg-white p-4 md:grid-cols-12">
-            <div class="relative md:col-span-5">
+        <form action="{{ route('petugas.barang-temuan.index') }}" method="GET" class="flex flex-col gap-3 rounded-2xl border border-[#e7ebf2] bg-white p-4 md:flex-row md:flex-wrap md:items-center">
+            <div class="relative min-w-[200px] flex-1">
                 <svg class="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-muted" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75" aria-hidden="true">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
                 </svg>
                 <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari nama barang atau lokasi" class="{{ $field }} pl-10">
             </div>
 
-            <div class="md:col-span-3">
+            <div class="w-full md:w-48">
                 <select name="kategori_id" class="{{ $field }}">
                     <option value="">Semua Kategori</option>
                     @foreach ($kategori as $kat)
@@ -37,7 +37,7 @@
                 </select>
             </div>
 
-            <div class="md:col-span-2">
+            <div class="w-full md:w-40">
                 <select name="status" class="{{ $field }}">
                     <option value="">Semua Status</option>
                     @foreach (['tersedia' => 'Tersedia', 'diklaim' => 'Diklaim', 'dikembalikan' => 'Dikembalikan'] as $val => $label)
@@ -46,10 +46,10 @@
                 </select>
             </div>
 
-            <div class="flex gap-2 md:col-span-2">
-                <button type="submit" class="flex-1 rounded-xl bg-brand px-4 py-2.5 text-sm font-medium text-white transition-colors duration-150 hover:bg-brand-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 active:scale-[0.98]">Filter</button>
+            <div class="flex shrink-0 items-center gap-2">
+                <button type="submit" class="inline-flex h-[42px] flex-1 items-center justify-center rounded-xl bg-brand px-5 text-sm font-medium text-white transition-colors duration-150 hover:bg-brand-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 active:scale-[0.98] md:flex-none">Filter</button>
                 @if (request()->anyFilled(['search', 'kategori_id', 'status']))
-                    <a href="{{ route('petugas.barang-temuan.index') }}" class="inline-flex items-center justify-center rounded-xl border border-[#d7dde7] bg-white px-3 py-2.5 text-sm font-medium text-ink transition-colors duration-150 hover:bg-[#f7f8fb] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink-navy/30">Reset</a>
+                    <a href="{{ route('petugas.barang-temuan.index') }}" class="inline-flex h-[42px] items-center justify-center rounded-xl border border-[#d7dde7] bg-white px-3.5 text-sm font-medium text-ink transition-colors duration-150 hover:bg-[#f7f8fb] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink-navy/30">Reset</a>
                 @endif
             </div>
         </form>
@@ -69,6 +69,7 @@
                 @foreach ($barangTemuan as $item)
                     @php
                         $foto = $item->foto_barang ? ltrim(preg_replace('#^(public/|storage/)#', '', $item->foto_barang), '/') : null;
+                        $hasFoto = $foto && is_file(public_path('storage/' . $foto));
                         [$badgeCls, $badgeLabel] = match ($item->status) {
                             'tersedia' => ['bg-ink-navy text-white', 'Tersedia'],
                             'diklaim' => ['bg-[#e8eef6] text-ink-navy', 'Diklaim'],
@@ -77,16 +78,16 @@
                     @endphp
                     <article class="group flex h-full min-w-0 flex-col overflow-hidden rounded-2xl border border-[#e7ebf2] bg-white transition duration-200 hover:-translate-y-1 hover:border-[#cfd6e2] hover:shadow-card">
                         <div class="relative h-40 overflow-hidden bg-[#eef1f5]">
-                            @if ($foto)
+                            @if ($hasFoto)
                                 <img src="{{ asset('storage/' . $foto) }}" alt="{{ $item->nama_barang }}"
-                                    onerror="this.hidden=true;this.nextElementSibling?.classList.remove('hidden')"
                                     class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.03]">
+                            @else
+                                <div class="absolute inset-0 flex items-center justify-center text-ink-muted/60">
+                                    <svg class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3.75h16.5v16.5H3.75zM3.75 16.5l4.5-4.5 3.75 3.75 2.25-2.25 6 6" />
+                                    </svg>
+                                </div>
                             @endif
-                            <div class="{{ $foto ? 'hidden' : '' }} absolute inset-0 flex items-center justify-center text-ink-muted/60">
-                                <svg class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3.75h16.5v16.5H3.75zM3.75 16.5l4.5-4.5 3.75 3.75 2.25-2.25 6 6" />
-                                </svg>
-                            </div>
                             <span class="absolute left-3 top-3 rounded-lg bg-white/95 px-2 py-0.5 text-xs font-medium text-ink shadow-sm">{{ $item->kategori->nama_kategori }}</span>
                             <span class="absolute right-3 top-3 rounded-lg px-2 py-0.5 text-xs font-medium {{ $badgeCls }}">{{ $badgeLabel }}</span>
                         </div>
@@ -107,16 +108,27 @@
 
                             <div class="mt-3 grid grid-cols-2 gap-2 border-t border-[#e7ebf2] pt-3">
                                 <a href="{{ route('petugas.barang-temuan.edit', $item) }}" class="{{ $actionBtn }} border-[#d7dde7] text-ink hover:border-ink-navy hover:bg-[#f7f8fb] hover:text-ink-navy focus-visible:ring-ink-navy/30">Edit</a>
-                                <form action="{{ route('petugas.barang-temuan.destroy', $item) }}" method="POST" onsubmit="return confirm('Hapus barang temuan {{ $item->nama_barang }}?')">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="{{ $actionBtn }} border-[#f3c3c0] text-[#b42318] hover:border-brand hover:bg-[#fef3f2] focus-visible:ring-brand/30">Hapus</button>
-                                </form>
+                                <button type="button" popovertarget="confirm-hapus-{{ $item->id }}" class="{{ $actionBtn }} border-[#f3c3c0] text-[#b42318] hover:border-brand hover:bg-[#fef3f2] focus-visible:ring-brand/30">Hapus</button>
                             </div>
                         </div>
                     </article>
                 @endforeach
             </div>
+
+            @foreach ($barangTemuan as $item)
+                <div id="confirm-hapus-{{ $item->id }}" popover class="m-auto w-[calc(100%-2rem)] max-w-sm rounded-2xl border border-[#e7ebf2] bg-white p-6 text-left backdrop:bg-ink-deep/60">
+                    <h3 class="text-base font-semibold text-ink">Hapus Barang Temuan</h3>
+                    <p class="mt-2 text-sm text-ink-muted">Hapus barang temuan <strong>{{ $item->nama_barang }}</strong>?</p>
+                    <div class="mt-5 flex justify-end gap-2">
+                        <button type="button" popovertarget="confirm-hapus-{{ $item->id }}" popovertargetaction="hide" class="inline-flex h-10 items-center justify-center rounded-xl border border-[#d7dde7] bg-white px-4 text-sm font-medium text-ink hover:bg-[#f7f8fb]">Batal</button>
+                        <form action="{{ route('petugas.barang-temuan.destroy', $item) }}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="inline-flex h-10 items-center justify-center rounded-xl bg-brand px-4 text-sm font-medium text-white hover:bg-brand-dark">Ya, Hapus</button>
+                        </form>
+                    </div>
+                </div>
+            @endforeach
         @endif
 
     </div>

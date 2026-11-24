@@ -19,21 +19,21 @@
     ];
 @endphp
 
-<div id="sidebar-backdrop" onclick="toggleSidebar()" class="fixed inset-0 z-40 hidden bg-ink-deep/50 lg:hidden print:hidden"></div>
+<label id="sidebar-backdrop" for="sidebar-toggle" aria-label="Tutup sidebar" class="fixed inset-0 z-40 hidden cursor-pointer bg-ink-deep/50 peer-checked:block lg:hidden print:hidden"></label>
 
-<aside id="sidebar" class="fixed inset-y-0 left-0 z-50 flex w-[248px] -translate-x-full flex-col border-r border-[#e7ebf2] bg-white transition-transform duration-200 lg:translate-x-0 print:hidden">
+<aside id="sidebar" class="fixed inset-y-0 left-0 z-50 flex w-[248px] -translate-x-full flex-col border-r border-[#e7ebf2] bg-white transition-transform duration-200 peer-checked:translate-x-0 lg:translate-x-0 print:hidden">
     <div class="h-1 bg-brand"></div>
     <div class="flex h-16 items-center justify-between px-4">
         <a href="{{ route('petugas.dashboard') }}" class="flex items-center gap-2 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink-navy/30">
             <img src="{{ asset('images/logo-findit.svg') }}" alt="Logo FindIT" class="h-8 w-auto object-contain">
             <span class="text-base font-bold leading-tight tracking-tight text-ink">Find<span class="text-brand">IT</span></span>
         </a>
-        <button type="button" onclick="toggleSidebar()" aria-label="Tutup sidebar"
-            class="flex h-9 w-9 items-center justify-center rounded-lg text-ink-muted transition-colors hover:bg-[#f3f5f8] hover:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink-navy/30 lg:hidden">
+        <label for="sidebar-toggle" role="button" tabindex="0" aria-label="Tutup sidebar"
+            class="flex h-9 w-9 cursor-pointer items-center justify-center rounded-lg text-ink-muted transition-colors hover:bg-[#f3f5f8] hover:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink-navy/30 lg:hidden">
             <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75" aria-hidden="true">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
             </svg>
-        </button>
+        </label>
     </div>
 
     <nav class="flex-1 space-y-6 overflow-y-auto px-3 py-3">

@@ -102,14 +102,22 @@
                             <h2 class="text-base font-semibold text-ink">Setujui Pengajuan Klaim</h2>
                             <p class="mt-0.5 text-xs text-ink-muted">Status barang akan berubah menjadi Diklaim dan klaim pending lain untuk barang ini otomatis ditolak.</p>
                         </div>
-                        <form action="{{ route('petugas.verifikasi-klaim.setujui', $klaim) }}" method="POST" class="space-y-4 p-6" onsubmit="return confirm('Setujui pengajuan klaim ini?')">
+                        <form action="{{ route('petugas.verifikasi-klaim.setujui', $klaim) }}" method="POST" class="space-y-4 p-6">
                             @csrf
                             @method('PATCH')
                             <div>
                                 <label for="catatan_setujui" class="mb-1.5 block text-sm font-medium text-ink">Catatan Petugas (Opsional)</label>
                                 <textarea id="catatan_setujui" name="catatan_petugas" rows="3" placeholder="Contoh: Ciri barang sesuai. Silakan ambil di Pos Keamanan Utama dengan membawa KTM asli." class="{{ $textarea }}">{{ old('catatan_petugas') }}</textarea>
                             </div>
-                            <button type="submit" class="{{ $btnBase }} bg-ink-navy text-white hover:bg-ink-deep focus-visible:ring-ink-navy">Setujui Klaim</button>
+                            <button type="button" popovertarget="confirm-setujui" class="{{ $btnBase }} bg-ink-navy text-white hover:bg-ink-deep focus-visible:ring-ink-navy">Setujui Klaim</button>
+                            <div id="confirm-setujui" popover class="m-auto w-[calc(100%-2rem)] max-w-sm rounded-2xl border border-[#e7ebf2] bg-white p-6 text-left backdrop:bg-ink-deep/60">
+                                <h3 class="text-base font-semibold text-ink">Setujui Klaim</h3>
+                                <p class="mt-2 text-sm text-ink-muted">Setujui pengajuan klaim ini?</p>
+                                <div class="mt-5 flex justify-end gap-2">
+                                    <button type="button" popovertarget="confirm-setujui" popovertargetaction="hide" class="inline-flex h-10 items-center justify-center rounded-xl border border-[#d7dde7] bg-white px-4 text-sm font-medium text-ink hover:bg-[#f7f8fb]">Batal</button>
+                                    <button type="submit" class="inline-flex h-10 items-center justify-center rounded-xl bg-ink-navy px-4 text-sm font-medium text-white hover:bg-ink-deep">Ya, Setujui</button>
+                                </div>
+                            </div>
                         </form>
                     </div>
                 @elseif ($klaim->status === 'disetujui')
@@ -118,7 +126,7 @@
                             <h2 class="text-base font-semibold text-ink">Selesaikan &amp; Catat Serah Terima</h2>
                             <p class="mt-0.5 text-xs text-ink-muted">Unggah foto bukti serah terima saat pemilik mengambil barang di Pos Keamanan Utama UNEJ.</p>
                         </div>
-                        <form action="{{ route('petugas.verifikasi-klaim.selesai', $klaim) }}" method="POST" enctype="multipart/form-data" class="space-y-4 p-6" onsubmit="return confirm('Selesaikan serah terima barang ini?')">
+                        <form action="{{ route('petugas.verifikasi-klaim.selesai', $klaim) }}" method="POST" enctype="multipart/form-data" class="space-y-4 p-6">
                             @csrf
                             @method('PATCH')
                             <div>
@@ -131,7 +139,15 @@
                                 <label for="catatan_selesai" class="mb-1.5 block text-sm font-medium text-ink">Catatan Serah Terima (Opsional)</label>
                                 <textarea id="catatan_selesai" name="catatan_petugas" rows="3" placeholder="Contoh: Barang diserahkan langsung setelah verifikasi KTM." class="{{ $textarea }}">{{ old('catatan_petugas', $klaim->catatan_petugas) }}</textarea>
                             </div>
-                            <button type="submit" class="{{ $btnBase }} bg-ink-navy text-white hover:bg-ink-deep focus-visible:ring-ink-navy">Simpan Serah Terima &amp; Selesaikan</button>
+                            <button type="button" popovertarget="confirm-selesai" class="{{ $btnBase }} bg-ink-navy text-white hover:bg-ink-deep focus-visible:ring-ink-navy">Simpan Serah Terima &amp; Selesaikan</button>
+                            <div id="confirm-selesai" popover class="m-auto w-[calc(100%-2rem)] max-w-sm rounded-2xl border border-[#e7ebf2] bg-white p-6 text-left backdrop:bg-ink-deep/60">
+                                <h3 class="text-base font-semibold text-ink">Selesaikan Serah Terima</h3>
+                                <p class="mt-2 text-sm text-ink-muted">Selesaikan serah terima barang ini?</p>
+                                <div class="mt-5 flex justify-end gap-2">
+                                    <button type="button" popovertarget="confirm-selesai" popovertargetaction="hide" class="inline-flex h-10 items-center justify-center rounded-xl border border-[#d7dde7] bg-white px-4 text-sm font-medium text-ink hover:bg-[#f7f8fb]">Batal</button>
+                                    <button type="submit" class="inline-flex h-10 items-center justify-center rounded-xl bg-ink-navy px-4 text-sm font-medium text-white hover:bg-ink-deep">Ya, Selesaikan</button>
+                                </div>
+                            </div>
                         </form>
                     </div>
                 @endif
@@ -147,8 +163,7 @@
                                 {{ $isPending ? 'Berikan alasan yang jelas jika ciri barang tidak sesuai.' : 'Jika pengklaim batal mengambil atau bukti fisik tidak cocok, barang akan dikembalikan ke status Tersedia.' }}
                             </p>
                         </div>
-                        <form action="{{ route('petugas.verifikasi-klaim.tolak', $klaim) }}" method="POST" class="space-y-4 p-6"
-                            onsubmit="return confirm('{{ $isPending ? 'Tolak pengajuan klaim ini?' : 'Batalkan persetujuan dan tolak klaim ini?' }}')">
+                        <form action="{{ route('petugas.verifikasi-klaim.tolak', $klaim) }}" method="POST" class="space-y-4 p-6">
                             @csrf
                             @method('PATCH')
                             <div>
@@ -157,9 +172,17 @@
                                     placeholder="{{ $isPending ? 'Tuliskan alasan penolakan klaim' : 'Tuliskan alasan pembatalan' }}"
                                     class="{{ $textarea }} focus:border-brand focus:ring-brand/10"></textarea>
                             </div>
-                            <button type="submit" class="{{ $btnBase }} border border-[#f3c3c0] bg-white text-[#b42318] hover:border-brand hover:bg-[#fef3f2] focus-visible:ring-brand">
+                            <button type="button" popovertarget="confirm-tolak" class="{{ $btnBase }} border border-[#f3c3c0] bg-white text-[#b42318] hover:border-brand hover:bg-[#fef3f2] focus-visible:ring-brand">
                                 {{ $isPending ? 'Tolak Klaim' : 'Batalkan & Tolak Klaim' }}
                             </button>
+                            <div id="confirm-tolak" popover class="m-auto w-[calc(100%-2rem)] max-w-sm rounded-2xl border border-[#e7ebf2] bg-white p-6 text-left backdrop:bg-ink-deep/60">
+                                <h3 class="text-base font-semibold text-ink">{{ $isPending ? 'Tolak Klaim' : 'Batalkan & Tolak Klaim' }}</h3>
+                                <p class="mt-2 text-sm text-ink-muted">{{ $isPending ? 'Tolak pengajuan klaim ini?' : 'Batalkan persetujuan dan tolak klaim ini?' }}</p>
+                                <div class="mt-5 flex justify-end gap-2">
+                                    <button type="button" popovertarget="confirm-tolak" popovertargetaction="hide" class="inline-flex h-10 items-center justify-center rounded-xl border border-[#d7dde7] bg-white px-4 text-sm font-medium text-ink hover:bg-[#f7f8fb]">Batal</button>
+                                    <button type="submit" class="inline-flex h-10 items-center justify-center rounded-xl bg-brand px-4 text-sm font-medium text-white hover:bg-brand-dark">Ya, Tolak</button>
+                                </div>
+                            </div>
                         </form>
                     </div>
                 @elseif ($klaim->status === 'selesai')

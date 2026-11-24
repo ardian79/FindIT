@@ -17,20 +17,22 @@
 
 @foreach ($flashes as $key => $cfg)
     @if (session($key))
-        <div x-data="{ show: true }" x-show="show" x-cloak x-transition.opacity.duration.150ms
-            class="mb-4 flex items-start justify-between gap-3 rounded-2xl border px-4 py-3 text-sm print:hidden {{ $cfg['box'] }}">
-            <div class="flex items-start gap-3">
-                <svg class="mt-0.5 h-4 w-4 shrink-0 {{ $cfg['icon'] }}" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75" aria-hidden="true">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="{{ $cfg['path'] }}" />
-                </svg>
-                <span>{{ session($key) }}</span>
+        <div>
+            <input type="checkbox" id="alert-dismiss-{{ $key }}" class="peer hidden" aria-hidden="true">
+            <div class="mb-4 flex items-start justify-between gap-3 rounded-2xl border px-4 py-3 text-sm peer-checked:hidden print:hidden {{ $cfg['box'] }}">
+                <div class="flex items-start gap-3">
+                    <svg class="mt-0.5 h-4 w-4 shrink-0 {{ $cfg['icon'] }}" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="{{ $cfg['path'] }}" />
+                    </svg>
+                    <span>{{ session($key) }}</span>
+                </div>
+                <label for="alert-dismiss-{{ $key }}" role="button" tabindex="0" aria-label="Tutup pemberitahuan"
+                    class="cursor-pointer rounded-lg p-1 transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 {{ $cfg['close'] }}">
+                    <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </label>
             </div>
-            <button type="button" @click="show = false" aria-label="Tutup pemberitahuan"
-                class="rounded-lg p-1 transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 {{ $cfg['close'] }}">
-                <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75" aria-hidden="true">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-                </svg>
-            </button>
         </div>
     @endif
 @endforeach
