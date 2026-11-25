@@ -60,8 +60,9 @@
     @endphp
 
     <section id="beranda"
-        class="relative isolate -mt-[68px] flex min-h-screen scroll-mt-0 items-center overflow-hidden bg-ink-deep text-white">
-        <img src="{{ asset('images/banner-unej.svg') }}" alt="Layanan Lost & Found Universitas Jember"
+        class="relative isolate -mt-[68px] flex min-h-screen scroll-mt-0 items-center overflow-hidden bg-ink-deep text-white [contain:layout_paint]">
+        <img src="{{ asset('images/banner-unej.webp') }}" alt="Layanan Lost & Found Universitas Jember"
+            width="1920" height="1080" fetchpriority="high" decoding="async"
             class="fi-hero-bg absolute inset-0 h-full w-full object-cover">
         <div class="absolute inset-0 bg-gradient-to-b from-ink-deep/75 via-ink-deep/65 to-ink-deep/85"></div>
 
@@ -91,7 +92,7 @@
         </div>
     </section>
 
-    <section id="cara-kerja" class="scroll-mt-24 bg-white py-20 lg:py-24">
+    <section id="cara-kerja" class="scroll-mt-24 bg-white py-20 [contain:layout_style] lg:py-24">
         <div class="{{ $container }}">
             <div class="fi-reveal mx-auto max-w-2xl text-center">
                 <p class="{{ $eyebrow }}">Cara kerja</p>
@@ -116,11 +117,12 @@
         </div>
     </section>
 
-    <section class="overflow-x-clip bg-[#f5f6f8]">
+    <section class="overflow-x-clip bg-[#f5f6f8] [contain:layout_style]">
         <div class="{{ $container }} grid items-center gap-10 py-20 lg:grid-cols-2 lg:py-24">
             <div
                 class="fi-reveal-left group overflow-hidden rounded-2xl shadow-lift transition duration-300 hover:-translate-y-1 hover:shadow-[0_24px_50px_rgba(16,42,76,0.16)]">
-                <img src="{{ asset('images/campus-activity.svg') }}" alt="Ilustrasi pencarian barang FindIT"
+                <img src="{{ asset('images/campus-activity.webp') }}" alt="Ilustrasi pencarian barang FindIT"
+                    width="1200" height="801" loading="lazy" decoding="async"
                     class="aspect-[4/3] w-full object-cover transition-transform duration-300 group-hover:scale-[1.03]">
             </div>
             <div class="fi-reveal-right">
@@ -145,7 +147,7 @@
         </div>
     </section>
 
-    <section id="lokasi" class="scroll-mt-24 overflow-x-clip bg-white py-20 lg:py-24">
+    <section id="lokasi" class="scroll-mt-24 overflow-x-clip bg-white py-20 [contain:layout_style] lg:py-24">
         <div class="{{ $container }}">
             <div class="fi-reveal mx-auto mb-8 max-w-2xl text-center">
                 <p class="{{ $eyebrow }}">Lokasi layanan</p>
@@ -192,7 +194,7 @@
                 </div>
 
                 <div
-                    class="min-h-[300px] border-t border-[#e7ebf2] bg-[#eef1f5] sm:min-h-[360px] lg:min-h-[420px] lg:border-l lg:border-t-0">
+                    class="min-h-[300px] border-t border-[#e7ebf2] bg-[#eef1f5] [contain:layout_paint] sm:min-h-[360px] lg:min-h-[420px] lg:border-l lg:border-t-0">
                     <iframe src="https://maps.google.com/maps?q=-8.1659263,113.7144346&t=&z=17&ie=UTF8&iwloc=&output=embed"
                         title="Peta Lokasi Pos Keamanan Utama Universitas Jember"
                         class="h-full min-h-[300px] w-full border-0 sm:min-h-[360px] lg:min-h-[420px]" loading="lazy"
@@ -202,7 +204,7 @@
         </div>
     </section>
 
-    <section id="katalog" class="scroll-mt-24 bg-[#f5f6f8] py-20 lg:py-24">
+    <section id="katalog" class="scroll-mt-24 bg-[#f5f6f8] py-20 [contain:layout_style] lg:py-24">
         <div class="{{ $container }}">
             <div class="fi-reveal mx-auto mb-8 max-w-2xl text-center">
                 <p class="{{ $eyebrow }}">Katalog</p>
@@ -301,7 +303,7 @@
                                             <div
                                                 class="relative flex aspect-[16/10] items-center justify-center overflow-hidden bg-[#eef1f5]">
                                                 @if ($fotoUrl)
-                                                    <img src="{{ $fotoUrl }}" alt="{{ $item->nama_barang }}"
+                                                    <img src="{{ $fotoUrl }}" alt="{{ $item->nama_barang }}" loading="lazy" decoding="async"
                                                         class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.03]">
                                                 @else
                                                     <span class="text-xs font-medium text-ink-muted">Tanpa foto</span>

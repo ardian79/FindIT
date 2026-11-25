@@ -49,7 +49,7 @@ class LaporanKehilanganSeeder extends Seeder
                 'lokasi_hilang' => 'Kantin Pusat Kampus Tegal Boto UNEJ',
                 'tanggal_hilang' => '2026-11-22',
                 'deskripsi' => 'Dompet kulit hitam polos, di dalamnya ada KTP, KTM, dan STNK motor.',
-                'foto_barang' => $publishFoto('hilang-dompet-hitam.jpg', 'laporan_kehilangan'),
+                'foto_barang' => $publishFoto('hilang-dompet-hitam.webp', 'laporan_kehilangan'),
                 'status' => 'dicari',
             ],
             [
@@ -59,7 +59,7 @@ class LaporanKehilanganSeeder extends Seeder
                 'lokasi_hilang' => 'Perpustakaan Pusat Lantai 1 UNEJ',
                 'tanggal_hilang' => '2026-11-22',
                 'deskripsi' => 'TWS hitam matte dalam case, ada stiker kecil huruf N di bagian tutupnya.',
-                'foto_barang' => $publishFoto('hilang-tws-hitam.jpg', 'laporan_kehilangan'),
+                'foto_barang' => $publishFoto('hilang-tws-hitam.webp', 'laporan_kehilangan'),
                 'status' => 'dicari',
             ],
             [
@@ -69,7 +69,7 @@ class LaporanKehilanganSeeder extends Seeder
                 'lokasi_hilang' => 'Parkiran FASILKOM UNEJ',
                 'tanggal_hilang' => '2026-11-21',
                 'deskripsi' => 'Dua buah anak kunci kamar kos dengan gantungan kayu ukiran nama.',
-                'foto_barang' => $publishFoto('hilang-kunci-kos.jpg', 'laporan_kehilangan'),
+                'foto_barang' => $publishFoto('hilang-kunci-kos.webp', 'laporan_kehilangan'),
                 'status' => 'dicari',
             ],
             [
@@ -79,7 +79,7 @@ class LaporanKehilanganSeeder extends Seeder
                 'lokasi_hilang' => 'Gedung Kuliah Bersama UNEJ',
                 'tanggal_hilang' => '2026-11-21',
                 'deskripsi' => 'Kacamata minus frame bening transparan, kemungkinan jatuh dari saku tas.',
-                'foto_barang' => $publishFoto('hilang-kacamata-bening.jpg', 'laporan_kehilangan'),
+                'foto_barang' => $publishFoto('hilang-kacamata-bening.webp', 'laporan_kehilangan'),
                 'status' => 'dicari',
             ],
             [
@@ -89,7 +89,7 @@ class LaporanKehilanganSeeder extends Seeder
                 'lokasi_hilang' => 'Lapangan Basket Kampus Tegal Boto',
                 'tanggal_hilang' => '2026-11-20',
                 'deskripsi' => 'Tumbler warna hijau sage kapasitas 600ml, tutup ulir warna hitam.',
-                'foto_barang' => $publishFoto('hilang-tumbler-sage.jpg', 'laporan_kehilangan'),
+                'foto_barang' => $publishFoto('hilang-tumbler-sage.webp', 'laporan_kehilangan'),
                 'status' => 'dicari',
             ],
             [
@@ -99,7 +99,7 @@ class LaporanKehilanganSeeder extends Seeder
                 'lokasi_hilang' => 'Ruang Baca Fakultas Hukum UNEJ',
                 'tanggal_hilang' => '2026-11-20',
                 'deskripsi' => 'Kepala charger fast charging 33W warna putih tertinggal di stopkontak.',
-                'foto_barang' => $publishFoto('hilang-charger-hp.jpg', 'laporan_kehilangan'),
+                'foto_barang' => $publishFoto('hilang-charger-hp.webp', 'laporan_kehilangan'),
                 'status' => 'dicari',
             ],
             [
@@ -109,7 +109,7 @@ class LaporanKehilanganSeeder extends Seeder
                 'lokasi_hilang' => 'Auditorium Universitas Jember',
                 'tanggal_hilang' => '2026-11-19',
                 'deskripsi' => 'Jaket jeans warna biru tua ukuran XL, tertinggal di kursi baris tengah.',
-                'foto_barang' => $publishFoto('hilang-jaket-denim.jpg', 'laporan_kehilangan'),
+                'foto_barang' => $publishFoto('hilang-jaket-denim.webp', 'laporan_kehilangan'),
                 'status' => 'dicari',
             ],
             [
@@ -119,7 +119,7 @@ class LaporanKehilanganSeeder extends Seeder
                 'lokasi_hilang' => 'Mushola Fakultas Ekonomi dan Bisnis',
                 'tanggal_hilang' => '2026-11-19',
                 'deskripsi' => 'Jam tangan analog dial putih dengan tali kulit warna coklat muda.',
-                'foto_barang' => $publishFoto('hilang-jam-kulit.jpg', 'laporan_kehilangan'),
+                'foto_barang' => $publishFoto('hilang-jam-kulit.webp', 'laporan_kehilangan'),
                 'status' => 'dicari',
             ],
             [
@@ -129,7 +129,7 @@ class LaporanKehilanganSeeder extends Seeder
                 'lokasi_hilang' => 'Lab Pemrograman FASILKOM UNEJ',
                 'tanggal_hilang' => '2026-11-18',
                 'deskripsi' => 'HDD eksternal Seagate 1TB warna hitam di dalam pouch resleting abu-abu.',
-                'foto_barang' => $publishFoto('hilang-hdd.jpg', 'laporan_kehilangan'),
+                'foto_barang' => $publishFoto('hilang-hdd.webp', 'laporan_kehilangan'),
                 'status' => 'dicari',
             ],
             [
@@ -139,7 +139,7 @@ class LaporanKehilanganSeeder extends Seeder
                 'lokasi_hilang' => 'Area Parkir Masjid Al-Hikmah UNEJ',
                 'tanggal_hilang' => '2026-11-18',
                 'deskripsi' => 'Kunci motor dengan remote hitam dan gantungan tali paracord hijau.',
-                'foto_barang' => $publishFoto('hilang-kunci-yamaha.jpg', 'laporan_kehilangan'),
+                'foto_barang' => $publishFoto('hilang-kunci-yamaha.webp', 'laporan_kehilangan'),
                 'status' => 'dicari',
             ],
             [
@@ -149,7 +149,7 @@ class LaporanKehilanganSeeder extends Seeder
                 'lokasi_hilang' => 'Ruang Diskusi Perpustakaan UNEJ',
                 'tanggal_hilang' => '2026-11-17',
                 'deskripsi' => 'USB Hub bahan aluminium warna silver merk Ugreen, ada port HDMI dan LAN.',
-                'foto_barang' => $publishFoto('hilang-usbhub.jpg', 'laporan_kehilangan'),
+                'foto_barang' => $publishFoto('hilang-usbhub.webp', 'laporan_kehilangan'),
                 'status' => 'dicari',
             ],
             [
@@ -159,7 +159,7 @@ class LaporanKehilanganSeeder extends Seeder
                 'lokasi_hilang' => 'Toilet Gedung Fakultas Farmasi UNEJ',
                 'tanggal_hilang' => '2026-11-17',
                 'deskripsi' => 'Pouch resleting warna krem berisi lip balm, cermin kecil, dan tisu.',
-                'foto_barang' => $publishFoto('hilang-pouch.jpg', 'laporan_kehilangan'),
+                'foto_barang' => $publishFoto('hilang-pouch.webp', 'laporan_kehilangan'),
                 'status' => 'dicari',
             ],
             [
@@ -169,7 +169,7 @@ class LaporanKehilanganSeeder extends Seeder
                 'lokasi_hilang' => 'Gazebo Depan FASILKOM UNEJ',
                 'tanggal_hilang' => '2026-11-16',
                 'deskripsi' => 'Buku teks sampul biru putih, di halaman depan ada tulisan nama pemilik.',
-                'foto_barang' => $publishFoto('hilang-buku-kuliah.jpg', 'laporan_kehilangan'),
+                'foto_barang' => $publishFoto('hilang-buku-kuliah.webp', 'laporan_kehilangan'),
                 'status' => 'dicari',
             ],
             [
@@ -179,7 +179,7 @@ class LaporanKehilanganSeeder extends Seeder
                 'lokasi_hilang' => 'Sepanjang Jalan Kalimantan Kampus',
                 'tanggal_hilang' => '2026-11-16',
                 'deskripsi' => 'Topi baseball warna hitam polos bahan katun dengan pengait besi di belakang.',
-                'foto_barang' => $publishFoto('hilang-topi-hitam.jpg', 'laporan_kehilangan'),
+                'foto_barang' => $publishFoto('hilang-topi-hitam.webp', 'laporan_kehilangan'),
                 'status' => 'dicari',
             ],
             [
@@ -189,7 +189,7 @@ class LaporanKehilanganSeeder extends Seeder
                 'lokasi_hilang' => 'Ruang Kelas 204 Gedung FKIP UNEJ',
                 'tanggal_hilang' => '2026-11-15',
                 'deskripsi' => 'Stylus pen magnetik warna putih untuk iPad/tablet, ujung nib baru diganti.',
-                'foto_barang' => $publishFoto('hilang-stylus.jpg', 'laporan_kehilangan'),
+                'foto_barang' => $publishFoto('hilang-stylus.webp', 'laporan_kehilangan'),
                 'status' => 'dicari',
             ],
             [
@@ -199,7 +199,7 @@ class LaporanKehilanganSeeder extends Seeder
                 'lokasi_hilang' => 'Koperasi Mahasiswa UNEJ',
                 'tanggal_hilang' => '2026-11-14',
                 'deskripsi' => 'Card holder tipis warna navy berisi kartu ATM dan kartu e-money.',
-                'foto_barang' => $publishFoto('hilang-cardholder-navy.jpg', 'laporan_kehilangan'),
+                'foto_barang' => $publishFoto('hilang-cardholder-navy.webp', 'laporan_kehilangan'),
                 'status' => 'dicari',
             ],
             [
@@ -209,7 +209,7 @@ class LaporanKehilanganSeeder extends Seeder
                 'lokasi_hilang' => 'Parkiran Fakultas Teknik UNEJ',
                 'tanggal_hilang' => '2026-11-13',
                 'deskripsi' => 'Jas hujan setelan warna hitam terlipat di dalam tas serut kecil.',
-                'foto_barang' => $publishFoto('hilang-jashujan.jpg', 'laporan_kehilangan'),
+                'foto_barang' => $publishFoto('hilang-jashujan.webp', 'laporan_kehilangan'),
                 'status' => 'ditemukan',
             ],
             [
@@ -219,7 +219,7 @@ class LaporanKehilanganSeeder extends Seeder
                 'lokasi_hilang' => 'Lab Komputer Fakultas Ekonomi UNEJ',
                 'tanggal_hilang' => '2026-11-12',
                 'deskripsi' => 'Flashdisk bodi besi warna silver merk Kingston 64GB berisi file tugas akhir.',
-                'foto_barang' => $publishFoto('hilang-flashdisk-metal.jpg', 'laporan_kehilangan'),
+                'foto_barang' => $publishFoto('hilang-flashdisk-metal.webp', 'laporan_kehilangan'),
                 'status' => 'ditemukan',
             ],
             [
@@ -229,7 +229,7 @@ class LaporanKehilanganSeeder extends Seeder
                 'lokasi_hilang' => 'Taman Fakultas Kedokteran Gigi UNEJ',
                 'tanggal_hilang' => '2026-11-11',
                 'deskripsi' => 'Sunglasses frame hitam doff dengan lensa gelap, jatuh saat istirahat siang.',
-                'foto_barang' => $publishFoto('hilang-sunglasses.jpg', 'laporan_kehilangan'),
+                'foto_barang' => $publishFoto('hilang-sunglasses.webp', 'laporan_kehilangan'),
                 'status' => 'ditemukan',
             ],
             [
@@ -239,7 +239,7 @@ class LaporanKehilanganSeeder extends Seeder
                 'lokasi_hilang' => 'Studio Mini FISIP UNEJ',
                 'tanggal_hilang' => '2026-11-10',
                 'deskripsi' => 'Headset over-ear warna hitam merk Sony, kabel jack 3.5mm bentuk L.',
-                'foto_barang' => $publishFoto('hilang-headset.jpg', 'laporan_kehilangan'),
+                'foto_barang' => $publishFoto('hilang-headset.webp', 'laporan_kehilangan'),
                 'status' => 'ditemukan',
             ],
         ];

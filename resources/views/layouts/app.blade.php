@@ -51,12 +51,19 @@
         @media (prefers-reduced-motion: no-preference) {
             @supports (animation-timeline: scroll()) {
                 .fi-hero-bg {
+                    will-change: transform;
                     animation: fi-hero-parallax linear both;
                     animation-timeline: scroll(root);
                     animation-range: 0px 100vh;
                 }
             }
             @supports (animation-timeline: view()) {
+                .fi-reveal,
+                .fi-reveal-left,
+                .fi-reveal-right,
+                .fi-reveal-scale {
+                    will-change: transform, opacity;
+                }
                 .fi-reveal {
                     animation: fi-reveal-up linear both;
                     animation-timeline: view();
@@ -175,13 +182,12 @@
                 display: none;
             }
         }
+        .fi-nav-wrap {
+            contain: layout style;
+        }
         @supports (animation-timeline: scroll()) {
-            .fi-nav-wrap {
-                animation: fi-nav-wrap-scroll linear both;
-                animation-timeline: scroll(root);
-                animation-range: 0px 80px;
-            }
             .fi-nav-bar {
+                will-change: transform;
                 animation: fi-nav-bar-scroll linear both;
                 animation-timeline: scroll(root);
                 animation-range: 0px 80px;
@@ -192,10 +198,6 @@
                 animation-range: 0px 80px;
             }
         }
-        @keyframes fi-nav-wrap-scroll {
-            from { padding-inline: 0; }
-            to { padding-inline: 1rem; }
-        }
         @keyframes fi-nav-bar-scroll {
             from {
                 max-width: 100%;
@@ -205,7 +207,7 @@
                 box-shadow: 0 0 0 rgba(16, 42, 76, 0);
             }
             to {
-                max-width: 1160px;
+                max-width: min(1160px, calc(100% - 2rem));
                 transform: translateY(0.75rem);
                 border-radius: 36px;
                 background-color: rgba(255, 255, 255, 0.95);
@@ -214,7 +216,7 @@
         }
         @keyframes fi-nav-mobile-scroll {
             from { max-width: 100%; margin-top: 0.375rem; }
-            to { max-width: 1160px; margin-top: 1.25rem; }
+            to { max-width: min(1160px, calc(100% - 2rem)); margin-top: 1.25rem; }
         }
         @supports (scroll-target-group: auto) {
             .fi-nav-links {

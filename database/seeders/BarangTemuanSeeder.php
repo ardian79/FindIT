@@ -41,7 +41,7 @@ class BarangTemuanSeeder extends Seeder
                 'lokasi_ditemukan' => 'Perpustakaan Pusat Lantai 2 UNEJ',
                 'tanggal_ditemukan' => '2026-11-22',
                 'deskripsi' => 'Dompet lipat kulit warna coklat tua ditemukan di meja baca dekat rak buku referensi.',
-                'foto_barang' => $publishFoto('temuan-dompet-coklat.jpg', 'barang_temuan'),
+                'foto_barang' => $publishFoto('temuan-dompet-coklat.webp', 'barang_temuan'),
                 'status' => 'tersedia',
             ],
             [
@@ -50,7 +50,7 @@ class BarangTemuanSeeder extends Seeder
                 'lokasi_ditemukan' => 'Lab Basis Data FASILKOM UNEJ',
                 'tanggal_ditemukan' => '2026-11-21',
                 'deskripsi' => 'Flashdisk warna hitam-merah tertinggal di PC baris kedua sebelah kanan.',
-                'foto_barang' => $publishFoto('temuan-flashdisk.jpg', 'barang_temuan'),
+                'foto_barang' => $publishFoto('temuan-flashdisk.webp', 'barang_temuan'),
                 'status' => 'tersedia',
             ],
             [
@@ -59,7 +59,7 @@ class BarangTemuanSeeder extends Seeder
                 'lokasi_ditemukan' => 'Gazebo Masjid Al-Hikmah UNEJ',
                 'tanggal_ditemukan' => '2026-11-21',
                 'deskripsi' => 'Hoodie katun warna hitam polos ukuran L tanpa resleting, kondisi bersih terlipat.',
-                'foto_barang' => $publishFoto('temuan-hoodie-hitam.jpg', 'barang_temuan'),
+                'foto_barang' => $publishFoto('temuan-hoodie-hitam.webp', 'barang_temuan'),
                 'status' => 'tersedia',
             ],
             [
@@ -68,7 +68,7 @@ class BarangTemuanSeeder extends Seeder
                 'lokasi_ditemukan' => 'Ruang Kuliah 302 Gedung Mas Soerachman',
                 'tanggal_ditemukan' => '2026-11-20',
                 'deskripsi' => 'Kacamata minus frame tipis warna hitam beserta kotak kain abu-abu di bawah kursi.',
-                'foto_barang' => $publishFoto('temuan-kacamata-hitam.jpg', 'barang_temuan'),
+                'foto_barang' => $publishFoto('temuan-kacamata-hitam.webp', 'barang_temuan'),
                 'status' => 'tersedia',
             ],
             [
@@ -77,7 +77,7 @@ class BarangTemuanSeeder extends Seeder
                 'lokasi_ditemukan' => 'Gedung CDAST Lantai 3 UNEJ',
                 'tanggal_ditemukan' => '2026-11-20',
                 'deskripsi' => 'Kalkulator scientific Casio FX-991EX tertinggal di meja setelah ujian praktikum.',
-                'foto_barang' => $publishFoto('temuan-kalkulator.jpg', 'barang_temuan'),
+                'foto_barang' => $publishFoto('temuan-kalkulator.webp', 'barang_temuan'),
                 'status' => 'tersedia',
             ],
             [
@@ -86,7 +86,7 @@ class BarangTemuanSeeder extends Seeder
                 'lokasi_ditemukan' => 'Parkiran Barat FASILKOM UNEJ',
                 'tanggal_ditemukan' => '2026-11-19',
                 'deskripsi' => 'Kunci motor Honda dengan gantungan karet warna biru, ditemukan dekat pos parkir.',
-                'foto_barang' => $publishFoto('temuan-kunci-motor.jpg', 'barang_temuan'),
+                'foto_barang' => $publishFoto('temuan-kunci-motor.webp', 'barang_temuan'),
                 'status' => 'tersedia',
             ],
             [
@@ -95,7 +95,7 @@ class BarangTemuanSeeder extends Seeder
                 'lokasi_ditemukan' => 'Kantin Pusat Kampus Tegal Boto UNEJ',
                 'tanggal_ditemukan' => '2026-11-19',
                 'deskripsi' => 'Tumbler stainless steel 500ml warna hitam doff, ada sedikit goresan di bagian bawah.',
-                'foto_barang' => $publishFoto('temuan-tumbler-hitam.jpg', 'barang_temuan'),
+                'foto_barang' => $publishFoto('temuan-tumbler-hitam.webp', 'barang_temuan'),
                 'status' => 'tersedia',
             ],
             [
@@ -104,7 +104,7 @@ class BarangTemuanSeeder extends Seeder
                 'lokasi_ditemukan' => 'Co-Working Space Perpustakaan UNEJ',
                 'tanggal_ditemukan' => '2026-11-18',
                 'deskripsi' => 'Adaptor charger laptop Type-C 65W warna hitam lengkap dengan kabelnya.',
-                'foto_barang' => $publishFoto('temuan-charger-laptop.jpg', 'barang_temuan'),
+                'foto_barang' => $publishFoto('temuan-charger-laptop.webp', 'barang_temuan'),
                 'status' => 'tersedia',
             ],
             [
@@ -113,7 +113,7 @@ class BarangTemuanSeeder extends Seeder
                 'lokasi_ditemukan' => 'Tribun Lapangan Stadion UNEJ',
                 'tanggal_ditemukan' => '2026-11-18',
                 'deskripsi' => 'Powerbank tipis warna hitam doff dengan lampu indikator LED biru.',
-                'foto_barang' => $publishFoto('temuan-powerbank.jpg', 'barang_temuan'),
+                'foto_barang' => $publishFoto('temuan-powerbank.webp', 'barang_temuan'),
                 'status' => 'tersedia',
             ],
             [
@@ -122,7 +122,7 @@ class BarangTemuanSeeder extends Seeder
                 'lokasi_ditemukan' => 'Halte Double Way UNEJ',
                 'tanggal_ditemukan' => '2026-11-17',
                 'deskripsi' => 'TWS warna putih lengkap dengan charging case, ditemukan di bangku tunggu.',
-                'foto_barang' => $publishFoto('temuan-tws-putih.jpg', 'barang_temuan'),
+                'foto_barang' => $publishFoto('temuan-tws-putih.webp', 'barang_temuan'),
                 'status' => 'tersedia',
             ],
             [
@@ -131,7 +131,7 @@ class BarangTemuanSeeder extends Seeder
                 'lokasi_ditemukan' => 'Lab Jaringan Komputer FASILKOM',
                 'tanggal_ditemukan' => '2026-11-17',
                 'deskripsi' => 'Mouse wireless warna abu-abu gelap, dongle USB masih terpasang di dalamnya.',
-                'foto_barang' => $publishFoto('temuan-mouse-wireless.jpg', 'barang_temuan'),
+                'foto_barang' => $publishFoto('temuan-mouse-wireless.webp', 'barang_temuan'),
                 'status' => 'tersedia',
             ],
             [
@@ -140,7 +140,7 @@ class BarangTemuanSeeder extends Seeder
                 'lokasi_ditemukan' => 'Depan ATM Center Kampus Tegal Boto',
                 'tanggal_ditemukan' => '2026-11-16',
                 'deskripsi' => 'Card holder plastik berisi KTM UNEJ dengan tali lanyard warna merah marun.',
-                'foto_barang' => $publishFoto('temuan-ktm-lanyard.jpg', 'barang_temuan'),
+                'foto_barang' => $publishFoto('temuan-ktm-lanyard.webp', 'barang_temuan'),
                 'status' => 'tersedia',
             ],
             [
@@ -149,7 +149,7 @@ class BarangTemuanSeeder extends Seeder
                 'lokasi_ditemukan' => 'Tempat Wudhu Masjid Al-Hikmah UNEJ',
                 'tanggal_ditemukan' => '2026-11-16',
                 'deskripsi' => 'Jam tangan digital strap rantai silver tertinggal di pinggir tembok tempat wudhu.',
-                'foto_barang' => $publishFoto('temuan-jam-casio.jpg', 'barang_temuan'),
+                'foto_barang' => $publishFoto('temuan-jam-casio.webp', 'barang_temuan'),
                 'status' => 'tersedia',
             ],
             [
@@ -158,7 +158,7 @@ class BarangTemuanSeeder extends Seeder
                 'lokasi_ditemukan' => 'Selasar Gedung FKIP UNEJ',
                 'tanggal_ditemukan' => '2026-11-15',
                 'deskripsi' => 'Payung lipat otomatis warna biru navy lengkap dengan sarungnya.',
-                'foto_barang' => $publishFoto('temuan-payung-lipat.jpg', 'barang_temuan'),
+                'foto_barang' => $publishFoto('temuan-payung-lipat.webp', 'barang_temuan'),
                 'status' => 'tersedia',
             ],
             [
@@ -167,7 +167,7 @@ class BarangTemuanSeeder extends Seeder
                 'lokasi_ditemukan' => 'Parkiran Gedung Rektorat UNEJ',
                 'tanggal_ditemukan' => '2026-11-15',
                 'deskripsi' => 'Helm half face hitam doff kaca bening, ditemukan terjatuh di dekat pembatas motor.',
-                'foto_barang' => $publishFoto('temuan-helm-hitam.jpg', 'barang_temuan'),
+                'foto_barang' => $publishFoto('temuan-helm-hitam.webp', 'barang_temuan'),
                 'status' => 'tersedia',
             ],
             [
@@ -176,7 +176,7 @@ class BarangTemuanSeeder extends Seeder
                 'lokasi_ditemukan' => 'Ruang Seminar Gedung A FEB UNEJ',
                 'tanggal_ditemukan' => '2026-11-14',
                 'deskripsi' => 'Tempat pensil bahan kanvas abu-abu berisi pulpen, stabilo kuning, dan penggaris.',
-                'foto_barang' => $publishFoto('temuan-tempat-pensil.jpg', 'barang_temuan'),
+                'foto_barang' => $publishFoto('temuan-tempat-pensil.webp', 'barang_temuan'),
                 'status' => 'dikembalikan',
             ],
             [
@@ -185,7 +185,7 @@ class BarangTemuanSeeder extends Seeder
                 'lokasi_ditemukan' => 'Gazebo Fakultas Pertanian UNEJ',
                 'tanggal_ditemukan' => '2026-11-13',
                 'deskripsi' => 'Buku catatan spiral sampul coklat polos berisi catatan mata kuliah semester ganjil.',
-                'foto_barang' => $publishFoto('temuan-buku-catatan.jpg', 'barang_temuan'),
+                'foto_barang' => $publishFoto('temuan-buku-catatan.webp', 'barang_temuan'),
                 'status' => 'dikembalikan',
             ],
             [
@@ -194,7 +194,7 @@ class BarangTemuanSeeder extends Seeder
                 'lokasi_ditemukan' => 'Kantin Fakultas Teknik UNEJ',
                 'tanggal_ditemukan' => '2026-11-12',
                 'deskripsi' => 'Card holder kulit sintetis hitam berisi kartu parkir dan beberapa kartu member.',
-                'foto_barang' => $publishFoto('temuan-card-holder.jpg', 'barang_temuan'),
+                'foto_barang' => $publishFoto('temuan-card-holder.webp', 'barang_temuan'),
                 'status' => 'dikembalikan',
             ],
             [
@@ -203,7 +203,7 @@ class BarangTemuanSeeder extends Seeder
                 'lokasi_ditemukan' => 'Lobby Gedung Auditorium UNEJ',
                 'tanggal_ditemukan' => '2026-11-11',
                 'deskripsi' => 'Kabel USB-C to USB-C bahan braided warna hitam panjang sekitar 1 meter.',
-                'foto_barang' => $publishFoto('temuan-kabel-usbc.jpg', 'barang_temuan'),
+                'foto_barang' => $publishFoto('temuan-kabel-usbc.webp', 'barang_temuan'),
                 'status' => 'dikembalikan',
             ],
             [
@@ -212,7 +212,7 @@ class BarangTemuanSeeder extends Seeder
                 'lokasi_ditemukan' => 'Taman Double Way Kampus Tegal Boto',
                 'tanggal_ditemukan' => '2026-11-10',
                 'deskripsi' => 'Tote bag kanvas warna cream polos berisi map plastik bening.',
-                'foto_barang' => $publishFoto('temuan-totebag-kanvas.jpg', 'barang_temuan'),
+                'foto_barang' => $publishFoto('temuan-totebag-kanvas.webp', 'barang_temuan'),
                 'status' => 'dikembalikan',
             ],
         ];

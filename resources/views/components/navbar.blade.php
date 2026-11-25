@@ -10,7 +10,6 @@
     $btnBrand = 'inline-flex items-center justify-center gap-2 rounded-full bg-brand text-white transition-colors duration-150 hover:bg-brand-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 active:scale-[0.98]';
 @endphp
 
-{{-- ponytail: native checkbox peer + details/summary + CSS scroll-target-group replaces navbar JS/Alpine --}}
 <div class="fi-nav-wrap fixed inset-x-0 top-0 z-40 print:hidden">
     <input type="checkbox" id="nav-mobile-toggle" class="peer hidden" aria-hidden="true">
 
@@ -87,7 +86,7 @@
                     <a href="{{ route('mahasiswa.laporan.index') }}" class="{{ $mobileUserLink }} {{ request()->routeIs('mahasiswa.laporan.*') ? 'bg-brand-soft font-semibold text-brand' : '' }}">Laporan Saya</a>
                     <a href="{{ route('mahasiswa.klaim.index') }}" class="{{ $mobileUserLink }} {{ request()->routeIs('mahasiswa.klaim.*') ? 'bg-brand-soft font-semibold text-brand' : '' }}">Klaim Saya</a>
                 @else
-                    <a href="{{ route('petugas.dashboard') }}" class="{{ $mobileUserLink }} bg-brand-soft font-semibold text-brand">Panel Petugas</a>
+                    <a href="{{ route('petugas.dashboard') }}" class="{{ $mobileUserLink }} {{ request()->routeIs('petugas.*') ? 'bg-brand-soft font-semibold text-brand' : '' }}">Panel Petugas</a>
                 @endif
                 <a href="{{ route('profil.edit') }}" class="{{ $mobileUserLink }} {{ request()->routeIs('profil.*') ? 'bg-brand-soft font-semibold text-brand' : '' }}">Profil ({{ Auth::user()->nama }})</a>
                 <form action="{{ route('logout') }}" method="POST" class="pt-1">
