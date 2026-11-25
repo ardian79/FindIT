@@ -386,7 +386,7 @@
                             @endif
                             @php
                                 $dialogClass =
-                                    'm-0 mt-auto max-h-[92vh] w-full max-w-full overflow-y-auto rounded-t-2xl border border-[#e7ebf2] bg-white p-0 text-left backdrop:bg-ink-deep/60 sm:m-auto sm:w-[calc(100%-2rem)] sm:rounded-2xl';
+                                    'fi-detail-modal m-0 mt-auto max-h-[92vh] w-full max-w-full overflow-y-auto rounded-t-2xl border border-[#e7ebf2] bg-white p-0 text-left backdrop:bg-ink-deep/60 sm:m-auto sm:w-[calc(100%-2rem)] sm:rounded-2xl';
                                 $closeBtnClass =
                                     'flex h-9 w-9 items-center justify-center rounded-lg text-ink-muted transition-colors duration-150 hover:bg-[#f3f5f8] hover:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink-navy/30';
                             @endphp

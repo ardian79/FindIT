@@ -58,12 +58,6 @@
                 }
             }
             @supports (animation-timeline: view()) {
-                .fi-reveal,
-                .fi-reveal-left,
-                .fi-reveal-right,
-                .fi-reveal-scale {
-                    will-change: transform, opacity;
-                }
                 .fi-reveal {
                     animation: fi-reveal-up linear both;
                     animation-timeline: view();
@@ -110,6 +104,52 @@
             to { opacity: 1; transform: translateY(0) scale(1); }
         }
         [popover]::backdrop { overscroll-behavior: contain; }
+        @media (prefers-reduced-motion: no-preference) {
+            .fi-detail-modal[popover] {
+                opacity: 0;
+                transform: translateY(100%);
+                transition:
+                    transform 280ms cubic-bezier(.22, 1, .36, 1),
+                    opacity 220ms ease,
+                    overlay 280ms allow-discrete,
+                    display 280ms allow-discrete;
+            }
+            .fi-detail-modal[popover]:popover-open {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            @starting-style {
+                .fi-detail-modal[popover]:popover-open {
+                    opacity: 0;
+                    transform: translateY(100%);
+                }
+            }
+            @media (min-width: 640px) {
+                .fi-detail-modal[popover] {
+                    transform: translateY(36px);
+                }
+                @starting-style {
+                    .fi-detail-modal[popover]:popover-open {
+                        transform: translateY(36px);
+                    }
+                }
+            }
+            .fi-detail-modal[popover]::backdrop {
+                background-color: rgb(10 28 51 / 0);
+                transition:
+                    background-color 260ms ease,
+                    overlay 280ms allow-discrete,
+                    display 280ms allow-discrete;
+            }
+            .fi-detail-modal[popover]:popover-open::backdrop {
+                background-color: rgb(10 28 51 / 0.6);
+            }
+            @starting-style {
+                .fi-detail-modal[popover]:popover-open::backdrop {
+                    background-color: rgb(10 28 51 / 0);
+                }
+            }
+        }
         select:not([multiple]) {
             appearance: none;
             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%235e6a7d' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
@@ -185,15 +225,15 @@
         .fi-nav-wrap {
             contain: layout style;
         }
+        #nav-mobile-toggle:checked ~ .fi-nav-bar #mobile-menu {
+            visibility: visible;
+            opacity: 1;
+            pointer-events: auto;
+        }
         @supports (animation-timeline: scroll()) {
             .fi-nav-bar {
                 will-change: transform;
                 animation: fi-nav-bar-scroll linear both;
-                animation-timeline: scroll(root);
-                animation-range: 0px 80px;
-            }
-            .fi-nav-mobile {
-                animation: fi-nav-mobile-scroll linear both;
                 animation-timeline: scroll(root);
                 animation-range: 0px 80px;
             }
@@ -213,10 +253,6 @@
                 background-color: rgba(255, 255, 255, 0.95);
                 box-shadow: 0 10px 30px rgba(16, 42, 76, 0.06);
             }
-        }
-        @keyframes fi-nav-mobile-scroll {
-            from { max-width: 100%; margin-top: 0.375rem; }
-            to { max-width: min(1160px, calc(100% - 2rem)); margin-top: 1.25rem; }
         }
         @supports (scroll-target-group: auto) {
             .fi-nav-links {
@@ -240,7 +276,7 @@
         }
     </style>
 </head>
-<body id="top" class="flex min-h-screen flex-col overflow-x-hidden bg-[#f5f6f8] font-sans text-ink antialiased">
+<body id="top" class="flex min-h-screen flex-col overflow-x-clip bg-[#f5f6f8] font-sans text-ink antialiased">
     <x-navbar />
 
     <main class="flex-1 pt-[68px]">
