@@ -51,8 +51,28 @@
         ];
 
         $paginator = $isHilang ? $laporanKehilangan : $barangTemuan;
+        if (request()->header('X-Per-Page') === '4') {
+            $q = $isHilang
+                ? \App\Models\LaporanKehilangan::with(['kategori', 'pengguna'])->where('status', 'dicari')
+                : \App\Models\BarangTemuan::with('kategori')->where('status', 'tersedia');
+            if (request()->filled('search')) {
+                $s = request('search');
+                $locCol = $isHilang ? 'lokasi_hilang' : 'lokasi_ditemukan';
+                $q->where(fn($w) => $w->where('nama_barang', 'like', "%{$s}%")
+                    ->orWhere($locCol, 'like', "%{$s}%")
+                    ->orWhere('deskripsi', 'like', "%{$s}%"));
+            }
+            if (request()->filled('kategori_id')) {
+                $q->where('kategori_id', request('kategori_id'));
+            }
+            $pName = $isHilang ? 'page_hilang' : 'page_temuan';
+            $paginator = $q->latest()->paginate(4, ['*'], $pName)->withQueryString();
+            if ($paginator->isEmpty() && $paginator->currentPage() > $paginator->lastPage() && $paginator->total() > 0) {
+                $paginator = $q->paginate(4, ['*'], $pName, $paginator->lastPage())->withQueryString();
+            }
+        }
         $isPaginator = $paginator instanceof \Illuminate\Pagination\AbstractPaginator;
-        $items = ($isPaginator ? $paginator->getCollection() : collect($paginator))->take(3);
+        $items = $isPaginator ? $paginator->getCollection() : collect($paginator)->take(3);
         $currPage = $isPaginator ? $paginator->currentPage() : 1;
         $lastPage = $isPaginator ? $paginator->lastPage() : 1;
         $pageName = $isPaginator ? $paginator->getPageName() : 'page';
@@ -271,8 +291,9 @@
                         </form>
                     </div>
 
-                    <div id="catalog-results" class="min-h-[480px]">
-                        <div id="catalog-results-body">
+                    <div id="catalog-results" class="min-h-[480px] scroll-mt-24"
+                        hx-on::after-swap="if (event.detail.requestConfig?.elt?.tagName === 'A' && this.getBoundingClientRect().top < 96) this.scrollIntoView({ block: 'start' })">
+                        <div id="catalog-results-body" data-per-page="{{ $isPaginator ? $paginator->perPage() : 3 }}">
 
                             @if ($items->isEmpty())
                                 <div
@@ -566,4 +587,25 @@
             </div>
         </div>
     </section>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const mq = window.matchMedia('(min-width: 640px) and (max-width: 1023.98px)');
+            const want = () => (mq.matches ? '4' : '3');
+            document.body.addEventListener('htmx:configRequest', (e) => {
+                e.detail.headers['X-Per-Page'] = want();
+            });
+            const sync = () => {
+                const body = document.getElementById('catalog-results-body');
+                if (!body || body.dataset.perPage === want() || !window.htmx) return;
+                window.htmx.ajax('GET', location.pathname + location.search, {
+                    target: '#catalog-results',
+                    select: '#catalog-results-body',
+                    swap: 'innerHTML show:none focus-scroll:false',
+                });
+            };
+            sync();
+            mq.addEventListener('change', sync);
+        });
+    </script>
 @endsection
