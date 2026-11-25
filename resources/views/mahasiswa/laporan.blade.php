@@ -53,7 +53,7 @@
                                     <td class="px-5 py-4">
                                         <div class="flex items-center gap-3">
                                             @if ($item->foto_barang)
-                                                <img src="{{ asset('storage/' . $item->foto_barang) }}" alt="{{ $item->nama_barang }}" class="h-12 w-12 shrink-0 rounded-lg object-cover">
+                                                <img src="{{ asset('storage/' . $item->foto_barang) }}" alt="{{ $item->nama_barang }}" loading="lazy" decoding="async" class="h-12 w-12 shrink-0 rounded-lg object-cover">
                                             @else
                                                 <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-[#f3f5f8] text-ink-muted">
                                                     <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true">

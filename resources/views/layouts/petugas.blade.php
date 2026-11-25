@@ -106,14 +106,14 @@
         }
     </style>
 </head>
-<body class="min-h-screen overflow-x-hidden bg-[#f3f5f8] font-sans text-ink antialiased">
+<body class="min-h-screen overflow-x-clip bg-[#f3f5f8] font-sans text-ink antialiased">
     {{-- ponytail: checkbox peer toggle replaces toggleSidebar() JS --}}
     <input type="checkbox" id="sidebar-toggle" class="peer hidden" aria-hidden="true">
     <x-sidebar />
 
     <div class="flex min-h-screen flex-col lg:pl-[248px] print:pl-0">
         <div class="sticky top-0 z-30 px-4 pt-4 sm:px-6 lg:px-8 print:hidden">
-            <header class="mx-auto flex h-16 w-full items-center justify-between rounded-2xl border border-[#e7ebf2] bg-white/95 px-4 shadow-card backdrop-blur-md sm:px-5 lg:px-6">
+            <header class="mx-auto flex h-16 w-full items-center justify-between rounded-2xl border border-[#e7ebf2] bg-white/95 px-4 shadow-card sm:px-5 lg:px-6">
                 <div class="flex min-w-0 items-center gap-3">
                     <label for="sidebar-toggle" role="button" tabindex="0" aria-label="Buka sidebar"
                         class="flex h-10 w-10 shrink-0 cursor-pointer items-center justify-center rounded-xl text-ink-muted transition-colors duration-150 hover:bg-[#f3f5f8] hover:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink-navy/30 lg:hidden">

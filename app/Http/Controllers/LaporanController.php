@@ -20,10 +20,10 @@ class LaporanController extends Controller
             $query = LaporanKehilangan::with(['kategori', 'pengguna']);
 
             if ($tanggalMulai) {
-                $query->whereDate('tanggal_hilang', '>=', $tanggalMulai);
+                $query->where('tanggal_hilang', '>=', $tanggalMulai);
             }
             if ($tanggalSelesai) {
-                $query->whereDate('tanggal_hilang', '<=', $tanggalSelesai);
+                $query->where('tanggal_hilang', '<=', $tanggalSelesai);
             }
             if ($status) {
                 $query->where('status', $status);
@@ -34,10 +34,10 @@ class LaporanController extends Controller
             $query = Klaim::with(['barangTemuan.kategori', 'pengguna']);
 
             if ($tanggalMulai) {
-                $query->whereDate('created_at', '>=', $tanggalMulai);
+                $query->where('created_at', '>=', $tanggalMulai . ' 00:00:00');
             }
             if ($tanggalSelesai) {
-                $query->whereDate('created_at', '<=', $tanggalSelesai);
+                $query->where('created_at', '<=', $tanggalSelesai . ' 23:59:59');
             }
             if ($status) {
                 $query->where('status', $status);
@@ -49,10 +49,10 @@ class LaporanController extends Controller
             $query = BarangTemuan::with('kategori');
 
             if ($tanggalMulai) {
-                $query->whereDate('tanggal_ditemukan', '>=', $tanggalMulai);
+                $query->where('tanggal_ditemukan', '>=', $tanggalMulai);
             }
             if ($tanggalSelesai) {
-                $query->whereDate('tanggal_ditemukan', '<=', $tanggalSelesai);
+                $query->where('tanggal_ditemukan', '<=', $tanggalSelesai);
             }
             if ($status) {
                 $query->where('status', $status);
@@ -61,10 +61,14 @@ class LaporanController extends Controller
             $data = $query->latest('tanggal_ditemukan')->get();
         }
 
+        $temuanCounts = BarangTemuan::selectRaw('status, COUNT(*) as total')
+            ->groupBy('status')
+            ->pluck('total', 'status');
+
         $ringkasan = [
-            'total_temuan' => BarangTemuan::count(),
-            'total_tersedia' => BarangTemuan::where('status', 'tersedia')->count(),
-            'total_dikembalikan' => BarangTemuan::where('status', 'dikembalikan')->count(),
+            'total_temuan' => (int) $temuanCounts->sum(),
+            'total_tersedia' => (int) ($temuanCounts['tersedia'] ?? 0),
+            'total_dikembalikan' => (int) ($temuanCounts['dikembalikan'] ?? 0),
             'total_hilang' => LaporanKehilangan::count(),
             'total_klaim_selesai' => Klaim::where('status', 'selesai')->count(),
         ];

@@ -68,7 +68,7 @@
                     <article class="group flex h-full min-w-0 flex-col overflow-hidden rounded-2xl border border-[#e7ebf2] bg-white transition duration-200 hover:-translate-y-1 hover:border-[#cfd6e2] hover:shadow-card">
                         <div class="relative h-40 overflow-hidden bg-[#eef1f5]">
                             @if ($hasFoto)
-                                <img src="{{ asset('storage/' . $foto) }}" alt="{{ $item->nama_barang }}"
+                                <img src="{{ asset('storage/' . $foto) }}" alt="{{ $item->nama_barang }}" loading="lazy" decoding="async"
                                     class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.03]">
                             @else
                                 <div class="absolute inset-0 flex items-center justify-center text-ink-muted/60">

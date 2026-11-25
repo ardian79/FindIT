@@ -45,7 +45,7 @@
                     <article class="group overflow-hidden rounded-2xl border border-[#e7ebf2] bg-white p-5 transition duration-200 hover:border-[#cfd6e2] hover:shadow-card">
                         <div class="flex flex-col gap-5 md:flex-row md:items-start">
                             <div class="h-40 w-full shrink-0 overflow-hidden rounded-xl bg-[#eef1f5] md:h-32 md:w-40">
-                                <img src="{{ asset('storage/' . $item->barangTemuan->foto_barang) }}" alt="{{ $item->barangTemuan->nama_barang }}" class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.03]">
+                                <img src="{{ asset('storage/' . $item->barangTemuan->foto_barang) }}" alt="{{ $item->barangTemuan->nama_barang }}" loading="lazy" decoding="async" class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.03]">
                             </div>
 
                             <div class="flex-1 space-y-3">

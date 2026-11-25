@@ -13,35 +13,51 @@ class HomeController extends Controller
     public function index(Request $request)
     {
         $tab = $request->get('tab', 'temuan');
+        $isHilang = $tab === 'hilang';
+        $isHtmx = $request->hasHeader('HX-Request');
+        $isResultsOnly = $request->header('HX-Target') === 'catalog-results';
 
-        $temuanQuery = BarangTemuan::with('kategori')->where('status', 'tersedia');
-        $hilangQuery = LaporanKehilangan::with(['kategori', 'pengguna'])->where('status', 'dicari');
+        $barangTemuan = collect();
+        $laporanKehilangan = collect();
 
-        if ($request->filled('search')) {
-            $search = $request->search;
+        if ($isHilang) {
+            $hilangQuery = LaporanKehilangan::with(['kategori', 'pengguna'])->where('status', 'dicari');
 
-            $temuanQuery->where(function ($q) use ($search) {
-                $q->where('nama_barang', 'like', "%{$search}%")
-                    ->orWhere('lokasi_ditemukan', 'like', "%{$search}%")
-                    ->orWhere('deskripsi', 'like', "%{$search}%");
-            });
+            if ($request->filled('search')) {
+                $search = $request->search;
+                $hilangQuery->where(function ($q) use ($search) {
+                    $q->where('nama_barang', 'like', "%{$search}%")
+                        ->orWhere('lokasi_hilang', 'like', "%{$search}%")
+                        ->orWhere('deskripsi', 'like', "%{$search}%");
+                });
+            }
 
-            $hilangQuery->where(function ($q) use ($search) {
-                $q->where('nama_barang', 'like', "%{$search}%")
-                    ->orWhere('lokasi_hilang', 'like', "%{$search}%")
-                    ->orWhere('deskripsi', 'like', "%{$search}%");
-            });
+            if ($request->filled('kategori_id')) {
+                $hilangQuery->where('kategori_id', $request->kategori_id);
+            }
+
+            $laporanKehilangan = $hilangQuery->latest()->paginate(3, ['*'], 'page_hilang')->withQueryString();
+        } else {
+            $temuanQuery = BarangTemuan::with('kategori')->where('status', 'tersedia');
+
+            if ($request->filled('search')) {
+                $search = $request->search;
+                $temuanQuery->where(function ($q) use ($search) {
+                    $q->where('nama_barang', 'like', "%{$search}%")
+                        ->orWhere('lokasi_ditemukan', 'like', "%{$search}%")
+                        ->orWhere('deskripsi', 'like', "%{$search}%");
+                });
+            }
+
+            if ($request->filled('kategori_id')) {
+                $temuanQuery->where('kategori_id', $request->kategori_id);
+            }
+
+            $barangTemuan = $temuanQuery->latest()->paginate(3, ['*'], 'page_temuan')->withQueryString();
         }
 
-        if ($request->filled('kategori_id')) {
-            $temuanQuery->where('kategori_id', $request->kategori_id);
-            $hilangQuery->where('kategori_id', $request->kategori_id);
-        }
-
-        $barangTemuan = $temuanQuery->latest()->paginate(3, ['*'], 'page_temuan')->withQueryString();
-        $laporanKehilangan = $hilangQuery->latest()->paginate(3, ['*'], 'page_hilang')->withQueryString();
-        $kategori = Kategori::orderBy('nama_kategori')->get();
-        $petugas = User::where('role', 'petugas')->first();
+        $kategori = $isResultsOnly ? collect() : Kategori::orderBy('nama_kategori')->get();
+        $petugas = $isHtmx ? null : User::where('role', 'petugas')->first(['no_hp']);
 
         return view('home', compact(
             'tab',

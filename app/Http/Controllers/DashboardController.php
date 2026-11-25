@@ -11,9 +11,13 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        $totalTersedia = BarangTemuan::where('status', 'tersedia')->count();
-        $totalDiklaim = BarangTemuan::where('status', 'diklaim')->count();
-        $totalDikembalikan = BarangTemuan::where('status', 'dikembalikan')->count();
+        $temuanCounts = BarangTemuan::selectRaw('status, COUNT(*) as total')
+            ->groupBy('status')
+            ->pluck('total', 'status');
+
+        $totalTersedia = (int) ($temuanCounts['tersedia'] ?? 0);
+        $totalDiklaim = (int) ($temuanCounts['diklaim'] ?? 0);
+        $totalDikembalikan = (int) ($temuanCounts['dikembalikan'] ?? 0);
         $totalLaporanDicari = LaporanKehilangan::where('status', 'dicari')->count();
         $totalKlaimPending = Klaim::where('status', 'pending')->count();
         $totalMahasiswaAktif = User::where('role', 'mahasiswa')->where('is_active', true)->count();

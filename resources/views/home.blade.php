@@ -429,7 +429,7 @@
                                         @if ($fotoUrl)
                                             <div
                                                 class="mb-4 overflow-hidden rounded-xl {{ $isHilang ? 'border border-[#e7ebf2]' : '' }} bg-[#eef1f5]">
-                                                <img src="{{ $fotoUrl }}" alt="{{ $item->nama_barang }}"
+                                                <img src="{{ $fotoUrl }}" alt="{{ $item->nama_barang }}" loading="lazy" decoding="async"
                                                     class="max-h-80 w-full object-contain">
                                             </div>
                                         @endif
