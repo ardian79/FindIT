@@ -30,7 +30,6 @@
         }
     </script>
     <style>
-        /* ponytail: native base-select styling replaces 100-line custom JS select */
         [popover]::backdrop { overscroll-behavior: contain; }
         select:not([multiple]) {
             appearance: none;
