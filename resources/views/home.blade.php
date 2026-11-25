@@ -562,10 +562,10 @@
             <div class="grid items-center gap-8 lg:grid-cols-[1fr_auto]">
                 <div>
                     <p class="text-xs font-medium text-white/80">Pos Keamanan Utama UNEJ</p>
-                    <h2 class="mt-2 font-heading text-2xl font-semibold leading-tight sm:text-3xl md:whitespace-nowrap">
+                    <h2 class="mt-2 font-heading text-2xl font-semibold leading-tight sm:text-3xl">
                         Mulai cari, atau laporkan barang yang hilang hari ini
                     </h2>
-                    <p class="mt-3 text-sm leading-7 text-white/85 lg:whitespace-nowrap">
+                    <p class="mt-3 text-sm leading-7 text-white/85">
                         Pengambilan barang dilakukan di Pos Keamanan Utama Universitas Jember dengan identitas resmi.
                     </p>
                     @if ($waPetugas)
