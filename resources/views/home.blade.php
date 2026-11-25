@@ -292,7 +292,7 @@
                     </div>
 
                     <div id="catalog-results" class="min-h-[480px] scroll-mt-24"
-                        hx-on::after-swap="if (event.detail.requestConfig?.elt?.tagName === 'A' && this.getBoundingClientRect().top < 96) this.scrollIntoView({ block: 'start' })">
+                        hx-on::after-swap="if (event.detail.requestConfig?.elt?.tagName === 'A' && this.getBoundingClientRect().top < 96) this.scrollIntoView({ block: 'start', behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' })">
                         <div id="catalog-results-body" data-per-page="{{ $isPaginator ? $paginator->perPage() : 3 }}">
 
                             @if ($items->isEmpty())
