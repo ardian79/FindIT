@@ -9,9 +9,11 @@
     @endphp
 
     <div class="mx-auto w-full max-w-[1160px] px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
-        <div class="mx-auto grid max-w-5xl overflow-hidden rounded-2xl border border-[#e7ebf2] bg-white shadow-card lg:grid-cols-[.9fr_1.1fr]">
+        <div
+            class="mx-auto grid max-w-5xl overflow-hidden rounded-2xl border border-[#e7ebf2] bg-white shadow-card lg:grid-cols-[.9fr_1.1fr]">
             <div class="relative hidden min-h-[540px] overflow-hidden bg-ink-deep lg:block">
-                <img src="{{ asset('images/gambar-login.webp') }}" alt="Latar Belakang FindIT" decoding="async" fetchpriority="high" class="absolute inset-0 h-full w-full object-cover">
+                <img src="{{ asset('images/gambar-login.webp') }}" alt="Latar Belakang FindIT" decoding="async"
+                    fetchpriority="high" class="absolute inset-0 h-full w-full object-cover">
             </div>
 
             <div class="p-6 sm:p-10">
@@ -22,16 +24,17 @@
                     @csrf
                     <div>
                         <label for="identifier" class="{{ $label }}">NIM / Email</label>
-                        <input type="text" id="identifier" name="identifier" value="{{ old('identifier') }}" required autofocus
-                            placeholder="Contoh: 252410101010" class="{{ $input }}">
+                        <input type="text" id="identifier" name="identifier" value="{{ old('identifier') }}" required
+                            autofocus placeholder="Contoh: 252410101010" class="{{ $input }}">
                     </div>
                     <div>
                         <label for="password" class="{{ $label }}">Kata Sandi</label>
-                        <input type="password" id="password" name="password" required
-                            placeholder="Masukkan password" class="{{ $input }}">
+                        <input type="password" id="password" name="password" required placeholder="Masukkan password"
+                            class="{{ $input }}">
                     </div>
                     <label class="flex items-center gap-2 text-sm text-[#3d4b60]">
-                        <input type="checkbox" name="remember" class="h-4 w-4 rounded border-[#d7dde7] text-brand focus:ring-brand">
+                        <input type="checkbox" name="remember"
+                            class="h-4 w-4 rounded border-[#d7dde7] text-brand focus:ring-brand">
                         <span>Ingat saya</span>
                     </label>
                     <button type="submit"
@@ -42,7 +45,8 @@
 
                 <p class="mt-6 text-center text-sm text-ink-muted">
                     Belum punya akun mahasiswa?
-                    <a href="{{ route('register') }}" class="font-medium text-brand hover:text-brand-dark">Daftar di sini</a>
+                    <a href="{{ route('register') }}" class="font-medium text-brand hover:text-brand-dark">Daftar di
+                        sini</a>
                 </p>
             </div>
         </div>

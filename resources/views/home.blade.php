@@ -61,9 +61,8 @@
 
     <section id="beranda"
         class="relative isolate -mt-[68px] flex min-h-screen scroll-mt-0 items-center overflow-hidden bg-ink-deep text-white [contain:layout_paint]">
-        <img src="{{ asset('images/banner-unej.webp') }}" alt="Layanan Lost & Found Universitas Jember"
-            width="1920" height="1080" fetchpriority="high" decoding="async"
-            class="fi-hero-bg absolute inset-0 h-full w-full object-cover">
+        <img src="{{ asset('images/banner-unej.webp') }}" alt="Layanan Lost & Found Universitas Jember" width="1920"
+            height="1080" fetchpriority="high" decoding="async" class="fi-hero-bg absolute inset-0 h-full w-full object-cover">
         <div class="absolute inset-0 bg-gradient-to-b from-ink-deep/75 via-ink-deep/65 to-ink-deep/85"></div>
 
         <div
@@ -303,7 +302,8 @@
                                             <div
                                                 class="relative flex aspect-[16/10] items-center justify-center overflow-hidden bg-[#eef1f5]">
                                                 @if ($fotoUrl)
-                                                    <img src="{{ $fotoUrl }}" alt="{{ $item->nama_barang }}" loading="lazy" decoding="async"
+                                                    <img src="{{ $fotoUrl }}" alt="{{ $item->nama_barang }}"
+                                                        loading="lazy" decoding="async"
                                                         class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.03]">
                                                 @else
                                                     <span class="text-xs font-medium text-ink-muted">Tanpa foto</span>
@@ -429,7 +429,8 @@
                                         @if ($fotoUrl)
                                             <div
                                                 class="mb-4 overflow-hidden rounded-xl {{ $isHilang ? 'border border-[#e7ebf2]' : '' }} bg-[#eef1f5]">
-                                                <img src="{{ $fotoUrl }}" alt="{{ $item->nama_barang }}" loading="lazy" decoding="async"
+                                                <img src="{{ $fotoUrl }}" alt="{{ $item->nama_barang }}"
+                                                    loading="lazy" decoding="async"
                                                     class="max-h-80 w-full object-contain">
                                             </div>
                                         @endif
