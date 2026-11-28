@@ -61,6 +61,10 @@ Panel petugas digunakan untuk mengelola seluruh aktivitas operasional layanan Lo
 
   Selain itu, dashboard menampilkan lima pengajuan klaim pending dan lima laporan kehilangan terbaru.
 
+  **Pembedaan:**
+  - Kartu statistik = angka ringkasan operasional.
+  - Daftar ringkas = lima klaim pending dan lima laporan kehilangan terbaru.
+
 - **Kelola Barang Temuan**
 
   Petugas dapat melakukan pengelolaan data barang temuan, meliputi:
@@ -75,6 +79,11 @@ Panel petugas digunakan untuk mengelola seluruh aktivitas operasional layanan Lo
 
   Status barang temuan terdiri atas `tersedia`, `diklaim`, dan `dikembalikan`.
 
+  **Pembedaan:**
+  - CRUD = menambah, mengubah, dan menghapus data barang.
+  - Pencarian dan filter = menemukan data berdasarkan kata kunci, kategori, dan status.
+  - Status barang = `tersedia`, `diklaim`, dan `dikembalikan`.
+
 - **Verifikasi Klaim dan Serah Terima**
 
   Petugas bertanggung jawab memeriksa pengajuan klaim yang dikirimkan mahasiswa.
@@ -84,6 +93,13 @@ Panel petugas digunakan untuk mengelola seluruh aktivitas operasional layanan Lo
   3. **Membatalkan Persetujuan:** Jika klaim yang sebelumnya disetujui dibatalkan, status barang dikembalikan menjadi `tersedia`.
   4. **Menyelesaikan Klaim:** Petugas mengunggah foto bukti serah terima, sistem mencatat `tanggal_diambil` secara otomatis, dan status barang berubah menjadi `dikembalikan`.
   5. **Menghubungi Pengklaim:** Petugas dapat menghubungi mahasiswa melalui WhatsApp dengan pesan otomatis yang telah disiapkan.
+
+  **Pembedaan:**
+  - Menyetujui klaim = status klaim menjadi `disetujui`, status barang menjadi `diklaim`, dan klaim `pending` lain pada barang yang sama otomatis ditolak.
+  - Menolak klaim = klaim ditolak dengan alasan pada `catatan_petugas`.
+  - Membatalkan persetujuan = status barang kembali menjadi `tersedia`.
+  - Menyelesaikan klaim = unggah foto bukti serah terima, `tanggal_diambil` tercatat otomatis, dan status barang menjadi `dikembalikan`.
+  - Menghubungi pengklaim = komunikasi via WhatsApp dengan pesan otomatis.
 
 - **Pantau Laporan Kehilangan**
 
@@ -98,6 +114,12 @@ Panel petugas digunakan untuk mengelola seluruh aktivitas operasional layanan Lo
   5. Pembaruan status laporan.
   6. Penghapusan laporan kehilangan.
 
+  **Pembedaan:**
+  - Pencarian = berdasarkan nama barang, lokasi kehilangan, nama mahasiswa, dan NIM.
+  - Filter = berdasarkan kategori dan status laporan.
+  - Badge otomatis = penanda `> 30 hr` untuk laporan `dicari` yang sudah melewati 30 hari.
+  - Aksi = WhatsApp, pembaruan status, dan penghapusan laporan.
+
 - **Master Kategori**
 
   Petugas dapat mengelola kategori barang yang digunakan dalam laporan kehilangan dan barang temuan.
@@ -109,6 +131,11 @@ Panel petugas digunakan untuk mengelola seluruh aktivitas operasional layanan Lo
   3. Menghapus kategori.
   4. Validasi nama kategori agar tidak terjadi duplikasi.
   5. Proteksi penghapusan kategori yang masih digunakan oleh data lain.
+
+  **Pembedaan:**
+  - Aksi = menambah, mengubah, dan menghapus kategori.
+  - Validasi = mencegah duplikasi nama kategori.
+  - Proteksi = kategori yang masih digunakan oleh data lain tidak boleh dihapus.
 
 - **Kelola Pengguna Mahasiswa**
 
@@ -122,6 +149,13 @@ Panel petugas digunakan untuk mengelola seluruh aktivitas operasional layanan Lo
   4. Menghubungi mahasiswa melalui WhatsApp.
   5. Mengaktifkan dan menonaktifkan akun melalui atribut `is_active`.
 
+  **Pembedaan:**
+  - Pencarian = berdasarkan nama, NIM, dan nomor HP.
+  - Filter = berdasarkan status akun.
+  - Ringkasan aktivitas = data laporan dan klaim mahasiswa.
+  - WhatsApp = komunikasi dengan mahasiswa.
+  - `is_active` = atribut untuk mengaktifkan atau menonaktifkan akun.
+
 - **Rekap dan Cetak Laporan**
 
   Sistem menyediakan halaman rekap untuk membantu petugas memantau aktivitas operasional.
@@ -134,6 +168,11 @@ Panel petugas digunakan untuk mengelola seluruh aktivitas operasional layanan Lo
   4. Filter status.
   5. Fitur cetak langsung menggunakan `window.print()`.
   6. Tampilan laporan yang telah disesuaikan untuk dicetak atau disimpan sebagai PDF melalui browser.
+
+  **Pembedaan:**
+  - Ringkasan = lima metrik operasional.
+  - Filter = jenis laporan, rentang tanggal, dan status.
+  - Cetak = menggunakan `window.print()` dan tampilan siap cetak/PDF melalui browser.
 
 ---
 
