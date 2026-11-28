@@ -137,7 +137,7 @@ Fitur yang tersedia meliputi:
 |---|---|
 | Backend | PHP `^8.3`, Laravel `^13.17` |
 | Template Engine | Laravel Blade |
-| Styling | Tailwind CSS v3 (Play CDN) dan Modern CSS |
+| Styling | Tailwind CSS dan Modern CSS |
 | Interaktivitas | HTMX `2.0.4` dan Native HTML Popover API |
 | Tipografi | Google Fonts (DM Sans) |
 | Database | MySQL dan SQLite |
