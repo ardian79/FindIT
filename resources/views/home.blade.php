@@ -18,8 +18,7 @@
 
         $container = 'mx-auto w-full max-w-[1160px] px-4 sm:px-6 lg:px-8';
         $eyebrow = 'text-xs font-semibold text-brand';
-        $btnBase =
-            'inline-flex items-center justify-center gap-2 border px-5 py-2.5 text-sm font-medium leading-tight transition duration-150 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 active:translate-y-0 active:scale-[0.98]';
+        $btnBase = 'inline-flex items-center justify-center gap-2 border px-5 py-2.5 text-sm font-medium leading-tight transition duration-150 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 active:translate-y-0 active:scale-[0.98]';
         $btnHeroBrand = "$btnBase rounded-full border-transparent bg-brand px-6 py-3 font-semibold text-white hover:bg-brand-dark focus-visible:ring-brand";
         $btnHeroWhite = "$btnBase rounded-full border-transparent bg-white px-6 py-3 font-semibold text-ink-navy hover:bg-[#f4f6f8] focus-visible:ring-white";
         $btnBrand = "$btnBase rounded-xl border-transparent bg-brand text-white hover:bg-brand-dark focus-visible:ring-brand";
@@ -40,7 +39,7 @@
             [
                 'bg-brand',
                 'Verifikasi dan ambil',
-                'Ajukan klaim, tunggu persetujuan petugas, lalu ambil barang di Pos Keamanan Utama.',
+                'Ajukan klaim, tunggu persetujuan petugas, lalu ambil barang di Pos Keamanan.',
             ],
         ];
 
