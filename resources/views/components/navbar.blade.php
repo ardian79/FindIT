@@ -1,25 +1,10 @@
-@php
-    $isHome = request()->routeIs('home');
-    $navLinks = [
-        ['Beranda', $isHome ? '#beranda' : route('home'), 'beranda'],
-        ['Cara Kerja', $isHome ? '#cara-kerja' : route('home') . '#cara-kerja', 'cara-kerja'],
-        ['Lokasi', $isHome ? '#lokasi' : route('home') . '#lokasi', 'lokasi'],
-        ['Katalog', $isHome ? '#katalog' : route('home') . '#katalog', 'katalog'],
-    ];
-    $mobileUserLink =
-        'block rounded-xl px-4 py-2 text-sm font-medium text-[#3d4b60] transition-colors duration-150 hover:bg-[#f3f5f8] hover:text-ink';
-    $btnBrand =
-        'inline-flex items-center justify-center gap-2 rounded-full bg-brand text-white transition-colors duration-150 hover:bg-brand-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 active:scale-[0.98]';
-@endphp
-
 <div class="fi-nav-wrap fixed inset-x-0 top-0 z-40 print:hidden">
     <input type="checkbox" id="nav-mobile-toggle" class="peer hidden" aria-hidden="true">
 
     <nav
         class="fi-nav-bar relative mx-auto w-full border border-[#e7ebf2] bg-white peer-checked:[&_.nav-icon-close]:block peer-checked:[&_.nav-icon-open]:hidden">
-        <div class="mx-auto w-full max-w-[1160px] px-3 sm:px-5">
-            <div
-                class="flex min-h-[68px] items-center justify-between gap-3 lg:grid lg:grid-cols-[1fr_auto_1fr] lg:gap-6">
+        <div class="mx-auto w-full max-w-290 px-3 sm:px-5">
+            <div class="flex min-h-17 items-center justify-between gap-3 lg:grid lg:grid-cols-[1fr_auto_1fr] lg:gap-6">
                 <a href="{{ route('home') }}"
                     class="flex shrink-0 items-center gap-2 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink-navy/30 lg:justify-self-start">
                     <img src="{{ asset('images/logo-findit.svg') }}" alt="Logo FindIT"
@@ -29,13 +14,23 @@
                 </a>
 
                 <div
-                    class="{{ $isHome ? 'fi-nav-links' : '' }} relative hidden items-center justify-center gap-1 lg:flex">
-                    @foreach ($navLinks as [$label, $href, $target])
-                        <a href="{{ $href }}"
-                            class="inline-flex min-h-10 items-center justify-center rounded-full px-4 py-2 text-sm font-medium text-ink-navy transition-colors duration-150 hover:bg-[#f3f5f8] hover:text-ink-navy focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink-navy/30">
-                            {{ $label }}
-                        </a>
-                    @endforeach
+                    class="{{ request()->routeIs('home') ? 'fi-nav-links' : '' }} relative hidden items-center justify-center gap-1 lg:flex">
+                    <a href="{{ request()->routeIs('home') ? '#beranda' : route('home') }}"
+                        class="inline-flex min-h-10 items-center justify-center rounded-full px-4 py-2 text-sm font-medium text-ink-navy transition-colors duration-150 hover:bg-[#f3f5f8] hover:text-ink-navy focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink-navy/30">
+                        Beranda
+                    </a>
+                    <a href="{{ request()->routeIs('home') ? '#cara-kerja' : route('home') . '#cara-kerja' }}"
+                        class="inline-flex min-h-10 items-center justify-center rounded-full px-4 py-2 text-sm font-medium text-ink-navy transition-colors duration-150 hover:bg-[#f3f5f8] hover:text-ink-navy focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink-navy/30">
+                        Cara Kerja
+                    </a>
+                    <a href="{{ request()->routeIs('home') ? '#lokasi' : route('home') . '#lokasi' }}"
+                        class="inline-flex min-h-10 items-center justify-center rounded-full px-4 py-2 text-sm font-medium text-ink-navy transition-colors duration-150 hover:bg-[#f3f5f8] hover:text-ink-navy focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink-navy/30">
+                        Lokasi
+                    </a>
+                    <a href="{{ request()->routeIs('home') ? '#katalog' : route('home') . '#katalog' }}"
+                        class="inline-flex min-h-10 items-center justify-center rounded-full px-4 py-2 text-sm font-medium text-ink-navy transition-colors duration-150 hover:bg-[#f3f5f8] hover:text-ink-navy focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink-navy/30">
+                        Katalog
+                    </a>
                 </div>
 
                 <div class="hidden min-w-0 items-center justify-end gap-2 lg:flex lg:justify-self-end">
@@ -47,8 +42,7 @@
                                     class="flex h-8 w-8 items-center justify-center rounded-full bg-ink-navy text-xs font-semibold text-white">
                                     {{ strtoupper(substr(Auth::user()->nama, 0, 1)) }}
                                 </span>
-                                <span
-                                    class="max-w-[120px] truncate text-sm font-medium text-ink">{{ Auth::user()->nama }}</span>
+                                <span class="max-w-30 truncate text-sm font-medium text-ink">{{ Auth::user()->nama }}</span>
                             </summary>
                             <div
                                 class="absolute right-0 mt-2 w-52 overflow-hidden rounded-2xl border border-[#e7ebf2] bg-white p-1.5 shadow-lift">
@@ -79,7 +73,7 @@
                         <a href="{{ route('login') }}"
                             class="rounded-full px-3.5 py-2 text-sm font-medium text-[#3d4b60] transition-colors duration-150 hover:bg-[#f3f5f8] hover:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink-navy/30">Masuk</a>
                         <a href="{{ route('register') }}"
-                            class="{{ $btnBrand }} px-4 py-2 text-xs font-semibold">Daftar</a>
+                            class="inline-flex items-center justify-center gap-2 rounded-full bg-brand px-4 py-2 text-xs font-semibold text-white transition-colors duration-150 hover:bg-brand-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 active:scale-[0.98]">Daftar</a>
                     @endauth
                 </div>
 
@@ -100,30 +94,43 @@
         </div>
         <div id="mobile-menu"
             class="fi-nav-mobile invisible pointer-events-none absolute -inset-x-px top-full mt-2 rounded-2xl border border-[#e7ebf2] bg-white opacity-0 shadow-lift transition-opacity duration-150 lg:hidden">
-            <div class="{{ $isHome ? 'fi-nav-links' : '' }} flex flex-col gap-1 px-4 py-3 sm:px-6">
-                @foreach ($navLinks as [$label, $href, $target])
-                    <a href="{{ $href }}"
-                        @if ($isHome) onclick="event.preventDefault(); document.getElementById('nav-mobile-toggle').checked = false; document.querySelector('{{ $href }}')?.scrollIntoView({ behavior: 'smooth' }); history.replaceState(null, '', '{{ $href }}');" @endif
-                        class="flex min-h-10 items-center rounded-xl bg-transparent px-4 py-2 text-sm font-medium text-ink-navy transition-colors duration-150 hover:bg-[#f3f5f8]">
-                        {{ $label }}
-                    </a>
-                @endforeach
+            <div class="{{ request()->routeIs('home') ? 'fi-nav-links' : '' }} flex flex-col gap-1 px-4 py-3 sm:px-6">
+                <a href="{{ request()->routeIs('home') ? '#beranda' : route('home') }}"
+                    @if (request()->routeIs('home')) onclick="event.preventDefault(); document.getElementById('nav-mobile-toggle').checked = false; document.querySelector('#beranda')?.scrollIntoView({ behavior: 'smooth' }); history.replaceState(null, '', '#beranda');" @endif
+                    class="flex min-h-10 items-center rounded-xl bg-transparent px-4 py-2 text-sm font-medium text-ink-navy transition-colors duration-150 hover:bg-[#f3f5f8]">
+                    Beranda
+                </a>
+                <a href="{{ request()->routeIs('home') ? '#cara-kerja' : route('home') . '#cara-kerja' }}"
+                    @if (request()->routeIs('home')) onclick="event.preventDefault(); document.getElementById('nav-mobile-toggle').checked = false; document.querySelector('#cara-kerja')?.scrollIntoView({ behavior: 'smooth' }); history.replaceState(null, '', '#cara-kerja');" @endif
+                    class="flex min-h-10 items-center rounded-xl bg-transparent px-4 py-2 text-sm font-medium text-ink-navy transition-colors duration-150 hover:bg-[#f3f5f8]">
+                    Cara Kerja
+                </a>
+                <a href="{{ request()->routeIs('home') ? '#lokasi' : route('home') . '#lokasi' }}"
+                    @if (request()->routeIs('home')) onclick="event.preventDefault(); document.getElementById('nav-mobile-toggle').checked = false; document.querySelector('#lokasi')?.scrollIntoView({ behavior: 'smooth' }); history.replaceState(null, '', '#lokasi');" @endif
+                    class="flex min-h-10 items-center rounded-xl bg-transparent px-4 py-2 text-sm font-medium text-ink-navy transition-colors duration-150 hover:bg-[#f3f5f8]">
+                    Lokasi
+                </a>
+                <a href="{{ request()->routeIs('home') ? '#katalog' : route('home') . '#katalog' }}"
+                    @if (request()->routeIs('home')) onclick="event.preventDefault(); document.getElementById('nav-mobile-toggle').checked = false; document.querySelector('#katalog')?.scrollIntoView({ behavior: 'smooth' }); history.replaceState(null, '', '#katalog');" @endif
+                    class="flex min-h-10 items-center rounded-xl bg-transparent px-4 py-2 text-sm font-medium text-ink-navy transition-colors duration-150 hover:bg-[#f3f5f8]">
+                    Katalog
+                </a>
                 @auth
                     <div class="my-1 border-t border-[#e7ebf2]"></div>
                     @if (Auth::user()->role === 'mahasiswa')
                         <a href="{{ route('mahasiswa.laporan.index') }}"
-                            class="{{ $mobileUserLink }} {{ request()->routeIs('mahasiswa.laporan.*') ? 'bg-brand-soft font-semibold text-brand' : '' }}">Laporan
+                            class="block rounded-xl px-4 py-2 text-sm font-medium transition-colors duration-150 hover:bg-[#f3f5f8] {{ request()->routeIs('mahasiswa.laporan.*') ? 'bg-brand-soft font-semibold text-brand' : 'text-[#3d4b60] hover:text-ink' }}">Laporan
                             Saya</a>
                         <a href="{{ route('mahasiswa.klaim.index') }}"
-                            class="{{ $mobileUserLink }} {{ request()->routeIs('mahasiswa.klaim.*') ? 'bg-brand-soft font-semibold text-brand' : '' }}">Klaim
+                            class="block rounded-xl px-4 py-2 text-sm font-medium transition-colors duration-150 hover:bg-[#f3f5f8] {{ request()->routeIs('mahasiswa.klaim.*') ? 'bg-brand-soft font-semibold text-brand' : 'text-[#3d4b60] hover:text-ink' }}">Klaim
                             Saya</a>
                     @else
                         <a href="{{ route('petugas.dashboard') }}"
-                            class="{{ $mobileUserLink }} {{ request()->routeIs('petugas.*') ? 'bg-brand-soft font-semibold text-brand' : '' }}">Panel
+                            class="block rounded-xl px-4 py-2 text-sm font-medium transition-colors duration-150 hover:bg-[#f3f5f8] {{ request()->routeIs('petugas.*') ? 'bg-brand-soft font-semibold text-brand' : 'text-[#3d4b60] hover:text-ink' }}">Panel
                             Petugas</a>
                     @endif
                     <a href="{{ route('profil.edit') }}"
-                        class="{{ $mobileUserLink }} {{ request()->routeIs('profil.*') ? 'bg-brand-soft font-semibold text-brand' : '' }}">Profil
+                        class="block rounded-xl px-4 py-2 text-sm font-medium transition-colors duration-150 hover:bg-[#f3f5f8] {{ request()->routeIs('profil.*') ? 'bg-brand-soft font-semibold text-brand' : 'text-[#3d4b60] hover:text-ink' }}">Profil
                         Saya</a>
                     <form action="{{ route('logout') }}" method="POST" class="pt-1">
                         @csrf

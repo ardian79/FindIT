@@ -20,10 +20,6 @@
             @if ($kategori->isEmpty())
                 <div class="px-6 py-14 text-center text-sm text-ink-muted">Belum ada data kategori.</div>
             @else
-                @php
-                    $iconBtn =
-                        'inline-flex h-9 w-9 items-center justify-center rounded-lg border bg-white transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2';
-                @endphp
                 <div class="overflow-x-auto">
                     <table class="min-w-full divide-y divide-[#e7ebf2] text-left text-sm">
                         <thead class="bg-[#f7f8fb] text-xs font-medium text-ink-muted">
@@ -48,7 +44,7 @@
                                         <div class="flex items-center justify-center gap-1.5">
                                             <a href="{{ route('petugas.kategori.edit', $item) }}" title="Edit"
                                                 aria-label="Edit {{ $item->nama_kategori }}"
-                                                class="{{ $iconBtn }} border-[#d7dde7] text-ink hover:bg-[#f3f5f8] focus-visible:ring-ink-navy/30">
+                                                class="inline-flex h-9 w-9 items-center justify-center rounded-lg border bg-white transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 border-[#d7dde7] text-ink hover:bg-[#f3f5f8] focus-visible:ring-ink-navy/30">
                                                 <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24"
                                                     stroke="currentColor" stroke-width="1.75" aria-hidden="true">
                                                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -57,7 +53,7 @@
                                             </a>
                                             <button type="button" popovertarget="confirm-hapus-{{ $item->id }}"
                                                 title="Hapus" aria-label="Hapus {{ $item->nama_kategori }}"
-                                                class="{{ $iconBtn }} border-[#f3c3c0] text-[#b42318] hover:border-brand hover:bg-[#fef3f2] focus-visible:ring-brand/30">
+                                                class="inline-flex h-9 w-9 items-center justify-center rounded-lg border bg-white transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 border-[#f3c3c0] text-[#b42318] hover:border-brand hover:bg-[#fef3f2] focus-visible:ring-brand/30">
                                                 <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24"
                                                     stroke="currentColor" stroke-width="1.75" aria-hidden="true">
                                                     <path stroke-linecap="round" stroke-linejoin="round"

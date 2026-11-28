@@ -17,8 +17,8 @@
 <body id="top" class="flex min-h-screen flex-col overflow-x-clip bg-[#f5f6f8] font-sans text-ink antialiased">
     <x-navbar />
 
-    <main class="flex-1 pt-[68px]">
-        <div class="mx-auto w-full max-w-[1160px] px-4 sm:px-6 lg:px-8">
+    <main class="flex-1 pt-17">
+        <div class="mx-auto w-full max-w-290 px-4 sm:px-6 lg:px-8">
             <x-alert />
         </div>
         @yield('content')

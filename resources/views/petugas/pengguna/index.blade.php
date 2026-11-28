@@ -4,27 +4,23 @@
 @section('header', 'Kelola Pengguna Mahasiswa')
 
 @section('content')
-    @php
-        $toWa = fn(?string $hp) => $hp ? preg_replace('/^0/', '62', preg_replace('/\D/', '', $hp)) : null;
-        $field =
-            'h-[42px] w-full rounded-xl border border-[#d7dde7] bg-white px-3.5 text-sm text-ink outline-none transition-colors duration-150 focus:border-ink-navy focus:ring-4 focus:ring-ink-navy/10';
-    @endphp
-
     <div class="space-y-5">
         <form action="{{ route('petugas.pengguna.index') }}" method="GET"
             class="flex flex-col gap-3 rounded-2xl border border-[#e7ebf2] bg-white p-4 md:flex-row md:flex-wrap md:items-center">
-            <div class="relative min-w-[200px] flex-1">
+            <div class="relative min-w-50 flex-1">
                 <svg class="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-muted"
                     fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75" aria-hidden="true">
                     <path stroke-linecap="round" stroke-linejoin="round"
                         d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
                 </svg>
                 <input type="text" name="search" value="{{ request('search') }}"
-                    placeholder="Cari nama, NIM, atau nomor HP" class="{{ $field }} pl-10">
+                    placeholder="Cari nama, NIM, atau nomor HP"
+                    class="h-10.5 w-full rounded-xl border border-[#d7dde7] bg-white px-3.5 text-sm text-ink outline-none transition-colors duration-150 focus:border-ink-navy focus:ring-4 focus:ring-ink-navy/10 pl-10">
             </div>
 
             <div class="w-full md:w-44">
-                <select name="status" class="{{ $field }}">
+                <select name="status"
+                    class="h-10.5 w-full rounded-xl border border-[#d7dde7] bg-white px-3.5 text-sm text-ink outline-none transition-colors duration-150 focus:border-ink-navy focus:ring-4 focus:ring-ink-navy/10">
                     <option value="">Semua Status</option>
                     @foreach (['aktif' => 'Aktif', 'nonaktif' => 'Nonaktif'] as $val => $label)
                         <option value="{{ $val }}" @selected(request('status') === $val)>{{ $label }}</option>
@@ -34,10 +30,10 @@
 
             <div class="flex shrink-0 items-center gap-2">
                 <button type="submit"
-                    class="inline-flex h-[42px] flex-1 items-center justify-center rounded-xl bg-brand px-5 text-sm font-medium text-white transition-colors duration-150 hover:bg-brand-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 active:scale-[0.98] md:flex-none">Filter</button>
+                    class="inline-flex h-10.5 flex-1 items-center justify-center rounded-xl bg-brand px-5 text-sm font-medium text-white transition-colors duration-150 hover:bg-brand-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 active:scale-[0.98] md:flex-none">Filter</button>
                 @if (request()->anyFilled(['search', 'status']))
                     <a href="{{ route('petugas.pengguna.index') }}"
-                        class="inline-flex h-[42px] items-center justify-center rounded-xl border border-[#d7dde7] bg-white px-3.5 text-sm font-medium text-ink transition-colors duration-150 hover:bg-[#f7f8fb] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink-navy/30">Reset</a>
+                        class="inline-flex h-10.5 items-center justify-center rounded-xl border border-[#d7dde7] bg-white px-3.5 text-sm font-medium text-ink transition-colors duration-150 hover:bg-[#f7f8fb] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink-navy/30">Reset</a>
                 @endif
             </div>
         </form>
@@ -60,9 +56,6 @@
                         </thead>
                         <tbody class="divide-y divide-[#e7ebf2] bg-white">
                             @foreach ($pengguna as $item)
-                                @php
-                                    $wa = $toWa($item->no_hp);
-                                @endphp
                                 <tr class="transition-colors duration-150 hover:bg-[#f7f8fb]">
                                     <td class="px-5 py-4">
                                         <div class="flex items-center gap-3">
@@ -77,10 +70,11 @@
                                         </div>
                                     </td>
                                     <td class="whitespace-nowrap px-5 py-4 text-center">
-                                        @if ($wa)
+                                        @if ($item->no_hp)
                                             <div class="inline-flex items-center gap-2">
                                                 <span class="tabular-nums text-[#3d4b60]">{{ $item->no_hp }}</span>
-                                                <a href="https://wa.me/{{ $wa }}" target="_blank" rel="noopener"
+                                                <a href="https://wa.me/{{ preg_replace('/^0/', '62', preg_replace('/\D/', '', $item->no_hp)) }}"
+                                                    target="_blank" rel="noopener"
                                                     aria-label="Chat WhatsApp {{ $item->nama }}" title="Chat WhatsApp"
                                                     class="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[#25D366] text-white transition-colors duration-150 hover:bg-[#1fb85a] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#25D366] focus-visible:ring-offset-1">
                                                     <svg class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor"
@@ -122,7 +116,8 @@
                             {{ $item->is_active ? 'Nonaktifkan Akun' : 'Aktifkan Akun' }}</h3>
                         <p class="mt-2 text-sm text-ink-muted">
                             {{ $item->is_active ? 'Nonaktifkan akun' : 'Aktifkan kembali akun' }}
-                            <strong>{{ $item->nama }}</strong>?</p>
+                            <strong>{{ $item->nama }}</strong>?
+                        </p>
                         <div class="mt-5 flex justify-end gap-2">
                             <button type="button" popovertarget="confirm-toggle-{{ $item->id }}"
                                 popovertargetaction="hide"

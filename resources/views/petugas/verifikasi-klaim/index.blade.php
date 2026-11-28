@@ -4,26 +4,23 @@
 @section('header', 'Verifikasi Klaim Barang')
 
 @section('content')
-    @php
-        $field =
-            'h-[42px] w-full rounded-xl border border-[#d7dde7] bg-white px-3.5 text-sm text-ink outline-none transition-colors duration-150 focus:border-ink-navy focus:ring-4 focus:ring-ink-navy/10';
-    @endphp
-
     <div class="space-y-5">
         <form action="{{ route('petugas.verifikasi-klaim.index') }}" method="GET"
             class="flex flex-col gap-3 rounded-2xl border border-[#e7ebf2] bg-white p-4 md:flex-row md:flex-wrap md:items-center">
-            <div class="relative min-w-[200px] flex-1">
+            <div class="relative min-w-50 flex-1">
                 <svg class="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-muted"
                     fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75" aria-hidden="true">
                     <path stroke-linecap="round" stroke-linejoin="round"
                         d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
                 </svg>
                 <input type="text" name="search" value="{{ request('search') }}"
-                    placeholder="Cari barang, pengklaim, atau NIM" class="{{ $field }} pl-10">
+                    placeholder="Cari barang, pengklaim, atau NIM"
+                    class="h-10.5 w-full rounded-xl border border-[#d7dde7] bg-white px-3.5 text-sm text-ink outline-none transition-colors duration-150 focus:border-ink-navy focus:ring-4 focus:ring-ink-navy/10 pl-10">
             </div>
 
             <div class="w-full md:w-44">
-                <select name="status" class="{{ $field }}">
+                <select name="status"
+                    class="h-10.5 w-full rounded-xl border border-[#d7dde7] bg-white px-3.5 text-sm text-ink outline-none transition-colors duration-150 focus:border-ink-navy focus:ring-4 focus:ring-ink-navy/10">
                     <option value="">Semua Status</option>
                     @foreach (['pending' => 'Pending', 'disetujui' => 'Disetujui', 'selesai' => 'Selesai', 'ditolak' => 'Ditolak'] as $val => $label)
                         <option value="{{ $val }}" @selected(request('status') === $val)>{{ $label }}</option>
@@ -33,10 +30,10 @@
 
             <div class="flex shrink-0 items-center gap-2">
                 <button type="submit"
-                    class="inline-flex h-[42px] flex-1 items-center justify-center rounded-xl bg-brand px-5 text-sm font-medium text-white transition-colors duration-150 hover:bg-brand-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 active:scale-[0.98] md:flex-none">Filter</button>
+                    class="inline-flex h-10.5 flex-1 items-center justify-center rounded-xl bg-brand px-5 text-sm font-medium text-white transition-colors duration-150 hover:bg-brand-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 active:scale-[0.98] md:flex-none">Filter</button>
                 @if (request()->anyFilled(['search', 'status']))
                     <a href="{{ route('petugas.verifikasi-klaim.index') }}"
-                        class="inline-flex h-[42px] items-center justify-center rounded-xl border border-[#d7dde7] bg-white px-3.5 text-sm font-medium text-ink transition-colors duration-150 hover:bg-[#f7f8fb] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink-navy/30">Reset</a>
+                        class="inline-flex h-10.5 items-center justify-center rounded-xl border border-[#d7dde7] bg-white px-3.5 text-sm font-medium text-ink transition-colors duration-150 hover:bg-[#f7f8fb] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink-navy/30">Reset</a>
                 @endif
             </div>
         </form>
@@ -56,25 +53,14 @@
         @else
             <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
                 @foreach ($klaim as $item)
-                    @php
-                        $namaBarang = $item->barangTemuan?->nama_barang ?? 'Barang Temuan';
-                        $namaKategori = $item->barangTemuan?->kategori?->nama_kategori ?? 'Umum';
-                        $foto = $item->barangTemuan?->foto_barang
-                            ? ltrim(preg_replace('#^(public/|storage/)#', '', $item->barangTemuan->foto_barang), '/')
-                            : null;
-                        $hasFoto = $foto && is_file(public_path('storage/' . $foto));
-                        [$badgeCls, $badgeLabel] = match ($item->status) {
-                            'pending' => ['border border-amber-200/80 bg-amber-50 text-amber-800', 'Pending'],
-                            'disetujui' => ['bg-[#e8eef6] text-ink-navy', 'Disetujui'],
-                            'ditolak' => ['bg-brand-soft text-brand-dark', 'Ditolak'],
-                            default => ['bg-ink-navy text-white', 'Selesai'],
-                        };
-                    @endphp
                     <article
                         class="group flex h-full min-w-0 flex-col overflow-hidden rounded-2xl border border-[#e7ebf2] bg-white transition duration-200 hover:-translate-y-1 hover:border-[#cfd6e2] hover:shadow-card">
                         <div class="relative h-40 overflow-hidden bg-[#eef1f5]">
-                            @if ($hasFoto)
-                                <img src="{{ asset('storage/' . $foto) }}" alt="{{ $namaBarang }}" loading="lazy"
+                            @if (
+                                $item->barangTemuan?->foto_barang &&
+                                    is_file(public_path('storage/' . ltrim(preg_replace('#^(public/|storage/)#', '', $item->barangTemuan->foto_barang), '/'))))
+                                <img src="{{ asset('storage/' . ltrim(preg_replace('#^(public/|storage/)#', '', $item->barangTemuan->foto_barang), '/')) }}"
+                                    alt="{{ $item->barangTemuan?->nama_barang ?? 'Barang Temuan' }}" loading="lazy"
                                     decoding="async"
                                     class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.03]">
                             @else
@@ -87,13 +73,23 @@
                                 </div>
                             @endif
                             <span
-                                class="absolute left-3 top-3 rounded-lg bg-white/95 px-2 py-0.5 text-xs font-medium text-ink shadow-sm">{{ $namaKategori }}</span>
-                            <span
-                                class="absolute right-3 top-3 rounded-lg px-2 py-0.5 text-xs font-medium {{ $badgeCls }}">{{ $badgeLabel }}</span>
+                                class="absolute left-3 top-3 rounded-lg bg-white/95 px-2 py-0.5 text-xs font-medium text-ink shadow-sm">{{ $item->barangTemuan?->kategori?->nama_kategori ?? 'Umum' }}</span>
+                            
+                            @if ($item->status === 'pending')
+                                <span class="absolute right-3 top-3 rounded-lg px-2 py-0.5 text-xs font-medium border border-amber-200/80 bg-amber-50 text-amber-800">Pending</span>
+                            @elseif ($item->status === 'disetujui')
+                                <span class="absolute right-3 top-3 rounded-lg px-2 py-0.5 text-xs font-medium bg-[#e8eef6] text-ink-navy">Disetujui</span>
+                            @elseif ($item->status === 'ditolak')
+                                <span class="absolute right-3 top-3 rounded-lg px-2 py-0.5 text-xs font-medium bg-brand-soft text-brand-dark">Ditolak</span>
+                            @else
+                                <span class="absolute right-3 top-3 rounded-lg px-2 py-0.5 text-xs font-medium bg-ink-navy text-white">Selesai</span>
+                            @endif
+                            
                         </div>
 
                         <div class="flex min-h-0 flex-1 flex-col p-4">
-                            <h2 class="line-clamp-2 min-h-10 text-sm font-semibold leading-5 text-ink">{{ $namaBarang }}
+                            <h2 class="line-clamp-2 min-h-10 text-sm font-semibold leading-5 text-ink">
+                                {{ $item->barangTemuan?->nama_barang ?? 'Barang Temuan' }}
                             </h2>
                             <div class="mt-2 space-y-1 text-xs text-ink-muted">
                                 <p class="font-medium text-ink">{{ $item->pengguna?->nama ?? '-' }}</p>

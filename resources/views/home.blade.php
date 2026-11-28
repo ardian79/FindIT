@@ -3,36 +3,14 @@
 @section('title', 'FindIT - Lost & Found Universitas Jember')
 
 @section('content')
-    @php
-        $toWa = fn(?string $hp) => $hp ? preg_replace('/^0/', '62', preg_replace('/\D/', '', $hp)) : '';
-        $waPetugas = $toWa($petugas?->no_hp);
-
-        $isHilang = $tab === 'hilang';
-        $activeTab = $isHilang ? 'hilang' : 'temuan';
-        $tabQuery = request()->except(['page_temuan', 'page_hilang']);
-        $temuanUrl = route('home', [...$tabQuery, 'tab' => 'temuan']);
-        $hilangUrl = route('home', [...$tabQuery, 'tab' => 'hilang']);
-
-        $isPetugas = auth()->check() && auth()->user()->role !== 'mahasiswa';
-        $laporUrl = auth()->check() ? route('mahasiswa.laporan.index') : route('login');
-
-        $paginator = $isHilang ? $laporanKehilangan : $barangTemuan;
-        $isPaginator = $paginator instanceof \Illuminate\Pagination\AbstractPaginator;
-        $items = $isPaginator ? $paginator->getCollection() : collect($paginator)->take(3);
-        $currPage = $isPaginator ? $paginator->currentPage() : 1;
-        $lastPage = $isPaginator ? $paginator->lastPage() : 1;
-        $pageName = $isPaginator ? $paginator->getPageName() : 'page';
-        $pageUrl = fn(int $p) => route('home', [...request()->except($pageName), 'tab' => $activeTab, $pageName => $p]);
-    @endphp
-
     <section id="beranda"
-        class="relative isolate -mt-[68px] flex min-h-screen scroll-mt-0 items-center overflow-hidden bg-ink-deep text-white [contain:layout_paint]">
+        class="relative isolate -mt-17 flex min-h-screen scroll-mt-0 items-center overflow-hidden bg-ink-deep text-white contain-[layout_paint]">
         <img src="{{ asset('images/banner-unej.webp') }}" alt="Layanan Lost & Found Universitas Jember" width="1920"
             height="1080" fetchpriority="high" decoding="async" class="fi-hero-bg absolute inset-0 h-full w-full object-cover">
-        <div class="absolute inset-0 bg-gradient-to-b from-ink-deep/75 via-ink-deep/65 to-ink-deep/85"></div>
+        <div class="absolute inset-0 bg-linear-to-b from-ink-deep/75 via-ink-deep/65 to-ink-deep/85"></div>
 
         <div
-            class="mx-auto flex w-full max-w-[1160px] flex-col items-center justify-center px-4 pb-20 pt-[100px] text-center relative z-10 sm:px-6 lg:px-8">
+            class="mx-auto flex w-full max-w-290 flex-col items-center justify-center px-4 pb-20 pt-25 text-center relative z-10 sm:px-6 lg:px-8">
             <h1
                 class="fi-hero-in fi-hero-in-1 max-w-3xl font-heading text-4xl font-bold leading-[1.08] tracking-tight sm:text-5xl lg:text-[56px]">
                 Temukan Kembali Barang Berharga Anda di UNEJ
@@ -51,16 +29,16 @@
                     </svg>
                     Cari Barang
                 </a>
-                <a href="{{ $isPetugas ? route('petugas.dashboard') : $laporUrl }}"
+                <a href="{{ auth()->check() && auth()->user()->role !== 'mahasiswa' ? route('petugas.dashboard') : (auth()->check() ? route('mahasiswa.laporan.index') : route('login')) }}"
                     class="inline-flex items-center justify-center gap-2 rounded-full border border-transparent bg-white px-6 py-3 text-sm font-semibold leading-tight text-ink-navy transition duration-150 hover:-translate-y-0.5 hover:bg-[#f4f6f8] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 active:translate-y-0 active:scale-[0.98]">
-                    {{ $isPetugas ? 'Buka Panel Petugas' : 'Laporkan Kehilangan' }}
+                    {{ auth()->check() && auth()->user()->role !== 'mahasiswa' ? 'Buka Panel Petugas' : 'Laporkan Kehilangan' }}
                 </a>
             </div>
         </div>
     </section>
 
-    <section id="cara-kerja" class="scroll-mt-24 bg-white py-20 [contain:layout_style] lg:py-24">
-        <div class="mx-auto w-full max-w-[1160px] px-4 sm:px-6 lg:px-8">
+    <section id="cara-kerja" class="scroll-mt-24 bg-white py-20 contain-[layout_style] lg:py-24">
+        <div class="mx-auto w-full max-w-290 px-4 sm:px-6 lg:px-8">
             <div class="fi-reveal mx-auto max-w-2xl text-center">
                 <p class="text-xs font-semibold text-brand">Cara kerja</p>
                 <h2 class="mt-2 font-heading text-2xl font-semibold tracking-tight text-ink sm:text-3xl lg:text-4xl">
@@ -99,14 +77,13 @@
         </div>
     </section>
 
-    <section class="overflow-x-clip bg-[#f5f6f8] [contain:layout_style]">
-        <div
-            class="mx-auto grid w-full max-w-[1160px] items-center gap-10 px-4 py-20 sm:px-6 lg:grid-cols-2 lg:px-8 lg:py-24">
+    <section class="overflow-x-clip bg-[#f5f6f8] contain-[layout_style]">
+        <div class="mx-auto grid w-full max-w-290 items-center gap-10 px-4 py-20 sm:px-6 lg:grid-cols-2 lg:px-8 lg:py-24">
             <div
                 class="fi-reveal-left group overflow-hidden rounded-2xl shadow-lift transition duration-300 hover:-translate-y-1 hover:shadow-[0_24px_50px_rgba(16,42,76,0.16)]">
-                <img src="{{ asset('images/campus-activity.webp') }}" alt="Ilustrasi pencarian barang FindIT"
-                    width="1200" height="801" loading="lazy" decoding="async"
-                    class="aspect-[4/3] w-full object-cover transition-transform duration-300 group-hover:scale-[1.03]">
+                <img src="{{ asset('images/campus-activity.webp') }}" alt="Ilustrasi pencarian barang FindIT" width="1200"
+                    height="801" loading="lazy" decoding="async"
+                    class="aspect-4/3 w-full object-cover transition-transform duration-300 group-hover:scale-[1.03]">
             </div>
             <div class="fi-reveal-right">
                 <p class="text-xs font-semibold text-brand">Pencarian yang terarah</p>
@@ -138,8 +115,8 @@
         </div>
     </section>
 
-    <section id="lokasi" class="scroll-mt-24 overflow-x-clip bg-white py-20 [contain:layout_style] lg:py-24">
-        <div class="mx-auto w-full max-w-[1160px] px-4 sm:px-6 lg:px-8">
+    <section id="lokasi" class="scroll-mt-24 overflow-x-clip bg-white py-20 contain-[layout_style] lg:py-24">
+        <div class="mx-auto w-full max-w-290 px-4 sm:px-6 lg:px-8">
             <div class="fi-reveal mx-auto mb-8 max-w-2xl text-center">
                 <p class="text-xs font-semibold text-brand">Lokasi layanan</p>
                 <h2 class="mt-2 font-heading text-3xl font-semibold tracking-tight text-ink sm:text-4xl">
@@ -185,18 +162,18 @@
                 </div>
 
                 <div
-                    class="min-h-[300px] border-t border-[#e7ebf2] bg-[#eef1f5] [contain:layout_paint] sm:min-h-[360px] lg:min-h-[420px] lg:border-l lg:border-t-0">
+                    class="min-h-75 border-t border-[#e7ebf2] bg-[#eef1f5] contain-[layout_paint] sm:min-h-90 lg:min-h-105 lg:border-l lg:border-t-0">
                     <iframe src="https://maps.google.com/maps?q=-8.1659263,113.7144346&t=&z=17&ie=UTF8&iwloc=&output=embed"
                         title="Peta Lokasi Pos Keamanan Utama Universitas Jember"
-                        class="h-full min-h-[300px] w-full border-0 sm:min-h-[360px] lg:min-h-[420px]" loading="lazy"
+                        class="h-full min-h-75 w-full border-0 sm:min-h-90 lg:min-h-105" loading="lazy"
                         referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="katalog" class="scroll-mt-24 bg-[#f5f6f8] py-20 [contain:layout_style] lg:py-24">
-        <div class="mx-auto w-full max-w-[1160px] px-4 sm:px-6 lg:px-8">
+    <section id="katalog" class="scroll-mt-24 bg-[#f5f6f8] py-20 contain-[layout_style] lg:py-24">
+        <div class="mx-auto w-full max-w-290 px-4 sm:px-6 lg:px-8">
             <div class="fi-reveal mx-auto mb-8 max-w-2xl text-center">
                 <p class="text-xs font-semibold text-brand">Katalog</p>
                 <h2 class="mt-2 font-heading text-3xl font-semibold tracking-tight text-ink sm:text-4xl">
@@ -207,25 +184,28 @@
                 </p>
             </div>
 
-            {{-- ponytail: innerHTML swap into permanent min-h containers + overflow-anchor:none prevents scroll jumps --}}
             <div id="catalog-content">
                 <div id="catalog-content-body">
                     <div
                         class="fi-reveal-scale relative z-20 rounded-2xl border border-[#e7ebf2] bg-white p-4 shadow-card sm:p-5">
                         <div id="catalog-tabs" class="relative mx-auto flex max-w-lg rounded-full bg-[#f3f5f8] p-1"
-                            data-active-tab="{{ $activeTab }}">
+                            data-active-tab="{{ $tab === 'hilang' ? 'hilang' : 'temuan' }}">
                             <span id="catalog-tab-indicator" aria-hidden="true"
-                                class="pointer-events-none absolute top-1 {{ $isHilang ? 'left-1/2' : 'left-1' }} h-[calc(100%-8px)] w-[calc(50%-4px)] rounded-full bg-ink-navy transition-[left] duration-150 ease-[cubic-bezier(.22,1,.36,1)]"></span>
-                            <a href="{{ $temuanUrl }}" hx-get="{{ $temuanUrl }}" hx-target="#catalog-content"
-                                hx-select="#catalog-content-body" hx-swap="innerHTML show:none focus-scroll:false"
-                                hx-push-url="true" data-catalog-tab="temuan"
-                                class="relative z-[1] flex-1 rounded-full px-4 py-2 text-center text-sm font-medium transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink-navy/40 {{ $isHilang ? 'text-ink-navy' : 'text-white' }}">
+                                class="pointer-events-none absolute top-1 {{ $tab === 'hilang' ? 'left-1/2' : 'left-1' }} h-[calc(100%-8px)] w-[calc(50%-4px)] rounded-full bg-ink-navy transition-[left] duration-150 ease-[cubic-bezier(.22,1,.36,1)]"></span>
+                            <a href="{{ route('home', [...request()->except(['page_temuan', 'page_hilang']), 'tab' => 'temuan']) }}"
+                                hx-get="{{ route('home', [...request()->except(['page_temuan', 'page_hilang']), 'tab' => 'temuan']) }}"
+                                hx-target="#catalog-content" hx-select="#catalog-content-body"
+                                hx-swap="innerHTML show:none focus-scroll:false" hx-push-url="true"
+                                data-catalog-tab="temuan"
+                                class="relative z-1 flex-1 rounded-full px-4 py-2 text-center text-sm font-medium transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink-navy/40 {{ $tab === 'hilang' ? 'text-ink-navy' : 'text-white' }}">
                                 Barang Temuan
                             </a>
-                            <a href="{{ $hilangUrl }}" hx-get="{{ $hilangUrl }}" hx-target="#catalog-content"
-                                hx-select="#catalog-content-body" hx-swap="innerHTML show:none focus-scroll:false"
-                                hx-push-url="true" data-catalog-tab="hilang"
-                                class="relative z-[1] flex-1 rounded-full px-4 py-2 text-center text-sm font-medium transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink-navy/40 {{ $isHilang ? 'text-white' : 'text-ink-navy' }}">
+                            <a href="{{ route('home', [...request()->except(['page_temuan', 'page_hilang']), 'tab' => 'hilang']) }}"
+                                hx-get="{{ route('home', [...request()->except(['page_temuan', 'page_hilang']), 'tab' => 'hilang']) }}"
+                                hx-target="#catalog-content" hx-select="#catalog-content-body"
+                                hx-swap="innerHTML show:none focus-scroll:false" hx-push-url="true"
+                                data-catalog-tab="hilang"
+                                class="relative z-1 flex-1 rounded-full px-4 py-2 text-center text-sm font-medium transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink-navy/40 {{ $tab === 'hilang' ? 'text-white' : 'text-ink-navy' }}">
                                 Barang Hilang
                             </a>
                         </div>
@@ -234,7 +214,7 @@
                             hx-target="#catalog-content" hx-select="#catalog-content-body"
                             hx-swap="innerHTML show:none focus-scroll:false" hx-push-url="true"
                             class="mt-4 flex flex-col gap-3 lg:flex-row">
-                            <input type="hidden" name="tab" value="{{ $activeTab }}">
+                            <input type="hidden" name="tab" value="{{ $tab === 'hilang' ? 'hilang' : 'temuan' }}">
                             <div class="relative flex-1">
                                 <svg class="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-muted"
                                     fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75"
@@ -244,12 +224,12 @@
                                 </svg>
                                 <input type="text" name="search" value="{{ request('search') }}"
                                     placeholder="Cari nama barang, lokasi, atau deskripsi"
-                                    class="h-[42px] w-full rounded-xl border border-[#d7dde7] bg-white pl-10 pr-3.5 text-sm text-ink outline-none transition-colors duration-150 focus:border-ink-navy focus:ring-4 focus:ring-ink-navy/10">
+                                    class="h-10.5 w-full rounded-xl border border-[#d7dde7] bg-white pl-10 pr-3.5 text-sm text-ink outline-none transition-colors duration-150 focus:border-ink-navy focus:ring-4 focus:ring-ink-navy/10">
                             </div>
                             <select name="kategori_id" hx-get="{{ route('home') }}" hx-include="closest form"
                                 hx-target="#catalog-content" hx-select="#catalog-content-body"
                                 hx-swap="innerHTML show:none focus-scroll:false" hx-push-url="true"
-                                class="h-[42px] w-full rounded-xl border border-[#d7dde7] bg-white px-3.5 text-sm text-ink outline-none transition-colors duration-150 focus:border-ink-navy focus:ring-4 focus:ring-ink-navy/10 lg:w-52">
+                                class="h-10.5 w-full rounded-xl border border-[#d7dde7] bg-white px-3.5 text-sm text-ink outline-none transition-colors duration-150 focus:border-ink-navy focus:ring-4 focus:ring-ink-navy/10 lg:w-52">
                                 <option value="">Semua Kategori</option>
                                 @foreach ($kategori as $kat)
                                     <option value="{{ $kat->id }}" @selected(request('kategori_id') == $kat->id)>
@@ -258,78 +238,78 @@
                                 @endforeach
                             </select>
                             <button type="submit"
-                                class="inline-flex h-[42px] items-center justify-center gap-2 rounded-xl border border-transparent bg-brand px-5 py-2.5 text-sm font-medium leading-tight text-white transition duration-150 hover:-translate-y-0.5 hover:bg-brand-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 active:translate-y-0 active:scale-[0.98]">Cari</button>
+                                class="inline-flex h-10.5 items-center justify-center gap-2 rounded-xl border border-transparent bg-brand px-5 py-2.5 text-sm font-medium leading-tight text-white transition duration-150 hover:-translate-y-0.5 hover:bg-brand-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 active:translate-y-0 active:scale-[0.98]">Cari</button>
                             @if (request()->filled('search') || request()->filled('kategori_id'))
-                                <a href="{{ route('home', ['tab' => $activeTab]) }}"
-                                    hx-get="{{ route('home', ['tab' => $activeTab]) }}" hx-target="#catalog-content"
-                                    hx-select="#catalog-content-body" hx-swap="innerHTML show:none focus-scroll:false"
-                                    hx-push-url="true"
-                                    class="inline-flex h-[42px] items-center justify-center gap-2 rounded-xl border border-[#d7dde7] bg-white px-5 py-2.5 text-sm font-medium leading-tight text-ink transition duration-150 hover:-translate-y-0.5 hover:border-ink-navy hover:bg-[#f7f8fb] hover:text-ink-navy focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink-navy/30 focus-visible:ring-offset-2 active:translate-y-0 active:scale-[0.98]">Reset</a>
+                                <a href="{{ route('home', ['tab' => $tab === 'hilang' ? 'hilang' : 'temuan']) }}"
+                                    hx-get="{{ route('home', ['tab' => $tab === 'hilang' ? 'hilang' : 'temuan']) }}"
+                                    hx-target="#catalog-content" hx-select="#catalog-content-body"
+                                    hx-swap="innerHTML show:none focus-scroll:false" hx-push-url="true"
+                                    class="inline-flex h-10.5 items-center justify-center gap-2 rounded-xl border border-[#d7dde7] bg-white px-5 py-2.5 text-sm font-medium leading-tight text-ink transition duration-150 hover:-translate-y-0.5 hover:border-ink-navy hover:bg-[#f7f8fb] hover:text-ink-navy focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink-navy/30 focus-visible:ring-offset-2 active:translate-y-0 active:scale-[0.98]">Reset</a>
                             @endif
                         </form>
                     </div>
 
-                    <div id="catalog-results" class="min-h-[480px] scroll-mt-24"
+                    <div id="catalog-results" class="min-h-120 scroll-mt-24"
                         hx-on::after-swap="if (event.detail.requestConfig?.elt?.tagName === 'A' && this.getBoundingClientRect().top < 96) this.scrollIntoView({ block: 'start', behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' })">
                         <div id="catalog-results-body">
 
-                            @if ($items->isEmpty())
+                            @if (
+                                (($tab === 'hilang' ? $laporanKehilangan : $barangTemuan) instanceof \Illuminate\Pagination\AbstractPaginator
+                                    ? ($tab === 'hilang' ? $laporanKehilangan : $barangTemuan)->getCollection()
+                                    : collect($tab === 'hilang' ? $laporanKehilangan : $barangTemuan)->take(3)
+                                )->isEmpty())
                                 <div
                                     class="mt-6 rounded-2xl border border-dashed border-[#d7dde7] bg-white p-14 text-center">
                                     <h3 class="text-base font-semibold text-ink">
-                                        {{ $isHilang ? 'Belum ada laporan barang hilang yang sesuai' : 'Belum ada barang temuan yang sesuai' }}
+                                        {{ $tab === 'hilang' ? 'Belum ada laporan barang hilang yang sesuai' : 'Belum ada barang temuan yang sesuai' }}
                                     </h3>
                                     <p class="mt-1 text-sm text-ink-muted">
-                                        {{ $isHilang ? 'Semua laporan kehilangan yang sedang dicari akan tampil di sini.' : 'Coba ubah kata kunci pencarian atau periksa kembali nanti.' }}
+                                        {{ $tab === 'hilang' ? 'Semua laporan kehilangan yang sedang dicari akan tampil di sini.' : 'Coba ubah kata kunci pencarian atau periksa kembali nanti.' }}
                                     </p>
                                 </div>
                             @else
                                 <div class="mt-6 grid grid-cols-1 gap-5 md:grid-cols-3">
-                                    @foreach ($items as $item)
-                                        @php
-                                            $katNama = $item->kategori?->nama_kategori ?? 'Umum';
-                                            $fotoUrl = $item->foto_barang ? asset('storage/' . $item->foto_barang) : '';
-                                            $lokasi = $isHilang ? $item->lokasi_hilang : $item->lokasi_ditemukan;
-                                            $tanggal = ($isHilang
-                                                ? $item->tanggal_hilang
-                                                : $item->tanggal_ditemukan
-                                            )->format('d M Y');
-                                            $pelapor = $isHilang ? $item->pengguna?->nama ?? '-' : '';
-                                        @endphp
+                                    @foreach (($tab === 'hilang' ? $laporanKehilangan : $barangTemuan) instanceof \Illuminate\Pagination\AbstractPaginator ? ($tab === 'hilang' ? $laporanKehilangan : $barangTemuan)->getCollection() : collect($tab === 'hilang' ? $laporanKehilangan : $barangTemuan)->take(3) as $item)
                                         <article
                                             class="group flex flex-col overflow-hidden rounded-2xl border border-[#e7ebf2] bg-white transition duration-200 hover:-translate-y-1 hover:border-[#cfd6e2] hover:shadow-card">
                                             <div
-                                                class="relative flex aspect-[16/10] items-center justify-center overflow-hidden bg-[#eef1f5]">
-                                                @if ($fotoUrl)
-                                                    <img src="{{ $fotoUrl }}" alt="{{ $item->nama_barang }}"
-                                                        loading="lazy" decoding="async"
+                                                class="relative flex aspect-16/10 items-center justify-center overflow-hidden bg-[#eef1f5]">
+                                                @if ($item->foto_barang)
+                                                    <img src="{{ asset('storage/' . $item->foto_barang) }}"
+                                                        alt="{{ $item->nama_barang }}" loading="lazy" decoding="async"
                                                         class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.03]">
                                                 @else
                                                     <span class="text-xs font-medium text-ink-muted">Tanpa foto</span>
                                                 @endif
                                                 <span
-                                                    class="absolute left-3 top-3 rounded-lg bg-white/95 px-2.5 py-1 text-xs font-medium text-ink shadow-sm">{{ $katNama }}</span>
+                                                    class="absolute left-3 top-3 rounded-lg bg-white/95 px-2.5 py-1 text-xs font-medium text-ink shadow-sm">
+                                                    {{ $item->kategori?->nama_kategori ?? 'Umum' }}
+                                                </span>
                                                 <span
-                                                    class="absolute right-3 top-3 rounded-lg px-2.5 py-1 text-xs font-medium {{ $isHilang ? 'bg-brand-soft text-brand-dark' : 'bg-ink-navy text-white' }}">
-                                                    {{ $isHilang ? 'Dicari' : 'Tersedia' }}
+                                                    class="absolute right-3 top-3 rounded-lg px-2.5 py-1 text-xs font-medium {{ $tab === 'hilang' ? 'bg-brand-soft text-brand-dark' : 'bg-ink-navy text-white' }}">
+                                                    {{ $tab === 'hilang' ? 'Dicari' : 'Tersedia' }}
                                                 </span>
                                             </div>
                                             <div class="flex flex-1 flex-col p-5">
                                                 <h3 class="text-base font-semibold text-ink">{{ $item->nama_barang }}</h3>
                                                 <div class="mt-2 space-y-1 text-xs text-ink-muted">
-                                                    <p class="truncate">{{ $lokasi }}</p>
-                                                    <p class="tabular-nums">{{ $isHilang ? 'Hilang' : 'Ditemukan' }}
-                                                        {{ $tanggal }}
+                                                    <p class="truncate">
+                                                        {{ $tab === 'hilang' ? $item->lokasi_hilang : $item->lokasi_ditemukan }}
                                                     </p>
-                                                    @if ($isHilang)
-                                                        <p class="truncate">Pelapor: {{ $pelapor }}</p>
+                                                    <p class="tabular-nums">
+                                                        {{ $tab === 'hilang' ? 'Hilang' : 'Ditemukan' }}
+                                                        {{ ($tab === 'hilang' ? $item->tanggal_hilang : $item->tanggal_ditemukan)->format('d M Y') }}
+                                                    </p>
+                                                    @if ($tab === 'hilang')
+                                                        <p class="truncate">Pelapor: {{ $item->pengguna?->nama ?? '-' }}
+                                                        </p>
                                                     @endif
                                                 </div>
                                                 <p class="mt-3 line-clamp-2 flex-1 text-sm leading-6 text-[#3d4b60]">
                                                     {{ $item->deskripsi }}</p>
                                                 <button type="button"
-                                                    popovertarget="modal-{{ $activeTab }}-{{ $item->id }}"
-                                                    class="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-xl border px-5 py-2.5 text-sm font-medium leading-tight transition duration-150 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 active:translate-y-0 active:scale-[0.98] {{ $isHilang ? 'border-[#d7dde7] bg-white text-ink hover:border-ink-navy hover:bg-[#f7f8fb] hover:text-ink-navy focus-visible:ring-ink-navy/30' : 'border-transparent bg-ink-navy text-white hover:bg-ink-deep focus-visible:ring-ink-navy' }}">
+                                                    popovertarget="modal-{{ $tab === 'hilang' ? 'hilang' : 'temuan' }}-{{ $item->id }}"
+                                                    class="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-xl border px-5 py-2.5 text-sm font-medium leading-tight transition duration-150 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 active:translate-y-0 active:scale-[0.98] {{ $tab === 'hilang' ? 'border-[#d7dde7] bg-white text-ink hover:border-ink-navy hover:bg-[#f7f8fb] hover:text-ink-navy focus-visible:ring-ink-navy/30' : 'border-transparent bg-ink-navy text-white hover:bg-ink-deep focus-visible:ring-ink-navy' }}">
                                                     Lihat Detail
                                                 </button>
                                             </div>
@@ -337,46 +317,80 @@
                                     @endforeach
                                 </div>
 
-                                @if ($lastPage > 1)
-                                    @php
-                                        $window = 5;
-                                        $startPage = min($currPage, max(1, $lastPage - $window + 1));
-                                        $endPage = min($lastPage, $startPage + $window - 1);
-                                    @endphp
-                                    <nav aria-label="Navigasi halaman barang {{ $activeTab }}"
+                                @if (($tab === 'hilang' ? $laporanKehilangan : $barangTemuan)->lastPage() > 1)
+                                    <nav aria-label="Navigasi halaman barang {{ $tab === 'hilang' ? 'hilang' : 'temuan' }}"
                                         hx-target="#catalog-results" hx-select="#catalog-results-body"
                                         hx-swap="innerHTML show:none focus-scroll:false" hx-push-url="true"
                                         class="mt-8 flex flex-wrap items-center justify-center gap-2">
-                                        @if ($currPage > 1)
-                                            <a href="{{ $pageUrl($currPage - 1) }}"
-                                                hx-get="{{ $pageUrl($currPage - 1) }}"
+
+                                        @if (($tab === 'hilang' ? $laporanKehilangan : $barangTemuan)->currentPage() > 1)
+                                            <a href="{{ route('home', [
+                                                ...request()->except(($tab === 'hilang' ? $laporanKehilangan : $barangTemuan)->getPageName()),
+                                                'tab' => $tab === 'hilang' ? 'hilang' : 'temuan',
+                                                ($tab === 'hilang' ? $laporanKehilangan : $barangTemuan)->getPageName() =>
+                                                    ($tab === 'hilang' ? $laporanKehilangan : $barangTemuan)->currentPage() - 1,
+                                            ]) }}"
+                                                hx-get="{{ route('home', [
+                                                    ...request()->except(($tab === 'hilang' ? $laporanKehilangan : $barangTemuan)->getPageName()),
+                                                    'tab' => $tab === 'hilang' ? 'hilang' : 'temuan',
+                                                    ($tab === 'hilang' ? $laporanKehilangan : $barangTemuan)->getPageName() =>
+                                                        ($tab === 'hilang' ? $laporanKehilangan : $barangTemuan)->currentPage() - 1,
+                                                ]) }}"
                                                 class="inline-flex h-10 items-center justify-center gap-1 rounded-xl border border-[#d7dde7] bg-white px-4 text-xs font-medium text-ink transition duration-150 hover:-translate-y-0.5 hover:border-ink-navy hover:bg-[#f7f8fb] hover:text-ink-navy focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink-navy/30">&lsaquo;
                                                 Prev</a>
                                         @endif
 
-                                        @if ($startPage > 1)
+                                        @if (min(
+                                                ($tab === 'hilang' ? $laporanKehilangan : $barangTemuan)->currentPage(),
+                                                max(1, ($tab === 'hilang' ? $laporanKehilangan : $barangTemuan)->lastPage() - 5 + 1)) > 1)
                                             <span
                                                 class="inline-flex h-10 select-none items-center justify-center px-1.5 text-xs font-semibold text-ink-muted"
                                                 aria-hidden="true">&hellip;</span>
                                         @endif
 
-                                        @for ($p = $startPage; $p <= $endPage; $p++)
-                                            <a href="{{ $pageUrl($p) }}" hx-get="{{ $pageUrl($p) }}"
-                                                @if ($p === $currPage) aria-current="page" @endif
-                                                class="inline-flex h-10 min-w-10 items-center justify-center rounded-xl px-3 text-xs font-semibold tabular-nums transition duration-150 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 {{ $p === $currPage ? 'bg-brand text-white hover:bg-brand-dark focus-visible:ring-brand/40' : 'border border-[#e7ebf2] bg-white text-ink hover:border-ink-navy hover:bg-[#f7f8fb] hover:text-ink-navy focus-visible:ring-ink-navy/30' }}">
+                                        @for ($p = min(($tab === 'hilang' ? $laporanKehilangan : $barangTemuan)->currentPage(), max(1, ($tab === 'hilang' ? $laporanKehilangan : $barangTemuan)->lastPage() - 5 + 1)); $p <= min(($tab === 'hilang' ? $laporanKehilangan : $barangTemuan)->lastPage(), min(($tab === 'hilang' ? $laporanKehilangan : $barangTemuan)->currentPage(), max(1, ($tab === 'hilang' ? $laporanKehilangan : $barangTemuan)->lastPage() - 5 + 1)) + 5 - 1); $p++)
+                                            <a href="{{ route('home', [
+                                                ...request()->except(($tab === 'hilang' ? $laporanKehilangan : $barangTemuan)->getPageName()),
+                                                'tab' => $tab === 'hilang' ? 'hilang' : 'temuan',
+                                                ($tab === 'hilang' ? $laporanKehilangan : $barangTemuan)->getPageName() => $p,
+                                            ]) }}"
+                                                hx-get="{{ route('home', [
+                                                    ...request()->except(($tab === 'hilang' ? $laporanKehilangan : $barangTemuan)->getPageName()),
+                                                    'tab' => $tab === 'hilang' ? 'hilang' : 'temuan',
+                                                    ($tab === 'hilang' ? $laporanKehilangan : $barangTemuan)->getPageName() => $p,
+                                                ]) }}"
+                                                @if ($p === ($tab === 'hilang' ? $laporanKehilangan : $barangTemuan)->currentPage()) aria-current="page" @endif
+                                                class="inline-flex h-10 min-w-10 items-center justify-center rounded-xl px-3 text-xs font-semibold tabular-nums transition duration-150 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 {{ $p === ($tab === 'hilang' ? $laporanKehilangan : $barangTemuan)->currentPage() ? 'bg-brand text-white hover:bg-brand-dark focus-visible:ring-brand/40' : 'border border-[#e7ebf2] bg-white text-ink hover:border-ink-navy hover:bg-[#f7f8fb] hover:text-ink-navy focus-visible:ring-ink-navy/30' }}">
                                                 {{ $p }}
                                             </a>
                                         @endfor
 
-                                        @if ($endPage < $lastPage)
+                                        @if (min(
+                                                ($tab === 'hilang' ? $laporanKehilangan : $barangTemuan)->currentPage(),
+                                                max(1, ($tab === 'hilang' ? $laporanKehilangan : $barangTemuan)->lastPage() - 5 + 1)) +
+                                                5 -
+                                                1 <
+                                                ($tab === 'hilang' ? $laporanKehilangan : $barangTemuan)->lastPage())
                                             <span
                                                 class="inline-flex h-10 select-none items-center justify-center px-1.5 text-xs font-semibold text-ink-muted"
                                                 aria-hidden="true">&hellip;</span>
                                         @endif
 
-                                        @if ($currPage < $lastPage)
-                                            <a href="{{ $pageUrl($currPage + 1) }}"
-                                                hx-get="{{ $pageUrl($currPage + 1) }}"
+                                        @if (
+                                            ($tab === 'hilang' ? $laporanKehilangan : $barangTemuan)->currentPage() <
+                                                ($tab === 'hilang' ? $laporanKehilangan : $barangTemuan)->lastPage())
+                                            <a href="{{ route('home', [
+                                                ...request()->except(($tab === 'hilang' ? $laporanKehilangan : $barangTemuan)->getPageName()),
+                                                'tab' => $tab === 'hilang' ? 'hilang' : 'temuan',
+                                                ($tab === 'hilang' ? $laporanKehilangan : $barangTemuan)->getPageName() =>
+                                                    ($tab === 'hilang' ? $laporanKehilangan : $barangTemuan)->currentPage() + 1,
+                                            ]) }}"
+                                                hx-get="{{ route('home', [
+                                                    ...request()->except(($tab === 'hilang' ? $laporanKehilangan : $barangTemuan)->getPageName()),
+                                                    'tab' => $tab === 'hilang' ? 'hilang' : 'temuan',
+                                                    ($tab === 'hilang' ? $laporanKehilangan : $barangTemuan)->getPageName() =>
+                                                        ($tab === 'hilang' ? $laporanKehilangan : $barangTemuan)->currentPage() + 1,
+                                                ]) }}"
                                                 class="inline-flex h-10 items-center justify-center gap-1 rounded-xl border border-[#d7dde7] bg-white px-4 text-xs font-medium text-ink transition duration-150 hover:-translate-y-0.5 hover:border-ink-navy hover:bg-[#f7f8fb] hover:text-ink-navy focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink-navy/30">Next
                                                 &rsaquo;</a>
                                         @endif
@@ -384,31 +398,23 @@
                                 @endif
                             @endif
 
-                            @foreach ($items as $item)
-                                @php
-                                    $modalId = "modal-{$activeTab}-{$item->id}";
-                                    $katNama = $item->kategori?->nama_kategori ?? 'Umum';
-                                    $fotoUrl = $item->foto_barang ? asset('storage/' . $item->foto_barang) : '';
-                                    $lokasi = $isHilang ? $item->lokasi_hilang : $item->lokasi_ditemukan;
-                                    $tanggal = ($isHilang ? $item->tanggal_hilang : $item->tanggal_ditemukan)->format(
-                                        'd M Y',
-                                    );
-                                    $pelapor = $isHilang ? $item->pengguna?->nama ?? '-' : '';
-                                    $waPelapor = $isHilang ? $toWa($item->pengguna?->no_hp) : '';
-                                @endphp
-
-                                <div id="{{ $modalId }}" popover hx-boost="false"
-                                    aria-labelledby="{{ $modalId }}-title"
-                                    class="fi-detail-modal m-0 mt-auto max-h-[92vh] w-full max-w-full overflow-y-auto rounded-t-2xl border border-[#e7ebf2] bg-white p-0 text-left backdrop:bg-ink-deep/60 sm:m-auto sm:w-[calc(100%-2rem)] sm:rounded-2xl {{ $isHilang ? 'sm:max-w-xl' : 'sm:max-w-2xl' }}">
+                            @foreach (($tab === 'hilang' ? $laporanKehilangan : $barangTemuan) instanceof \Illuminate\Pagination\AbstractPaginator ? ($tab === 'hilang' ? $laporanKehilangan : $barangTemuan)->getCollection() : collect($tab === 'hilang' ? $laporanKehilangan : $barangTemuan)->take(3) as $item)
+                                <div id="modal-{{ $tab === 'hilang' ? 'hilang' : 'temuan' }}-{{ $item->id }}" popover
+                                    hx-boost="false"
+                                    aria-labelledby="modal-{{ $tab === 'hilang' ? 'hilang' : 'temuan' }}-{{ $item->id }}-title"
+                                    class="fi-detail-modal m-0 mt-auto max-h-[92vh] w-full max-w-full overflow-y-auto rounded-t-2xl border border-[#e7ebf2] bg-white p-0 text-left backdrop:bg-ink-deep/60 sm:m-auto sm:w-[calc(100%-2rem)] sm:rounded-2xl {{ $tab === 'hilang' ? 'sm:max-w-xl' : 'sm:max-w-2xl' }}">
                                     <div
                                         class="sticky top-0 z-10 flex items-start justify-between gap-4 border-b border-[#e7ebf2] bg-white px-5 py-4 sm:px-6">
                                         <div>
-                                            <span class="text-xs font-medium text-brand-dark">{{ $katNama }}</span>
-                                            <h3 id="{{ $modalId }}-title"
+                                            <span class="text-xs font-medium text-brand-dark">
+                                                {{ $item->kategori?->nama_kategori ?? 'Umum' }}
+                                            </span>
+                                            <h3 id="modal-{{ $tab === 'hilang' ? 'hilang' : 'temuan' }}-{{ $item->id }}-title"
                                                 class="mt-0.5 text-lg font-semibold text-ink">{{ $item->nama_barang }}
                                             </h3>
                                         </div>
-                                        <button type="button" popovertarget="{{ $modalId }}"
+                                        <button type="button"
+                                            popovertarget="modal-{{ $tab === 'hilang' ? 'hilang' : 'temuan' }}-{{ $item->id }}"
                                             popovertargetaction="hide"
                                             class="flex h-9 w-9 items-center justify-center rounded-lg text-ink-muted transition-colors duration-150 hover:bg-[#f3f5f8] hover:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink-navy/30"
                                             aria-label="Tutup">
@@ -421,11 +427,11 @@
                                     </div>
 
                                     <div class="p-5 sm:p-6">
-                                        @if ($fotoUrl)
+                                        @if ($item->foto_barang)
                                             <div
-                                                class="mb-4 overflow-hidden rounded-xl {{ $isHilang ? 'border border-[#e7ebf2]' : '' }} bg-[#eef1f5]">
-                                                <img src="{{ $fotoUrl }}" alt="{{ $item->nama_barang }}"
-                                                    loading="lazy" decoding="async"
+                                                class="mb-4 overflow-hidden rounded-xl {{ $tab === 'hilang' ? 'border border-[#e7ebf2]' : '' }} bg-[#eef1f5]">
+                                                <img src="{{ asset('storage/' . $item->foto_barang) }}"
+                                                    alt="{{ $item->nama_barang }}" loading="lazy" decoding="async"
                                                     class="max-h-80 w-full object-contain">
                                             </div>
                                         @endif
@@ -433,40 +439,51 @@
                                         <div
                                             class="grid grid-cols-1 gap-3 rounded-xl bg-[#f7f8fb] p-4 text-sm sm:grid-cols-2">
                                             <div>
-                                                <span
-                                                    class="block text-xs text-ink-muted">{{ $isHilang ? 'Perkiraan lokasi hilang' : 'Lokasi ditemukan' }}</span>
-                                                <span class="font-medium text-ink">{{ $lokasi }}</span>
+                                                <span class="block text-xs text-ink-muted">
+                                                    {{ $tab === 'hilang' ? 'Perkiraan lokasi hilang' : 'Lokasi ditemukan' }}
+                                                </span>
+                                                <span class="font-medium text-ink">
+                                                    {{ $tab === 'hilang' ? $item->lokasi_hilang : $item->lokasi_ditemukan }}
+                                                </span>
                                             </div>
                                             <div>
-                                                <span
-                                                    class="block text-xs text-ink-muted">{{ $isHilang ? 'Tanggal hilang' : 'Tanggal ditemukan' }}</span>
-                                                <span class="font-medium tabular-nums text-ink">{{ $tanggal }}</span>
+                                                <span class="block text-xs text-ink-muted">
+                                                    {{ $tab === 'hilang' ? 'Tanggal hilang' : 'Tanggal ditemukan' }}
+                                                </span>
+                                                <span class="font-medium tabular-nums text-ink">
+                                                    {{ ($tab === 'hilang' ? $item->tanggal_hilang : $item->tanggal_ditemukan)->format('d M Y') }}
+                                                </span>
                                             </div>
                                             <div class="sm:col-span-2">
+                                                <span class="block text-xs text-ink-muted">
+                                                    {{ $tab === 'hilang' ? 'Pelapor' : 'Lokasi penyimpanan' }}
+                                                </span>
                                                 <span
-                                                    class="block text-xs text-ink-muted">{{ $isHilang ? 'Pelapor' : 'Lokasi penyimpanan' }}</span>
-                                                <span class="font-medium {{ $isHilang ? 'text-ink' : 'text-ink-navy' }}">
-                                                    {{ $isHilang ? $pelapor : 'Pos Keamanan Universitas Jember' }}
+                                                    class="font-medium {{ $tab === 'hilang' ? 'text-ink' : 'text-ink-navy' }}">
+                                                    {{ $tab === 'hilang' ? $item->pengguna?->nama ?? '-' : 'Pos Keamanan Universitas Jember' }}
                                                 </span>
                                             </div>
                                         </div>
 
                                         <div class="mt-4">
                                             <h4 class="text-xs font-medium text-ink-muted">
-                                                {{ $isHilang ? 'Deskripsi dan ciri-ciri' : 'Deskripsi barang' }}</h4>
+                                                {{ $tab === 'hilang' ? 'Deskripsi dan ciri-ciri' : 'Deskripsi barang' }}
+                                            </h4>
                                             <p class="mt-1.5 text-sm leading-7 text-[#3d4b60]">
                                                 {!! nl2br(e(trim($item->deskripsi))) !!}
                                             </p>
                                         </div>
 
-                                        @if ($isHilang)
+                                        @if ($tab === 'hilang')
                                             <div
                                                 class="mt-6 flex flex-col gap-2 border-t border-[#e7ebf2] pt-4 sm:flex-row sm:justify-end">
-                                                <button type="button" popovertarget="{{ $modalId }}"
+                                                <button type="button"
+                                                    popovertarget="modal-{{ $tab === 'hilang' ? 'hilang' : 'temuan' }}-{{ $item->id }}"
                                                     popovertargetaction="hide"
                                                     class="inline-flex items-center justify-center gap-2 rounded-xl border border-[#d7dde7] bg-white px-5 py-2.5 text-sm font-medium leading-tight text-ink transition duration-150 hover:-translate-y-0.5 hover:border-ink-navy hover:bg-[#f7f8fb] hover:text-ink-navy focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink-navy/30 focus-visible:ring-offset-2 active:translate-y-0 active:scale-[0.98]">Tutup</button>
-                                                @if ($waPelapor)
-                                                    <a href="https://wa.me/{{ $waPelapor }}?text={{ urlencode('Halo ' . $pelapor . ', saya melihat laporan kehilangan "' . $item->nama_barang . '" di FindIT UNEJ.') }}"
+
+                                                @if ($item->pengguna?->no_hp)
+                                                    <a href="https://wa.me/{{ preg_replace('/^0/', '62', preg_replace('/\D/', '', $item->pengguna->no_hp)) }}?text={{ urlencode('Halo ' . ($item->pengguna?->nama ?? '-') . ', saya melihat laporan kehilangan "' . $item->nama_barang . '" di FindIT UNEJ.') }}"
                                                         target="_blank" rel="noopener"
                                                         class="inline-flex items-center justify-center gap-2 rounded-xl border border-transparent bg-[#25D366] px-5 py-2.5 text-sm font-medium leading-tight text-white transition duration-150 hover:-translate-y-0.5 hover:bg-[#1fb85a] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#25D366] focus-visible:ring-offset-2 active:translate-y-0 active:scale-[0.98]">
                                                         <svg class="h-4 w-4 shrink-0" viewBox="0 0 24 24"
@@ -481,7 +498,7 @@
                                         @else
                                             <div class="mt-6 border-t border-[#e7ebf2] pt-5">
                                                 @auth
-                                                    @if ($isPetugas)
+                                                    @if (auth()->user()->role !== 'mahasiswa')
                                                         <div
                                                             class="flex flex-col gap-3 rounded-xl bg-[#f7f8fb] p-4 text-sm text-[#3d4b60] sm:flex-row sm:items-center sm:justify-between">
                                                             <span>Anda masuk sebagai petugas keamanan.</span>
@@ -502,7 +519,8 @@
                                                                 class="min-h-24 w-full resize-y rounded-xl border border-[#d7dde7] bg-white px-3.5 py-2.5 text-sm text-ink outline-none transition-colors duration-150 focus:border-ink-navy focus:ring-4 focus:ring-ink-navy/10"></textarea>
                                                             <div
                                                                 class="flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
-                                                                <button type="button" popovertarget="{{ $modalId }}"
+                                                                <button type="button"
+                                                                    popovertarget="modal-{{ $tab === 'hilang' ? 'hilang' : 'temuan' }}-{{ $item->id }}"
                                                                     popovertargetaction="hide"
                                                                     class="inline-flex items-center justify-center gap-2 rounded-xl border border-[#d7dde7] bg-white px-5 py-2.5 text-sm font-medium leading-tight text-ink transition duration-150 hover:-translate-y-0.5 hover:border-ink-navy hover:bg-[#f7f8fb] hover:text-ink-navy focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink-navy/30 focus-visible:ring-offset-2 active:translate-y-0 active:scale-[0.98]">Batal</button>
                                                                 <button type="submit"
@@ -532,7 +550,7 @@
         </div>
     </section>
 
-    <section class="mx-auto w-full max-w-[1160px] px-4 pb-4 sm:px-6 lg:px-8">
+    <section class="mx-auto w-full max-w-290 px-4 pb-4 sm:px-6 lg:px-8">
         <div
             class="fi-reveal-scale overflow-hidden rounded-2xl bg-brand px-6 py-10 text-white shadow-card sm:px-10 lg:px-12">
             <div class="grid items-center gap-8 lg:grid-cols-[1fr_auto]">
@@ -544,8 +562,9 @@
                     <p class="mt-3 text-sm leading-7 text-white/85">
                         Pengambilan barang dilakukan di Pos Keamanan Utama Universitas Jember dengan identitas resmi.
                     </p>
-                    @if ($waPetugas)
-                        <a href="https://wa.me/{{ $waPetugas }}" target="_blank" rel="noopener"
+                    @if ($petugas?->no_hp)
+                        <a href="https://wa.me/{{ preg_replace('/^0/', '62', preg_replace('/\D/', '', $petugas->no_hp)) }}"
+                            target="_blank" rel="noopener"
                             class="mt-4 inline-flex text-sm font-medium text-white underline decoration-white/50 underline-offset-4 hover:decoration-white">
                             Hubungi petugas jaga
                         </a>
@@ -555,8 +574,8 @@
                     <a href="#katalog"
                         class="inline-flex items-center justify-center gap-2 rounded-full border border-transparent bg-white px-6 py-3 text-sm font-semibold leading-tight text-ink-navy transition duration-150 hover:-translate-y-0.5 hover:bg-[#f4f6f8] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 active:translate-y-0 active:scale-[0.98]">Cari
                         Barang</a>
-                    @unless ($isPetugas)
-                        <a href="{{ $laporUrl }}"
+                    @unless (auth()->check() && auth()->user()->role !== 'mahasiswa')
+                        <a href="{{ auth()->check() ? route('mahasiswa.laporan.index') : route('login') }}"
                             class="inline-flex items-center justify-center gap-2 rounded-full border border-white/40 bg-transparent px-6 py-3 text-sm font-semibold leading-tight text-white transition duration-150 hover:-translate-y-0.5 hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 active:translate-y-0 active:scale-[0.98]">
                             Laporkan Kehilangan
                         </a>

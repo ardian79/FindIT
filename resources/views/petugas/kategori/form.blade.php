@@ -1,25 +1,23 @@
 @extends('layouts.petugas')
 
-@php
-    $isEdit = isset($kategori);
-@endphp
-
-@section('title', $isEdit ? 'Edit Kategori' : 'Tambah Kategori')
-@section('header', $isEdit ? 'Edit Kategori' : 'Tambah Kategori')
+@section('title', isset($kategori) ? 'Edit Kategori' : 'Tambah Kategori')
+@section('header', isset($kategori) ? 'Edit Kategori' : 'Tambah Kategori')
 
 @section('content')
     <div class="mx-auto max-w-xl">
         <div class="overflow-hidden rounded-2xl border border-[#e7ebf2] bg-white">
             <div class="border-b border-[#e7ebf2] px-6 py-4">
-                <h2 class="text-base font-semibold text-ink">{{ $isEdit ? 'Perbarui Data Kategori' : 'Form Kategori Baru' }}
+                <h2 class="text-base font-semibold text-ink">
+                    {{ isset($kategori) ? 'Perbarui Data Kategori' : 'Form Kategori Baru' }}
                 </h2>
                 <p class="mt-0.5 text-xs text-ink-muted">Pastikan nama kategori unik dan mudah dipahami pengguna.</p>
             </div>
 
-            <form action="{{ $isEdit ? route('petugas.kategori.update', $kategori) : route('petugas.kategori.store') }}"
+            <form
+                action="{{ isset($kategori) ? route('petugas.kategori.update', $kategori) : route('petugas.kategori.store') }}"
                 method="POST" class="space-y-5 p-6">
                 @csrf
-                @if ($isEdit)
+                @if (isset($kategori))
                     @method('PUT')
                 @endif
 
@@ -36,7 +34,7 @@
                         class="rounded-xl border border-[#d7dde7] bg-white px-4 py-2.5 text-sm font-medium text-ink transition-colors duration-150 hover:bg-[#f7f8fb] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink-navy/30">Batal</a>
                     <button type="submit"
                         class="rounded-xl bg-brand px-5 py-2.5 text-sm font-medium text-white transition-colors duration-150 hover:bg-brand-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 active:scale-[0.98]">
-                        {{ $isEdit ? 'Simpan Perubahan' : 'Simpan Kategori' }}
+                        {{ isset($kategori) ? 'Simpan Perubahan' : 'Simpan Kategori' }}
                     </button>
                 </div>
             </form>

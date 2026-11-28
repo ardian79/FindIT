@@ -3,21 +3,15 @@
 @section('title', 'Riwayat Klaim Saya - FindIT UNEJ')
 
 @section('content')
-    @php
-        $btnPrimary =
-            'inline-flex items-center justify-center gap-2 rounded-xl bg-brand px-4 py-2.5 text-sm font-medium text-white transition-colors duration-150 hover:bg-brand-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 active:scale-[0.98]';
-        $btnSecondary =
-            'inline-flex items-center justify-center gap-2 rounded-xl border border-[#d7dde7] bg-white px-4 py-2.5 text-sm font-medium text-ink transition-colors duration-150 hover:bg-[#f7f8fb] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink-navy/30';
-    @endphp
-
-    <div class="mx-auto max-w-[1160px] px-4 py-8 sm:px-6 lg:px-8">
+    <div class="mx-auto max-w-290 px-4 py-8 sm:px-6 lg:px-8">
         <div class="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <div>
                 <h1 class="text-2xl font-semibold tracking-tight text-ink">Riwayat Klaim Saya</h1>
                 <p class="mt-1 text-sm text-ink-muted">Pantau status verifikasi pengajuan klaim barang temuan Anda di Pos
                     Keamanan Utama UNEJ.</p>
             </div>
-            <a href="{{ route('home') }}#katalog" class="{{ $btnSecondary }}">
+            <a href="{{ route('home') }}#katalog"
+                class="inline-flex items-center justify-center gap-2 rounded-xl border border-[#d7dde7] bg-white px-4 py-2.5 text-sm font-medium text-ink transition-colors duration-150 hover:bg-[#f7f8fb] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink-navy/30">
                 <svg class="h-4 w-4 text-ink-muted" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75"
                     aria-hidden="true">
                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -37,22 +31,14 @@
                 <h2 class="mt-3 text-base font-semibold text-ink">Belum ada pengajuan klaim</h2>
                 <p class="mt-1 text-sm text-ink-muted">Temukan barang milik Anda di katalog beranda dan ajukan klaim
                     kepemilikan.</p>
-                <a href="{{ route('home') }}#katalog" class="{{ $btnPrimary }} mt-5">Lihat Barang Temuan</a>
+                <a href="{{ route('home') }}#katalog"
+                    class="mt-5 inline-flex items-center justify-center gap-2 rounded-xl bg-brand px-4 py-2.5 text-sm font-medium text-white transition-colors duration-150 hover:bg-brand-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 active:scale-[0.98]">
+                    Lihat Barang Temuan
+                </a>
             </div>
         @else
             <div class="space-y-4">
                 @foreach ($klaim as $item)
-                    @php
-                        [$badgeCls, $badgeLabel] = match ($item->status) {
-                            'pending' => [
-                                'border border-amber-200/80 bg-amber-50 text-amber-800',
-                                'Menunggu Verifikasi',
-                            ],
-                            'disetujui' => ['bg-[#e8eef6] text-ink-navy', 'Disetujui · Siap Diambil'],
-                            'ditolak' => ['bg-brand-soft text-brand-dark', 'Ditolak'],
-                            default => ['bg-ink-navy text-white', 'Selesai Diambil'],
-                        };
-                    @endphp
                     <article
                         class="group overflow-hidden rounded-2xl border border-[#e7ebf2] bg-white p-5 transition duration-200 hover:border-[#cfd6e2] hover:shadow-card">
                         <div class="flex flex-col gap-5 md:flex-row md:items-start">
@@ -66,16 +52,38 @@
                                 <div class="flex flex-col justify-between gap-2 sm:flex-row sm:items-start">
                                     <div>
                                         <p class="text-xs font-medium text-brand-dark">
-                                            {{ $item->barangTemuan->kategori->nama_kategori }}</p>
+                                            {{ $item->barangTemuan->kategori->nama_kategori }}
+                                        </p>
                                         <h2 class="mt-0.5 text-lg font-semibold text-ink">
-                                            {{ $item->barangTemuan->nama_barang }}</h2>
+                                            {{ $item->barangTemuan->nama_barang }}
+                                        </h2>
                                         <p class="mt-0.5 text-xs tabular-nums text-ink-muted">
                                             Ditemukan di {{ $item->barangTemuan->lokasi_ditemukan }} · Diajukan
                                             {{ $item->created_at->format('d M Y, H:i') }}
                                         </p>
                                     </div>
-                                    <span
-                                        class="inline-flex w-fit items-center rounded-lg px-2.5 py-1 text-xs font-medium {{ $badgeCls }}">{{ $badgeLabel }}</span>
+
+                                    @if ($item->status === 'pending')
+                                        <span
+                                            class="inline-flex w-fit items-center rounded-lg border border-amber-200/80 bg-amber-50 px-2.5 py-1 text-xs font-medium text-amber-800">
+                                            Menunggu Verifikasi
+                                        </span>
+                                    @elseif ($item->status === 'disetujui')
+                                        <span
+                                            class="inline-flex w-fit items-center rounded-lg bg-[#e8eef6] px-2.5 py-1 text-xs font-medium text-ink-navy">
+                                            Disetujui · Siap Diambil
+                                        </span>
+                                    @elseif ($item->status === 'ditolak')
+                                        <span
+                                            class="inline-flex w-fit items-center rounded-lg bg-brand-soft px-2.5 py-1 text-xs font-medium text-brand-dark">
+                                            Ditolak
+                                        </span>
+                                    @else
+                                        <span
+                                            class="inline-flex w-fit items-center rounded-lg bg-ink-navy px-2.5 py-1 text-xs font-medium text-white">
+                                            Selesai Diambil
+                                        </span>
+                                    @endif
                                 </div>
 
                                 <div class="rounded-xl bg-[#f7f8fb] p-4 text-sm">
@@ -106,8 +114,12 @@
                                 @elseif ($item->status === 'selesai')
                                     <div
                                         class="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-[#e7ebf2] bg-[#f7f8fb] p-4 text-sm text-ink">
-                                        <span class="tabular-nums">Barang telah diambil pada <strong
-                                                class="font-semibold">{{ $item->tanggal_diambil?->format('d M Y, H:i') }}</strong></span>
+                                        <span class="tabular-nums">
+                                            Barang telah diambil pada
+                                            <strong
+                                                class="font-semibold">{{ $item->tanggal_diambil?->format('d M Y, H:i') }}</strong>
+                                        </span>
+
                                         @if ($item->foto_serah_terima)
                                             <a href="{{ asset('storage/' . $item->foto_serah_terima) }}" target="_blank"
                                                 rel="noopener"

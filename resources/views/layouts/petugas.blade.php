@@ -14,11 +14,10 @@
 </head>
 
 <body class="min-h-screen overflow-x-clip bg-[#f3f5f8] font-sans text-ink antialiased">
-    {{-- ponytail: checkbox peer toggle replaces toggleSidebar() JS --}}
     <input type="checkbox" id="sidebar-toggle" class="peer hidden" aria-hidden="true">
     <x-sidebar />
 
-    <div class="flex min-h-screen flex-col lg:pl-[248px] print:pl-0">
+    <div class="flex min-h-screen flex-col lg:pl-62 print:pl-0">
         <div class="sticky top-0 z-30 px-4 pt-4 sm:px-6 lg:px-8 print:hidden">
             <header
                 class="mx-auto flex h-16 w-full items-center justify-between rounded-2xl border border-[#e7ebf2] bg-white/95 px-4 shadow-card sm:px-5 lg:px-6">
@@ -39,7 +38,7 @@
 
                 <div class="flex items-center gap-3">
                     <div class="hidden text-right sm:block">
-                        <p class="max-w-[180px] truncate text-sm font-medium text-ink">{{ Auth::user()->nama }}</p>
+                        <p class="max-w-45 truncate text-sm font-medium text-ink">{{ Auth::user()->nama }}</p>
                         <p class="text-xs text-ink-muted">Petugas Keamanan</p>
                     </div>
                     <div

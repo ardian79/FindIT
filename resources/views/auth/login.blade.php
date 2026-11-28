@@ -3,15 +3,10 @@
 @section('title', 'Masuk - FindIT UNEJ')
 
 @section('content')
-    @php
-        $label = 'mb-1.5 block text-sm font-medium text-ink';
-        $input = 'w-full rounded-xl border border-[#d7dde7] bg-white px-3.5 py-2.5 text-sm text-ink outline-none transition-colors duration-150 focus:border-ink-navy focus:ring-4 focus:ring-ink-navy/10 disabled:cursor-not-allowed disabled:bg-[#f3f5f8] disabled:text-[#6b7585]';
-    @endphp
-
-    <div class="mx-auto w-full max-w-[1160px] px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
+    <div class="mx-auto w-full max-w-290 px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
         <div
             class="mx-auto grid max-w-5xl overflow-hidden rounded-2xl border border-[#e7ebf2] bg-white shadow-card lg:grid-cols-[.9fr_1.1fr]">
-            <div class="relative hidden min-h-[540px] overflow-hidden bg-ink-deep lg:block">
+            <div class="relative hidden min-h-135 overflow-hidden bg-ink-deep lg:block">
                 <img src="{{ asset('images/gambar-login.webp') }}" alt="Latar Belakang FindIT" decoding="async"
                     fetchpriority="high" class="absolute inset-0 h-full w-full object-cover">
             </div>
@@ -23,14 +18,15 @@
                 <form action="{{ route('login') }}" method="POST" class="mt-8 space-y-4">
                     @csrf
                     <div>
-                        <label for="identifier" class="{{ $label }}">NIM / Email</label>
+                        <label for="identifier" class="mb-1.5 block text-sm font-medium text-ink">NIM / Email</label>
                         <input type="text" id="identifier" name="identifier" value="{{ old('identifier') }}" required
-                            autofocus placeholder="Contoh: 252410101010" class="{{ $input }}">
+                            autofocus placeholder="Contoh: 252410101010"
+                            class="w-full rounded-xl border border-[#d7dde7] bg-white px-3.5 py-2.5 text-sm text-ink outline-none transition-colors duration-150 focus:border-ink-navy focus:ring-4 focus:ring-ink-navy/10 disabled:cursor-not-allowed disabled:bg-[#f3f5f8] disabled:text-[#6b7585]">
                     </div>
                     <div>
-                        <label for="password" class="{{ $label }}">Kata Sandi</label>
+                        <label for="password" class="mb-1.5 block text-sm font-medium text-ink">Kata Sandi</label>
                         <input type="password" id="password" name="password" required placeholder="Masukkan password"
-                            class="{{ $input }}">
+                            class="w-full rounded-xl border border-[#d7dde7] bg-white px-3.5 py-2.5 text-sm text-ink outline-none transition-colors duration-150 focus:border-ink-navy focus:ring-4 focus:ring-ink-navy/10 disabled:cursor-not-allowed disabled:bg-[#f3f5f8] disabled:text-[#6b7585]">
                     </div>
                     <label class="flex items-center gap-2 text-sm text-[#3d4b60]">
                         <input type="checkbox" name="remember"

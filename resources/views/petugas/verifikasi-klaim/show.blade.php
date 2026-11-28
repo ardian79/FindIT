@@ -4,22 +4,6 @@
 @section('header', 'Detail Verifikasi Klaim')
 
 @section('content')
-    @php
-        $waPengklaim = $klaim->pengguna?->no_hp
-            ? preg_replace('/^0/', '62', preg_replace('/\D/', '', $klaim->pengguna->no_hp))
-            : null;
-        [$badgeCls, $badgeText] = match ($klaim->status) {
-            'pending' => ['border border-amber-200/80 bg-amber-50 text-amber-800', 'Status: Menunggu Verifikasi'],
-            'disetujui' => ['bg-[#e8eef6] text-ink-navy', 'Status: Disetujui · Menunggu Pengambilan'],
-            'ditolak' => ['bg-brand-soft text-brand-dark', 'Status: Ditolak'],
-            default => ['bg-ink-navy text-white', 'Status: Selesai Diserahkan'],
-        };
-        $textarea =
-            'w-full rounded-xl border border-[#d7dde7] bg-white px-3.5 py-2.5 text-sm text-ink outline-none transition-colors duration-150 focus:border-ink-navy focus:ring-4 focus:ring-ink-navy/10';
-        $btnBase =
-            'w-full rounded-xl px-4 py-2.5 text-sm font-medium transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 active:scale-[0.98]';
-    @endphp
-
     <div class="space-y-6">
         <div class="flex flex-wrap items-center justify-between gap-3">
             <a href="{{ route('petugas.verifikasi-klaim.index') }}"
@@ -30,8 +14,25 @@
                 </svg>
                 Kembali ke Daftar Klaim
             </a>
-            <span
-                class="inline-flex rounded-lg px-3 py-1.5 text-xs font-medium {{ $badgeCls }}">{{ $badgeText }}</span>
+
+            @if ($klaim->status === 'pending')
+                <span
+                    class="inline-flex rounded-lg px-3 py-1.5 text-xs font-medium border border-amber-200/80 bg-amber-50 text-amber-800">
+                    Status: Menunggu Verifikasi
+                </span>
+            @elseif ($klaim->status === 'disetujui')
+                <span class="inline-flex rounded-lg px-3 py-1.5 text-xs font-medium bg-[#e8eef6] text-ink-navy">
+                    Status: Disetujui · Menunggu Pengambilan
+                </span>
+            @elseif ($klaim->status === 'ditolak')
+                <span class="inline-flex rounded-lg px-3 py-1.5 text-xs font-medium bg-brand-soft text-brand-dark">
+                    Status: Ditolak
+                </span>
+            @else
+                <span class="inline-flex rounded-lg px-3 py-1.5 text-xs font-medium bg-ink-navy text-white">
+                    Status: Selesai Diserahkan
+                </span>
+            @endif
         </div>
 
         <div class="grid grid-cols-1 gap-6 lg:grid-cols-12">
@@ -85,8 +86,8 @@
                                 <p class="text-xs tabular-nums text-ink-muted">No. HP / WA: {{ $klaim->pengguna->no_hp }}
                                 </p>
                             </div>
-                            @if ($waPengklaim)
-                                <a href="https://wa.me/{{ $waPengklaim }}?text={{ urlencode('Halo ' . $klaim->pengguna->nama . ', saya petugas Pos Keamanan Utama UNEJ terkait pengajuan klaim barang "' . $klaim->barangTemuan->nama_barang . '".') }}"
+                            @if ($klaim->pengguna?->no_hp)
+                                <a href="https://wa.me/{{ preg_replace('/^0/', '62', preg_replace('/\D/', '', $klaim->pengguna->no_hp)) }}?text={{ urlencode('Halo ' . $klaim->pengguna->nama . ', saya petugas Pos Keamanan Utama UNEJ terkait pengajuan klaim barang "' . $klaim->barangTemuan->nama_barang . '".') }}"
                                     target="_blank" rel="noopener"
                                     class="inline-flex items-center justify-center gap-2 rounded-xl bg-[#25D366] px-4 py-2.5 text-xs font-medium text-white transition-colors duration-150 hover:bg-[#1fb85a] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#25D366] focus-visible:ring-offset-2">
                                     <svg class="h-4 w-4 shrink-0" viewBox="0 0 24 24" fill="currentColor"
@@ -129,10 +130,10 @@
                                     Petugas (Opsional)</label>
                                 <textarea id="catatan_setujui" name="catatan_petugas" rows="3"
                                     placeholder="Contoh: Ciri barang sesuai. Silakan ambil di Pos Keamanan Utama dengan membawa KTM asli."
-                                    class="{{ $textarea }}">{{ old('catatan_petugas') }}</textarea>
+                                    class="w-full rounded-xl border border-[#d7dde7] bg-white px-3.5 py-2.5 text-sm text-ink outline-none transition-colors duration-150 focus:border-ink-navy focus:ring-4 focus:ring-ink-navy/10">{{ old('catatan_petugas') }}</textarea>
                             </div>
                             <button type="button" popovertarget="confirm-setujui"
-                                class="{{ $btnBase }} bg-ink-navy text-white hover:bg-ink-deep focus-visible:ring-ink-navy">Setujui
+                                class="w-full rounded-xl px-4 py-2.5 text-sm font-medium transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 active:scale-[0.98] bg-ink-navy text-white hover:bg-ink-deep focus-visible:ring-ink-navy">Setujui
                                 Klaim</button>
                             <div id="confirm-setujui" popover
                                 class="m-auto w-[calc(100%-2rem)] max-w-sm rounded-2xl border border-[#e7ebf2] bg-white p-6 text-left backdrop:bg-ink-deep/60">
@@ -168,13 +169,15 @@
                                 <p class="mt-1 text-xs text-ink-muted">Format JPG, PNG, atau WEBP maksimal 2MB.</p>
                             </div>
                             <div>
-                                <label for="catatan_selesai" class="mb-1.5 block text-sm font-medium text-ink">Catatan Serah
+                                <label for="catatan_selesai" class="mb-1.5 block text-sm font-medium text-ink">Catatan
+                                    Serah
                                     Terima (Opsional)</label>
                                 <textarea id="catatan_selesai" name="catatan_petugas" rows="3"
-                                    placeholder="Contoh: Barang diserahkan langsung setelah verifikasi KTM." class="{{ $textarea }}">{{ old('catatan_petugas', $klaim->catatan_petugas) }}</textarea>
+                                    placeholder="Contoh: Barang diserahkan langsung setelah verifikasi KTM."
+                                    class="w-full rounded-xl border border-[#d7dde7] bg-white px-3.5 py-2.5 text-sm text-ink outline-none transition-colors duration-150 focus:border-ink-navy focus:ring-4 focus:ring-ink-navy/10">{{ old('catatan_petugas', $klaim->catatan_petugas) }}</textarea>
                             </div>
                             <button type="button" popovertarget="confirm-selesai"
-                                class="{{ $btnBase }} bg-ink-navy text-white hover:bg-ink-deep focus-visible:ring-ink-navy">Simpan
+                                class="w-full rounded-xl px-4 py-2.5 text-sm font-medium transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 active:scale-[0.98] bg-ink-navy text-white hover:bg-ink-deep focus-visible:ring-ink-navy">Simpan
                                 Serah Terima &amp; Selesaikan</button>
                             <div id="confirm-selesai" popover
                                 class="m-auto w-[calc(100%-2rem)] max-w-sm rounded-2xl border border-[#e7ebf2] bg-white p-6 text-left backdrop:bg-ink-deep/60">
@@ -193,15 +196,13 @@
                 @endif
 
                 @if (in_array($klaim->status, ['pending', 'disetujui']))
-                    @php
-                        $isPending = $klaim->status === 'pending';
-                    @endphp
                     <div class="overflow-hidden rounded-2xl border border-[#f3c7c3] bg-white">
                         <div class="border-b border-[#f3c7c3] bg-[#fff6f5] px-6 py-4">
                             <h2 class="text-base font-semibold text-[#7a271a]">
-                                {{ $isPending ? 'Tolak Pengajuan Klaim' : 'Batalkan / Tolak Klaim' }}</h2>
-                            <p class="mt-0.5 text-xs text-[#9b1028]">
-                                {{ $isPending ? 'Berikan alasan yang jelas jika ciri barang tidak sesuai.' : 'Jika pengklaim batal mengambil atau bukti fisik tidak cocok, barang akan dikembalikan ke status Tersedia.' }}
+                                {{ $klaim->status === 'pending' ? 'Tolak Pengajuan Klaim' : 'Batalkan / Tolak Klaim' }}
+                            </h2>
+                            <p class="mt-0.5 text-xs text-brand-dark">
+                                {{ $klaim->status === 'pending' ? 'Berikan alasan yang jelas jika ciri barang tidak sesuai.' : 'Jika pengklaim batal mengambil atau bukti fisik tidak cocok, barang akan dikembalikan ke status Tersedia.' }}
                             </p>
                         </div>
                         <form action="{{ route('petugas.verifikasi-klaim.tolak', $klaim) }}" method="POST"
@@ -210,21 +211,21 @@
                             @method('PATCH')
                             <div>
                                 <label for="catatan_tolak"
-                                    class="mb-1.5 block text-sm font-medium text-ink">{{ $isPending ? 'Alasan Penolakan' : 'Alasan Pembatalan' }}</label>
-                                <textarea id="catatan_tolak" name="catatan_petugas" rows="{{ $isPending ? 3 : 2 }}" required
-                                    placeholder="{{ $isPending ? 'Tuliskan alasan penolakan klaim' : 'Tuliskan alasan pembatalan' }}"
-                                    class="{{ $textarea }} focus:border-brand focus:ring-brand/10"></textarea>
+                                    class="mb-1.5 block text-sm font-medium text-ink">{{ $klaim->status === 'pending' ? 'Alasan Penolakan' : 'Alasan Pembatalan' }}</label>
+                                <textarea id="catatan_tolak" name="catatan_petugas" rows="{{ $klaim->status === 'pending' ? 3 : 2 }}" required
+                                    placeholder="{{ $klaim->status === 'pending' ? 'Tuliskan alasan penolakan klaim' : 'Tuliskan alasan pembatalan' }}"
+                                    class="w-full rounded-xl border border-[#d7dde7] bg-white px-3.5 py-2.5 text-sm text-ink outline-none transition-colors duration-150 focus:ring-4 focus:border-brand focus:ring-brand/10"></textarea>
                             </div>
                             <button type="button" popovertarget="confirm-tolak"
-                                class="{{ $btnBase }} border border-[#f3c3c0] bg-white text-[#b42318] hover:border-brand hover:bg-[#fef3f2] focus-visible:ring-brand">
-                                {{ $isPending ? 'Tolak Klaim' : 'Batalkan & Tolak Klaim' }}
+                                class="w-full rounded-xl px-4 py-2.5 text-sm font-medium transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 active:scale-[0.98] border border-[#f3c3c0] bg-white text-[#b42318] hover:border-brand hover:bg-[#fef3f2] focus-visible:ring-brand">
+                                {{ $klaim->status === 'pending' ? 'Tolak Klaim' : 'Batalkan & Tolak Klaim' }}
                             </button>
                             <div id="confirm-tolak" popover
                                 class="m-auto w-[calc(100%-2rem)] max-w-sm rounded-2xl border border-[#e7ebf2] bg-white p-6 text-left backdrop:bg-ink-deep/60">
                                 <h3 class="text-base font-semibold text-ink">
-                                    {{ $isPending ? 'Tolak Klaim' : 'Batalkan & Tolak Klaim' }}</h3>
+                                    {{ $klaim->status === 'pending' ? 'Tolak Klaim' : 'Batalkan & Tolak Klaim' }}</h3>
                                 <p class="mt-2 text-sm text-ink-muted">
-                                    {{ $isPending ? 'Tolak pengajuan klaim ini?' : 'Batalkan persetujuan dan tolak klaim ini?' }}
+                                    {{ $klaim->status === 'pending' ? 'Tolak pengajuan klaim ini?' : 'Batalkan persetujuan dan tolak klaim ini?' }}
                                 </p>
                                 <div class="mt-5 flex justify-end gap-2">
                                     <button type="button" popovertarget="confirm-tolak" popovertargetaction="hide"

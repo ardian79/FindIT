@@ -3,23 +3,15 @@
 @section('title', 'Laporan Kehilangan Saya - FindIT UNEJ')
 
 @section('content')
-    @php
-        $btnPrimary = 'inline-flex items-center justify-center gap-2 rounded-xl bg-brand px-4 py-2.5 text-sm font-medium text-white transition-colors duration-150 hover:bg-brand-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 active:scale-[0.98]';
-        $btnSecondary = 'inline-flex items-center justify-center rounded-xl border border-[#d7dde7] bg-white px-4 py-2.5 text-sm font-medium text-ink transition-colors duration-150 hover:bg-[#f7f8fb] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink-navy/30';
-        $label = 'mb-1.5 block text-sm font-medium text-ink';
-        $input = 'w-full rounded-xl border border-[#d7dde7] bg-white px-3.5 py-2.5 text-sm text-ink outline-none transition-colors duration-150 focus:border-ink-navy focus:ring-4 focus:ring-ink-navy/10';
-        $modalCls = 'm-auto max-h-[90vh] w-[calc(100%-2rem)] max-w-lg overflow-y-auto rounded-2xl border border-[#e7ebf2] bg-white p-0 text-left backdrop:bg-ink-deep/60';
-        $confirmCls = 'm-auto w-[calc(100%-2rem)] max-w-sm rounded-2xl border border-[#e7ebf2] bg-white p-6 text-left backdrop:bg-ink-deep/60';
-    @endphp
-
-    <div class="mx-auto max-w-[1160px] px-4 py-8 sm:px-6 lg:px-8">
+    <div class="mx-auto max-w-290 px-4 py-8 sm:px-6 lg:px-8">
         <div class="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <div>
                 <h1 class="text-2xl font-semibold tracking-tight text-ink">Laporan Kehilangan Saya</h1>
                 <p class="mt-1 text-sm text-ink-muted">Kelola daftar barang hilang yang Anda laporkan agar dapat dipantau
                     petugas dan sivitas kampus.</p>
             </div>
-            <button type="button" popovertarget="modal-laporan-create" class="{{ $btnPrimary }}">
+            <button type="button" popovertarget="modal-laporan-create"
+                class="inline-flex items-center justify-center gap-2 rounded-xl bg-brand px-4 py-2.5 text-sm font-medium text-white transition-colors duration-150 hover:bg-brand-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 active:scale-[0.98]">
                 <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75"
                     aria-hidden="true">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
@@ -38,7 +30,9 @@
                 <h2 class="mt-3 text-base font-semibold text-ink">Belum ada laporan kehilangan</h2>
                 <p class="mt-1 text-sm text-ink-muted">Kehilangan barang di area kampus? Buat laporan agar lebih mudah
                     ditemukan.</p>
-                <button type="button" popovertarget="modal-laporan-create" class="{{ $btnPrimary }} mt-5">Buat Laporan
+                <button type="button" popovertarget="modal-laporan-create"
+                    class="inline-flex items-center justify-center gap-2 rounded-xl bg-brand px-4 py-2.5 text-sm font-medium text-white transition-colors duration-150 hover:bg-brand-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 active:scale-[0.98] mt-5">Buat
+                    Laporan
                     Pertama</button>
             </div>
         @else
@@ -86,23 +80,25 @@
                                             {{ $item->tanggal_hilang->format('d M Y') }}</p>
                                     </td>
                                     <td class="px-5 py-4 text-center">
-                                        <span
-                                            class="inline-flex items-center rounded-lg px-2.5 py-1 text-xs font-medium {{ $item->status === 'dicari' ? 'border border-amber-200/80 bg-amber-50 text-amber-800' : 'bg-[#e8eef6] text-ink-navy' }}">
-                                            {{ $item->status === 'dicari' ? 'Dicari' : 'Ditemukan' }}
-                                        </span>
+                                        @if ($item->status === 'dicari')
+                                            <span
+                                                class="inline-flex items-center rounded-lg border border-amber-200/80 bg-amber-50 px-2.5 py-1 text-xs font-medium text-amber-800">
+                                                Dicari
+                                            </span>
+                                        @else
+                                            <span
+                                                class="inline-flex items-center rounded-lg bg-[#e8eef6] px-2.5 py-1 text-xs font-medium text-ink-navy">
+                                                Ditemukan
+                                            </span>
+                                        @endif
                                     </td>
                                     <td class="px-5 py-4">
-                                        @php
-                                            $iconBtn =
-                                                'inline-flex h-9 w-9 items-center justify-center rounded-lg transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2';
-                                        @endphp
                                         <div class="flex items-center justify-center gap-1.5">
                                             @if ($item->status === 'dicari')
-                                                <button type="button"
-                                                    popovertarget="confirm-ditemukan-{{ $item->id }}"
+                                                <button type="button" popovertarget="confirm-ditemukan-{{ $item->id }}"
                                                     title="Tandai sudah ditemukan"
                                                     aria-label="Tandai {{ $item->nama_barang }} sudah ditemukan"
-                                                    class="{{ $iconBtn }} bg-[#e8eef6] text-ink-navy hover:bg-[#dce5f2] focus-visible:ring-ink-navy/30">
+                                                    class="inline-flex h-9 w-9 items-center justify-center rounded-lg transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 bg-[#e8eef6] text-ink-navy hover:bg-[#dce5f2] focus-visible:ring-ink-navy/30">
                                                     <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24"
                                                         stroke="currentColor" stroke-width="1.75" aria-hidden="true">
                                                         <path stroke-linecap="round" stroke-linejoin="round"
@@ -113,7 +109,7 @@
 
                                             <button type="button" popovertarget="modal-laporan-edit-{{ $item->id }}"
                                                 title="Edit" aria-label="Edit {{ $item->nama_barang }}"
-                                                class="{{ $iconBtn }} border border-[#d7dde7] bg-white text-ink hover:bg-[#f3f5f8] focus-visible:ring-ink-navy/30">
+                                                class="inline-flex h-9 w-9 items-center justify-center rounded-lg transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 border border-[#d7dde7] bg-white text-ink hover:bg-[#f3f5f8] focus-visible:ring-ink-navy/30">
                                                 <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24"
                                                     stroke="currentColor" stroke-width="1.75" aria-hidden="true">
                                                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -123,7 +119,7 @@
 
                                             <button type="button" popovertarget="confirm-hapus-{{ $item->id }}"
                                                 title="Hapus" aria-label="Hapus {{ $item->nama_barang }}"
-                                                class="{{ $iconBtn }} border border-[#f3c3c0] bg-white text-[#b42318] hover:border-brand hover:bg-[#fef3f2] focus-visible:ring-brand/30">
+                                                class="inline-flex h-9 w-9 items-center justify-center rounded-lg transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 border border-[#f3c3c0] bg-white text-[#b42318] hover:border-brand hover:bg-[#fef3f2] focus-visible:ring-brand/30">
                                                 <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24"
                                                     stroke="currentColor" stroke-width="1.75" aria-hidden="true">
                                                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -143,8 +139,8 @@
         @endif
     </div>
 
-    {{-- ponytail: native HTML popovers replace openLaporanModal() & confirm() JS --}}
-    <div id="modal-laporan-create" popover aria-labelledby="modal-laporan-create-title" class="{{ $modalCls }}">
+    <div id="modal-laporan-create" popover aria-labelledby="modal-laporan-create-title"
+        class="m-auto max-h-[90vh] w-[calc(100%-2rem)] max-w-lg overflow-y-auto rounded-2xl border border-[#e7ebf2] bg-white p-0 text-left backdrop:bg-ink-deep/60">
         <div class="sticky top-0 z-10 flex items-center justify-between border-b border-[#e7ebf2] bg-white px-6 py-4">
             <h2 id="modal-laporan-create-title" class="text-base font-semibold text-ink">Buat Laporan Kehilangan</h2>
             <button type="button" popovertarget="modal-laporan-create" popovertargetaction="hide" aria-label="Tutup"
@@ -160,15 +156,17 @@
             class="space-y-4 p-6">
             @csrf
             <div>
-                <label for="nama_barang" class="{{ $label }}">Nama Barang</label>
+                <label for="nama_barang" class="mb-1.5 block text-sm font-medium text-ink">Nama Barang</label>
                 <input type="text" id="nama_barang" name="nama_barang" required
-                    placeholder="Contoh: Dompet kulit hitam" class="{{ $input }}">
+                    placeholder="Contoh: Dompet kulit hitam"
+                    class="w-full rounded-xl border border-[#d7dde7] bg-white px-3.5 py-2.5 text-sm text-ink outline-none transition-colors duration-150 focus:border-ink-navy focus:ring-4 focus:ring-ink-navy/10">
             </div>
 
             <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <div>
-                    <label for="kategori_id" class="{{ $label }}">Kategori</label>
-                    <select id="kategori_id" name="kategori_id" required class="{{ $input }}">
+                    <label for="kategori_id" class="mb-1.5 block text-sm font-medium text-ink">Kategori</label>
+                    <select id="kategori_id" name="kategori_id" required
+                        class="w-full rounded-xl border border-[#d7dde7] bg-white px-3.5 py-2.5 text-sm text-ink outline-none transition-colors duration-150 focus:border-ink-navy focus:ring-4 focus:ring-ink-navy/10">
                         <option value="">Pilih Kategori</option>
                         @foreach ($kategori as $kat)
                             <option value="{{ $kat->id }}">{{ $kat->nama_kategori }}</option>
@@ -176,26 +174,29 @@
                     </select>
                 </div>
                 <div>
-                    <label for="tanggal_hilang" class="{{ $label }}">Tanggal Hilang</label>
+                    <label for="tanggal_hilang" class="mb-1.5 block text-sm font-medium text-ink">Tanggal Hilang</label>
                     <input type="date" id="tanggal_hilang" name="tanggal_hilang" required max="{{ date('Y-m-d') }}"
-                        class="{{ $input }} tabular-nums">
+                        class="w-full rounded-xl border border-[#d7dde7] bg-white px-3.5 py-2.5 text-sm text-ink outline-none transition-colors duration-150 focus:border-ink-navy focus:ring-4 focus:ring-ink-navy/10 tabular-nums">
                 </div>
             </div>
 
             <div>
-                <label for="lokasi_hilang" class="{{ $label }}">Perkiraan Lokasi Hilang</label>
+                <label for="lokasi_hilang" class="mb-1.5 block text-sm font-medium text-ink">Perkiraan Lokasi
+                    Hilang</label>
                 <input type="text" id="lokasi_hilang" name="lokasi_hilang" required
-                    placeholder="Contoh: Parkiran Gedung Fakultas Ilmu Komputer" class="{{ $input }}">
+                    placeholder="Contoh: Parkiran Gedung Fakultas Ilmu Komputer"
+                    class="w-full rounded-xl border border-[#d7dde7] bg-white px-3.5 py-2.5 text-sm text-ink outline-none transition-colors duration-150 focus:border-ink-navy focus:ring-4 focus:ring-ink-navy/10">
             </div>
 
             <div>
-                <label for="deskripsi" class="{{ $label }}">Deskripsi &amp; Ciri-Ciri</label>
+                <label for="deskripsi" class="mb-1.5 block text-sm font-medium text-ink">Deskripsi &amp; Ciri-Ciri</label>
                 <textarea id="deskripsi" name="deskripsi" rows="3" required
-                    placeholder="Jelaskan warna, merek, atau ciri khusus barang" class="{{ $input }}"></textarea>
+                    placeholder="Jelaskan warna, merek, atau ciri khusus barang"
+                    class="w-full rounded-xl border border-[#d7dde7] bg-white px-3.5 py-2.5 text-sm text-ink outline-none transition-colors duration-150 focus:border-ink-navy focus:ring-4 focus:ring-ink-navy/10"></textarea>
             </div>
 
             <div>
-                <label for="foto_barang" class="{{ $label }}">Foto Barang (Opsional)</label>
+                <label for="foto_barang" class="mb-1.5 block text-sm font-medium text-ink">Foto Barang (Opsional)</label>
                 <input type="file" id="foto_barang" name="foto_barang" accept=".jpg,.jpeg,.png,.webp"
                     class="w-full rounded-xl border border-[#d7dde7] px-3 py-2 text-sm text-[#3d4b60] file:mr-3 file:rounded-lg file:border-0 file:bg-[#f3f5f8] file:px-3 file:py-1.5 file:text-xs file:font-medium file:text-ink hover:file:bg-[#e7ebf2]">
                 <p class="mt-1 text-xs text-ink-muted">Format JPG, PNG, atau WEBP maksimal 2MB.</p>
@@ -203,15 +204,17 @@
 
             <div class="flex justify-end gap-2 border-t border-[#e7ebf2] pt-4">
                 <button type="button" popovertarget="modal-laporan-create" popovertargetaction="hide"
-                    class="{{ $btnSecondary }}">Batal</button>
-                <button type="submit" class="{{ $btnPrimary }}">Simpan Laporan</button>
+                    class="inline-flex items-center justify-center rounded-xl border border-[#d7dde7] bg-white px-4 py-2.5 text-sm font-medium text-ink transition-colors duration-150 hover:bg-[#f7f8fb] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink-navy/30">Batal</button>
+                <button type="submit"
+                    class="inline-flex items-center justify-center gap-2 rounded-xl bg-brand px-4 py-2.5 text-sm font-medium text-white transition-colors duration-150 hover:bg-brand-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 active:scale-[0.98]">Simpan
+                    Laporan</button>
             </div>
         </form>
     </div>
 
     @foreach ($laporan as $item)
         <div id="modal-laporan-edit-{{ $item->id }}" popover aria-labelledby="modal-edit-title-{{ $item->id }}"
-            class="{{ $modalCls }}">
+            class="m-auto max-h-[90vh] w-[calc(100%-2rem)] max-w-lg overflow-y-auto rounded-2xl border border-[#e7ebf2] bg-white p-0 text-left backdrop:bg-ink-deep/60">
             <div class="sticky top-0 z-10 flex items-center justify-between border-b border-[#e7ebf2] bg-white px-6 py-4">
                 <h2 id="modal-edit-title-{{ $item->id }}" class="text-base font-semibold text-ink">Edit Laporan
                     Kehilangan</h2>
@@ -230,16 +233,19 @@
                 @csrf
                 @method('PUT')
                 <div>
-                    <label for="edit_nama_{{ $item->id }}" class="{{ $label }}">Nama Barang</label>
+                    <label for="edit_nama_{{ $item->id }}" class="mb-1.5 block text-sm font-medium text-ink">Nama
+                        Barang</label>
                     <input type="text" id="edit_nama_{{ $item->id }}" name="nama_barang"
-                        value="{{ $item->nama_barang }}" required class="{{ $input }}">
+                        value="{{ $item->nama_barang }}" required
+                        class="w-full rounded-xl border border-[#d7dde7] bg-white px-3.5 py-2.5 text-sm text-ink outline-none transition-colors duration-150 focus:border-ink-navy focus:ring-4 focus:ring-ink-navy/10">
                 </div>
 
                 <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
                     <div>
-                        <label for="edit_kategori_{{ $item->id }}" class="{{ $label }}">Kategori</label>
+                        <label for="edit_kategori_{{ $item->id }}"
+                            class="mb-1.5 block text-sm font-medium text-ink">Kategori</label>
                         <select id="edit_kategori_{{ $item->id }}" name="kategori_id" required
-                            class="{{ $input }}">
+                            class="w-full rounded-xl border border-[#d7dde7] bg-white px-3.5 py-2.5 text-sm text-ink outline-none transition-colors duration-150 focus:border-ink-navy focus:ring-4 focus:ring-ink-navy/10">
                             <option value="">Pilih Kategori</option>
                             @foreach ($kategori as $kat)
                                 <option value="{{ $kat->id }}" @selected($item->kategori_id == $kat->id)>
@@ -248,29 +254,34 @@
                         </select>
                     </div>
                     <div>
-                        <label for="edit_tanggal_{{ $item->id }}" class="{{ $label }}">Tanggal Hilang</label>
+                        <label for="edit_tanggal_{{ $item->id }}"
+                            class="mb-1.5 block text-sm font-medium text-ink">Tanggal Hilang</label>
                         <input type="date" id="edit_tanggal_{{ $item->id }}" name="tanggal_hilang"
                             value="{{ $item->tanggal_hilang->format('Y-m-d') }}" required max="{{ date('Y-m-d') }}"
-                            class="{{ $input }} tabular-nums">
+                            class="w-full rounded-xl border border-[#d7dde7] bg-white px-3.5 py-2.5 text-sm text-ink outline-none transition-colors duration-150 focus:border-ink-navy focus:ring-4 focus:ring-ink-navy/10 tabular-nums">
                     </div>
                 </div>
 
                 <div>
-                    <label for="edit_lokasi_{{ $item->id }}" class="{{ $label }}">Perkiraan Lokasi
+                    <label for="edit_lokasi_{{ $item->id }}"
+                        class="mb-1.5 block text-sm font-medium text-ink">Perkiraan Lokasi
                         Hilang</label>
                     <input type="text" id="edit_lokasi_{{ $item->id }}" name="lokasi_hilang"
-                        value="{{ $item->lokasi_hilang }}" required class="{{ $input }}">
+                        value="{{ $item->lokasi_hilang }}" required
+                        class="w-full rounded-xl border border-[#d7dde7] bg-white px-3.5 py-2.5 text-sm text-ink outline-none transition-colors duration-150 focus:border-ink-navy focus:ring-4 focus:ring-ink-navy/10">
                 </div>
 
                 <div>
-                    <label for="edit_deskripsi_{{ $item->id }}" class="{{ $label }}">Deskripsi &amp;
+                    <label for="edit_deskripsi_{{ $item->id }}"
+                        class="mb-1.5 block text-sm font-medium text-ink">Deskripsi &amp;
                         Ciri-Ciri</label>
                     <textarea id="edit_deskripsi_{{ $item->id }}" name="deskripsi" rows="3" required
-                        class="{{ $input }}">{{ $item->deskripsi }}</textarea>
+                        class="w-full rounded-xl border border-[#d7dde7] bg-white px-3.5 py-2.5 text-sm text-ink outline-none transition-colors duration-150 focus:border-ink-navy focus:ring-4 focus:ring-ink-navy/10">{{ $item->deskripsi }}</textarea>
                 </div>
 
                 <div>
-                    <label for="edit_foto_{{ $item->id }}" class="{{ $label }}">Foto Barang
+                    <label for="edit_foto_{{ $item->id }}" class="mb-1.5 block text-sm font-medium text-ink">Foto
+                        Barang
                         (Opsional)</label>
                     <input type="file" id="edit_foto_{{ $item->id }}" name="foto_barang"
                         accept=".jpg,.jpeg,.png,.webp"
@@ -281,20 +292,25 @@
 
                 <div class="flex justify-end gap-2 border-t border-[#e7ebf2] pt-4">
                     <button type="button" popovertarget="modal-laporan-edit-{{ $item->id }}"
-                        popovertargetaction="hide" class="{{ $btnSecondary }}">Batal</button>
-                    <button type="submit" class="{{ $btnPrimary }}">Perbarui Laporan</button>
+                        popovertargetaction="hide"
+                        class="inline-flex items-center justify-center rounded-xl border border-[#d7dde7] bg-white px-4 py-2.5 text-sm font-medium text-ink transition-colors duration-150 hover:bg-[#f7f8fb] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink-navy/30">Batal</button>
+                    <button type="submit"
+                        class="inline-flex items-center justify-center gap-2 rounded-xl bg-brand px-4 py-2.5 text-sm font-medium text-white transition-colors duration-150 hover:bg-brand-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 active:scale-[0.98]">Perbarui
+                        Laporan</button>
                 </div>
             </form>
         </div>
 
         @if ($item->status === 'dicari')
-            <div id="confirm-ditemukan-{{ $item->id }}" popover class="{{ $confirmCls }}">
+            <div id="confirm-ditemukan-{{ $item->id }}" popover
+                class="m-auto w-[calc(100%-2rem)] max-w-sm rounded-2xl border border-[#e7ebf2] bg-white p-6 text-left backdrop:bg-ink-deep/60">
                 <h3 class="text-base font-semibold text-ink">Konfirmasi Status</h3>
                 <p class="mt-2 text-sm text-ink-muted">Tandai barang <strong>{{ $item->nama_barang }}</strong> sudah
                     ditemukan?</p>
                 <div class="mt-5 flex justify-end gap-2">
                     <button type="button" popovertarget="confirm-ditemukan-{{ $item->id }}"
-                        popovertargetaction="hide" class="{{ $btnSecondary }}">Batal</button>
+                        popovertargetaction="hide"
+                        class="inline-flex items-center justify-center rounded-xl border border-[#d7dde7] bg-white px-4 py-2.5 text-sm font-medium text-ink transition-colors duration-150 hover:bg-[#f7f8fb] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink-navy/30">Batal</button>
                     <form action="{{ route('mahasiswa.laporan.ditemukan', $item) }}" method="POST">
                         @csrf
                         @method('PATCH')
@@ -306,16 +322,19 @@
             </div>
         @endif
 
-        <div id="confirm-hapus-{{ $item->id }}" popover class="{{ $confirmCls }}">
+        <div id="confirm-hapus-{{ $item->id }}" popover
+            class="m-auto w-[calc(100%-2rem)] max-w-sm rounded-2xl border border-[#e7ebf2] bg-white p-6 text-left backdrop:bg-ink-deep/60">
             <h3 class="text-base font-semibold text-ink">Hapus Laporan</h3>
             <p class="mt-2 text-sm text-ink-muted">Hapus laporan kehilangan <strong>{{ $item->nama_barang }}</strong>?</p>
             <div class="mt-5 flex justify-end gap-2">
                 <button type="button" popovertarget="confirm-hapus-{{ $item->id }}" popovertargetaction="hide"
-                    class="{{ $btnSecondary }}">Batal</button>
+                    class="inline-flex items-center justify-center rounded-xl border border-[#d7dde7] bg-white px-4 py-2.5 text-sm font-medium text-ink transition-colors duration-150 hover:bg-[#f7f8fb] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink-navy/30">Batal</button>
                 <form action="{{ route('mahasiswa.laporan.destroy', $item) }}" method="POST">
                     @csrf
                     @method('DELETE')
-                    <button type="submit" class="{{ $btnPrimary }}">Ya, Hapus</button>
+                    <button type="submit"
+                        class="inline-flex items-center justify-center gap-2 rounded-xl bg-brand px-4 py-2.5 text-sm font-medium text-white transition-colors duration-150 hover:bg-brand-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 active:scale-[0.98]">Ya,
+                        Hapus</button>
                 </form>
             </div>
         </div>

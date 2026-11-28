@@ -4,13 +4,8 @@
 @section('header', 'Profil Saya')
 
 @section('content')
-    @php
-        $isPetugas = $user->role === 'petugas';
-        $label = 'mb-1.5 block text-sm font-medium text-ink';
-        $input = 'w-full rounded-xl border border-[#d7dde7] bg-white px-3.5 py-2.5 text-sm text-ink outline-none transition-colors duration-150 focus:border-ink-navy focus:ring-4 focus:ring-ink-navy/10 disabled:cursor-not-allowed disabled:bg-[#f3f5f8] disabled:text-[#6b7585]';
-    @endphp
-
-    <div class="{{ $isPetugas ? 'mx-auto max-w-3xl' : 'mx-auto w-full max-w-[1160px] px-4 py-8 sm:px-6 lg:px-8' }}">
+    <div
+        class="{{ $user->role === 'petugas' ? 'mx-auto max-w-3xl' : 'mx-auto w-full max-w-290 px-4 py-8 sm:px-6 lg:px-8' }}">
         <div class="overflow-hidden rounded-2xl border border-[#e7ebf2] bg-white">
             <div
                 class="flex flex-col gap-4 border-b border-[#e7ebf2] bg-[#f7f8fb] p-6 sm:flex-row sm:items-center sm:justify-between">
@@ -21,13 +16,14 @@
                     </div>
                     <div>
                         <h2 class="text-lg font-semibold text-ink">{{ $user->nama }}</h2>
-                        <p class="text-sm tabular-nums text-ink-muted">{{ $isPetugas ? $user->email : 'NIM: ' . $user->nim }}
+                        <p class="text-sm tabular-nums text-ink-muted">
+                            {{ $user->role === 'petugas' ? $user->email : 'NIM: ' . $user->nim }}
                         </p>
                     </div>
                 </div>
                 <span
-                    class="inline-flex w-fit items-center rounded-lg px-2.5 py-1 text-xs font-medium {{ $isPetugas ? 'bg-brand-soft text-brand-dark' : 'bg-[#e8eef6] text-ink-navy' }}">
-                    {{ $isPetugas ? 'Petugas Keamanan' : 'Mahasiswa' }}
+                    class="inline-flex w-fit items-center rounded-lg px-2.5 py-1 text-xs font-medium {{ $user->role === 'petugas' ? 'bg-brand-soft text-brand-dark' : 'bg-[#e8eef6] text-ink-navy' }}">
+                    {{ $user->role === 'petugas' ? 'Petugas Keamanan' : 'Mahasiswa' }}
                 </span>
             </div>
 
@@ -37,21 +33,26 @@
 
                 <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
                     <div>
-                        <label class="{{ $label }}">{{ $isPetugas ? 'Email' : 'NIM' }}</label>
-                        <input type="text" value="{{ $isPetugas ? $user->email : $user->nim }}" disabled
-                            class="{{ $input }} tabular-nums">
+                        <label class="mb-1.5 block text-sm font-medium text-ink">
+                            {{ $user->role === 'petugas' ? 'Email' : 'NIM' }}
+                        </label>
+                        <input type="text" value="{{ $user->role === 'petugas' ? $user->email : $user->nim }}" disabled
+                            class="w-full rounded-xl border border-[#d7dde7] bg-white px-3.5 py-2.5 text-sm text-ink outline-none transition-colors duration-150 focus:border-ink-navy focus:ring-4 focus:ring-ink-navy/10 disabled:cursor-not-allowed disabled:bg-[#f3f5f8] disabled:text-[#6b7585] tabular-nums">
                     </div>
                     <div>
-                        <label for="no_hp" class="{{ $label }}">Nomor WhatsApp / HP</label>
+                        <label for="no_hp" class="mb-1.5 block text-sm font-medium text-ink">
+                            Nomor WhatsApp / HP
+                        </label>
                         <input type="text" id="no_hp" name="no_hp" value="{{ old('no_hp', $user->no_hp) }}"
-                            required class="{{ $input }} tabular-nums">
+                            required
+                            class="w-full rounded-xl border border-[#d7dde7] bg-white px-3.5 py-2.5 text-sm text-ink outline-none transition-colors duration-150 focus:border-ink-navy focus:ring-4 focus:ring-ink-navy/10 disabled:cursor-not-allowed disabled:bg-[#f3f5f8] disabled:text-[#6b7585] tabular-nums">
                     </div>
                 </div>
 
                 <div>
-                    <label for="nama" class="{{ $label }}">Nama lengkap</label>
+                    <label for="nama" class="mb-1.5 block text-sm font-medium text-ink">Nama lengkap</label>
                     <input type="text" id="nama" name="nama" value="{{ old('nama', $user->nama) }}" required
-                        class="{{ $input }}">
+                        class="w-full rounded-xl border border-[#d7dde7] bg-white px-3.5 py-2.5 text-sm text-ink outline-none transition-colors duration-150 focus:border-ink-navy focus:ring-4 focus:ring-ink-navy/10 disabled:cursor-not-allowed disabled:bg-[#f3f5f8] disabled:text-[#6b7585]">
                 </div>
 
                 <div class="border-t border-[#e7ebf2] pt-5">
@@ -60,14 +61,17 @@
                         password.</p>
                     <div class="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
                         <div>
-                            <label for="password" class="{{ $label }}">Password baru</label>
+                            <label for="password" class="mb-1.5 block text-sm font-medium text-ink">Password baru</label>
                             <input type="password" id="password" name="password" placeholder="Minimal 6 karakter"
-                                class="{{ $input }}">
+                                class="w-full rounded-xl border border-[#d7dde7] bg-white px-3.5 py-2.5 text-sm text-ink outline-none transition-colors duration-150 focus:border-ink-navy focus:ring-4 focus:ring-ink-navy/10 disabled:cursor-not-allowed disabled:bg-[#f3f5f8] disabled:text-[#6b7585]">
                         </div>
                         <div>
-                            <label for="password_confirmation" class="{{ $label }}">Konfirmasi password baru</label>
+                            <label for="password_confirmation" class="mb-1.5 block text-sm font-medium text-ink">
+                                Konfirmasi password baru
+                            </label>
                             <input type="password" id="password_confirmation" name="password_confirmation"
-                                placeholder="Ulangi password baru" class="{{ $input }}">
+                                placeholder="Ulangi password baru"
+                                class="w-full rounded-xl border border-[#d7dde7] bg-white px-3.5 py-2.5 text-sm text-ink outline-none transition-colors duration-150 focus:border-ink-navy focus:ring-4 focus:ring-ink-navy/10 disabled:cursor-not-allowed disabled:bg-[#f3f5f8] disabled:text-[#6b7585]">
                         </div>
                     </div>
                 </div>

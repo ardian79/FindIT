@@ -4,29 +4,23 @@
 @section('header', 'Laporan Kehilangan Mahasiswa')
 
 @section('content')
-    @php
-        $toWa = fn(?string $hp) => $hp ? preg_replace('/^0/', '62', preg_replace('/\D/', '', $hp)) : null;
-        $field =
-            'h-[42px] w-full rounded-xl border border-[#d7dde7] bg-white px-3.5 text-sm text-ink outline-none transition-colors duration-150 focus:border-ink-navy focus:ring-4 focus:ring-ink-navy/10';
-        $actionBtn =
-            'inline-flex h-9 w-full items-center justify-center rounded-lg border bg-white px-3 text-xs font-medium transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-1';
-    @endphp
-
     <div class="space-y-5">
         <form action="{{ route('petugas.laporan-kehilangan.index') }}" method="GET"
             class="flex flex-col gap-3 rounded-2xl border border-[#e7ebf2] bg-white p-4 md:flex-row md:flex-wrap md:items-center">
-            <div class="relative min-w-[200px] flex-1">
+            <div class="relative min-w-50 flex-1">
                 <svg class="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-muted"
                     fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75" aria-hidden="true">
                     <path stroke-linecap="round" stroke-linejoin="round"
                         d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
                 </svg>
                 <input type="text" name="search" value="{{ request('search') }}"
-                    placeholder="Cari barang, lokasi, nama, atau NIM" class="{{ $field }} pl-10">
+                    placeholder="Cari barang, lokasi, nama, atau NIM"
+                    class="h-10.5 w-full rounded-xl border border-[#d7dde7] bg-white px-3.5 text-sm text-ink outline-none transition-colors duration-150 focus:border-ink-navy focus:ring-4 focus:ring-ink-navy/10 pl-10">
             </div>
 
             <div class="w-full md:w-48">
-                <select name="kategori_id" class="{{ $field }}">
+                <select name="kategori_id"
+                    class="h-10.5 w-full rounded-xl border border-[#d7dde7] bg-white px-3.5 text-sm text-ink outline-none transition-colors duration-150 focus:border-ink-navy focus:ring-4 focus:ring-ink-navy/10">
                     <option value="">Semua Kategori</option>
                     @foreach ($kategori as $kat)
                         <option value="{{ $kat->id }}" @selected(request('kategori_id') == $kat->id)>{{ $kat->nama_kategori }}</option>
@@ -35,7 +29,8 @@
             </div>
 
             <div class="w-full md:w-40">
-                <select name="status" class="{{ $field }}">
+                <select name="status"
+                    class="h-10.5 w-full rounded-xl border border-[#d7dde7] bg-white px-3.5 text-sm text-ink outline-none transition-colors duration-150 focus:border-ink-navy focus:ring-4 focus:ring-ink-navy/10">
                     <option value="">Semua Status</option>
                     @foreach (['dicari' => 'Dicari', 'ditemukan' => 'Ditemukan'] as $val => $label)
                         <option value="{{ $val }}" @selected(request('status') === $val)>{{ $label }}</option>
@@ -45,10 +40,10 @@
 
             <div class="flex shrink-0 items-center gap-2">
                 <button type="submit"
-                    class="inline-flex h-[42px] flex-1 items-center justify-center rounded-xl bg-brand px-5 text-sm font-medium text-white transition-colors duration-150 hover:bg-brand-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 active:scale-[0.98] md:flex-none">Filter</button>
+                    class="inline-flex h-10.5 flex-1 items-center justify-center rounded-xl bg-brand px-5 text-sm font-medium text-white transition-colors duration-150 hover:bg-brand-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 active:scale-[0.98] md:flex-none">Filter</button>
                 @if (request()->anyFilled(['search', 'kategori_id', 'status']))
                     <a href="{{ route('petugas.laporan-kehilangan.index') }}"
-                        class="inline-flex h-[42px] items-center justify-center rounded-xl border border-[#d7dde7] bg-white px-3.5 text-sm font-medium text-ink transition-colors duration-150 hover:bg-[#f7f8fb] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink-navy/30">Reset</a>
+                        class="inline-flex h-10.5 items-center justify-center rounded-xl border border-[#d7dde7] bg-white px-3.5 text-sm font-medium text-ink transition-colors duration-150 hover:bg-[#f7f8fb] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink-navy/30">Reset</a>
                 @endif
             </div>
         </form>
@@ -68,21 +63,12 @@
         @else
             <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
                 @foreach ($laporan as $item)
-                    @php
-                        $wa = $toWa($item->pengguna?->no_hp);
-                        $foto = $item->foto_barang
-                            ? ltrim(preg_replace('#^(public/|storage/)#', '', $item->foto_barang), '/')
-                            : null;
-                        $hasFoto = $foto && is_file(public_path('storage/' . $foto));
-                        $isDicari = $item->status === 'dicari';
-                        $lebih30Hari = $isDicari && $item->tanggal_hilang->lt(now()->subDays(30));
-                    @endphp
                     <article
                         class="group flex h-full min-w-0 flex-col overflow-hidden rounded-2xl border border-[#e7ebf2] bg-white transition duration-200 hover:-translate-y-1 hover:border-[#cfd6e2] hover:shadow-card">
                         <div class="relative h-40 overflow-hidden bg-[#eef1f5]">
-                            @if ($hasFoto)
-                                <img src="{{ asset('storage/' . $foto) }}" alt="{{ $item->nama_barang }}" loading="lazy"
-                                    decoding="async"
+                            @if ($item->foto_barang && is_file(public_path('storage/' . ltrim(preg_replace('#^(public/|storage/)#', '', $item->foto_barang), '/'))))
+                                <img src="{{ asset('storage/' . ltrim(preg_replace('#^(public/|storage/)#', '', $item->foto_barang), '/')) }}"
+                                    alt="{{ $item->nama_barang }}" loading="lazy" decoding="async"
                                     class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.03]">
                             @else
                                 <div class="absolute inset-0 flex items-center justify-center text-ink-muted/60">
@@ -96,8 +82,8 @@
                             <span
                                 class="absolute left-3 top-3 rounded-lg bg-white/95 px-2 py-0.5 text-xs font-medium text-ink shadow-sm">{{ $item->kategori->nama_kategori }}</span>
                             <span
-                                class="absolute right-3 top-3 rounded-lg px-2 py-0.5 text-xs font-medium {{ $isDicari ? 'border border-amber-200/80 bg-amber-50 text-amber-800' : 'bg-ink-navy text-white' }}">
-                                {{ $isDicari ? 'Dicari' : 'Ditemukan' }}
+                                class="absolute right-3 top-3 rounded-lg px-2 py-0.5 text-xs font-medium {{ $item->status === 'dicari' ? 'border border-amber-200/80 bg-amber-50 text-amber-800' : 'bg-ink-navy text-white' }}">
+                                {{ $item->status === 'dicari' ? 'Dicari' : 'Ditemukan' }}
                             </span>
                         </div>
 
@@ -105,7 +91,7 @@
                             <div class="flex items-start justify-between gap-2">
                                 <h2 class="line-clamp-2 min-h-10 text-sm font-semibold leading-5 text-ink">
                                     {{ $item->nama_barang }}</h2>
-                                @if ($lebih30Hari)
+                                @if ($item->status === 'dicari' && $item->tanggal_hilang->lt(now()->subDays(30)))
                                     <span
                                         class="shrink-0 rounded-md bg-brand-soft px-2 py-0.5 text-xs font-medium tabular-nums text-brand-dark">&gt;
                                         30 hr</span>
@@ -122,8 +108,8 @@
                             <p class="mt-2 line-clamp-2 min-h-10 flex-1 text-xs leading-5 text-[#3d4b60]">
                                 {{ $item->deskripsi ?: 'Tidak ada deskripsi barang.' }}</p>
 
-                            @if ($wa)
-                                <a href="https://wa.me/{{ $wa }}?text={{ urlencode('Halo ' . $item->pengguna->nama . ', saya petugas Pos Keamanan UNEJ terkait laporan kehilangan "' . $item->nama_barang . '".') }}"
+                            @if ($item->pengguna?->no_hp)
+                                <a href="https://wa.me/{{ preg_replace('/^0/', '62', preg_replace('/\D/', '', $item->pengguna->no_hp)) }}?text={{ urlencode('Halo ' . $item->pengguna->nama . ', saya petugas Pos Keamanan UNEJ terkait laporan kehilangan "' . $item->nama_barang . '".') }}"
                                     target="_blank" rel="noopener"
                                     aria-label="Hubungi {{ $item->pengguna->nama }} melalui WhatsApp"
                                     class="mt-3 inline-flex h-9 items-center justify-center gap-2 rounded-lg bg-[#25D366] px-3 text-xs font-medium text-white transition-colors duration-150 hover:bg-[#1fb85a] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#25D366] focus-visible:ring-offset-1">
@@ -140,14 +126,14 @@
                                 <form action="{{ route('petugas.laporan-kehilangan.status', $item) }}" method="POST">
                                     @csrf
                                     @method('PATCH')
-                                    <input type="hidden" name="status" value="{{ $isDicari ? 'ditemukan' : 'dicari' }}">
+                                    <input type="hidden" name="status" value="{{ $item->status === 'dicari' ? 'ditemukan' : 'dicari' }}">
                                     <button type="submit"
-                                        class="{{ $actionBtn }} border-[#d7dde7] text-ink hover:border-ink-navy hover:bg-[#f7f8fb] hover:text-ink-navy focus-visible:ring-ink-navy/30">
-                                        {{ $isDicari ? 'Tandai Ditemukan' : 'Buka Kembali' }}
+                                        class="inline-flex h-9 w-full items-center justify-center rounded-lg border bg-white px-3 text-xs font-medium transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-1 border-[#d7dde7] text-ink hover:border-ink-navy hover:bg-[#f7f8fb] hover:text-ink-navy focus-visible:ring-ink-navy/30">
+                                        {{ $item->status === 'dicari' ? 'Tandai Ditemukan' : 'Buka Kembali' }}
                                     </button>
                                 </form>
                                 <button type="button" popovertarget="confirm-hapus-{{ $item->id }}"
-                                    class="{{ $actionBtn }} border-[#f3c3c0] text-[#b42318] hover:border-brand hover:bg-[#fef3f2] focus-visible:ring-brand/30">Hapus</button>
+                                    class="inline-flex h-9 w-full items-center justify-center rounded-lg border bg-white px-3 text-xs font-medium transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-1 border-[#f3c3c0] text-[#b42318] hover:border-brand hover:bg-[#fef3f2] focus-visible:ring-brand/30">Hapus</button>
                             </div>
                         </div>
                     </article>
