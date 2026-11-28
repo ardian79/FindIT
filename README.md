@@ -48,131 +48,84 @@ Status klaim yang digunakan meliputi `pending`, `disetujui`, `ditolak`, dan `sel
 
 Panel petugas digunakan untuk mengelola seluruh aktivitas operasional layanan Lost & Found.
 
-- **Dashboard Operasional**
+#### Dashboard Operasional
 
-  Dashboard menampilkan enam kartu statistik utama:
+Dashboard menampilkan enam kartu statistik utama:
 
-  1. Barang temuan tersedia.
-  2. Klaim yang menunggu verifikasi.
-  3. Barang yang menunggu diambil.
-  4. Barang yang sudah dikembalikan.
-  5. Laporan kehilangan dengan status dicari.
-  6. Jumlah mahasiswa aktif.
+1. Barang temuan tersedia.
+2. Klaim yang menunggu verifikasi.
+3. Barang yang menunggu diambil.
+4. Barang yang sudah dikembalikan.
+5. Laporan kehilangan dengan status dicari.
+6. Jumlah mahasiswa aktif.
 
-  Selain itu, dashboard menampilkan lima pengajuan klaim pending dan lima laporan kehilangan terbaru.
+Selain itu, dashboard menampilkan lima pengajuan klaim pending dan lima laporan kehilangan terbaru.
 
-  **Pembedaan:**
-  - Kartu statistik = angka ringkasan operasional.
-  - Daftar ringkas = lima klaim pending dan lima laporan kehilangan terbaru.
+#### Kelola Barang Temuan
 
-- **Kelola Barang Temuan**
+Petugas dapat melakukan pengelolaan data barang temuan, meliputi:
 
-  Petugas dapat melakukan pengelolaan data barang temuan, meliputi:
+1. Menambahkan data barang temuan.
+2. Mengunggah foto barang saat penambahan.
+3. Mengubah informasi barang.
+4. Menghapus data barang.
+5. Melakukan pencarian barang.
+6. Memfilter barang berdasarkan kategori dan status.
+7. Memperbarui status barang secara manual.
 
-  1. Menambahkan data barang temuan.
-  2. Mengunggah foto barang saat penambahan.
-  3. Mengubah informasi barang.
-  4. Menghapus data barang.
-  5. Melakukan pencarian barang.
-  6. Memfilter barang berdasarkan kategori dan status.
-  7. Memperbarui status barang secara manual.
+Status barang temuan terdiri atas `tersedia`, `diklaim`, dan `dikembalikan`.
 
-  Status barang temuan terdiri atas `tersedia`, `diklaim`, dan `dikembalikan`.
+#### Verifikasi Klaim dan Serah Terima
 
-  **Pembedaan:**
-  - CRUD = menambah, mengubah, dan menghapus data barang.
-  - Pencarian dan filter = menemukan data berdasarkan kata kunci, kategori, dan status.
-  - Status barang = `tersedia`, `diklaim`, dan `dikembalikan`.
+Petugas bertanggung jawab memeriksa pengajuan klaim yang dikirimkan mahasiswa.
 
-- **Verifikasi Klaim dan Serah Terima**
+1. **Menyetujui Klaim:** Mengubah status klaim menjadi `disetujui` dan status barang menjadi `diklaim`. Sistem juga otomatis menolak pengajuan klaim `pending` lainnya pada barang yang sama.
+2. **Menolak Klaim:** Petugas dapat menolak klaim dengan menyertakan alasan pada kolom `catatan_petugas`.
+3. **Membatalkan Persetujuan:** Jika klaim yang sebelumnya disetujui dibatalkan, status barang dikembalikan menjadi `tersedia`.
+4. **Menyelesaikan Klaim:** Petugas mengunggah foto bukti serah terima, sistem mencatat `tanggal_diambil` secara otomatis, dan status barang berubah menjadi `dikembalikan`.
+5. **Menghubungi Pengklaim:** Petugas dapat menghubungi mahasiswa melalui WhatsApp dengan pesan otomatis yang telah disiapkan.
 
-  Petugas bertanggung jawab memeriksa pengajuan klaim yang dikirimkan mahasiswa.
+#### Pantau Laporan Kehilangan
 
-  1. **Menyetujui Klaim:** Mengubah status klaim menjadi `disetujui` dan status barang menjadi `diklaim`. Sistem juga otomatis menolak pengajuan klaim `pending` lainnya pada barang yang sama.
-  2. **Menolak Klaim:** Petugas dapat menolak klaim dengan menyertakan alasan pada kolom `catatan_petugas`.
-  3. **Membatalkan Persetujuan:** Jika klaim yang sebelumnya disetujui dibatalkan, status barang dikembalikan menjadi `tersedia`.
-  4. **Menyelesaikan Klaim:** Petugas mengunggah foto bukti serah terima, sistem mencatat `tanggal_diambil` secara otomatis, dan status barang berubah menjadi `dikembalikan`.
-  5. **Menghubungi Pengklaim:** Petugas dapat menghubungi mahasiswa melalui WhatsApp dengan pesan otomatis yang telah disiapkan.
+Petugas dapat mengelola seluruh laporan kehilangan yang masuk melalui sistem. Fitur yang tersedia meliputi:
 
-  **Pembedaan:**
-  - Menyetujui klaim = status klaim menjadi `disetujui`, status barang menjadi `diklaim`, dan klaim `pending` lain pada barang yang sama otomatis ditolak.
-  - Menolak klaim = klaim ditolak dengan alasan pada `catatan_petugas`.
-  - Membatalkan persetujuan = status barang kembali menjadi `tersedia`.
-  - Menyelesaikan klaim = unggah foto bukti serah terima, `tanggal_diambil` tercatat otomatis, dan status barang menjadi `dikembalikan`.
-  - Menghubungi pengklaim = komunikasi via WhatsApp dengan pesan otomatis.
+1. Pencarian berdasarkan nama barang, lokasi kehilangan, nama mahasiswa, dan NIM.
+2. Filter berdasarkan kategori dan status laporan.
+3. Badge otomatis `> 30 hr` untuk laporan berstatus `dicari` yang telah melewati 30 hari.
+4. Tombol WhatsApp dengan pesan otomatis untuk menghubungi pelapor.
+5. Pembaruan status laporan.
+6. Penghapusan laporan kehilangan.
 
-- **Pantau Laporan Kehilangan**
+#### Master Kategori
 
-  Petugas dapat mengelola seluruh laporan kehilangan yang masuk melalui sistem.
+Petugas dapat mengelola kategori barang yang digunakan dalam laporan kehilangan dan barang temuan. Fitur pengelolaan meliputi:
 
-  Fitur yang tersedia meliputi:
+1. Menambahkan kategori.
+2. Mengubah kategori.
+3. Menghapus kategori.
+4. Validasi nama kategori agar tidak terjadi duplikasi.
+5. Proteksi penghapusan kategori yang masih digunakan oleh data lain.
 
-  1. Pencarian berdasarkan nama barang, lokasi kehilangan, nama mahasiswa, dan NIM.
-  2. Filter berdasarkan kategori dan status laporan.
-  3. Badge otomatis `> 30 hr` untuk laporan berstatus `dicari` yang telah melewati 30 hari.
-  4. Tombol WhatsApp dengan pesan otomatis untuk menghubungi pelapor.
-  5. Pembaruan status laporan.
-  6. Penghapusan laporan kehilangan.
+#### Kelola Pengguna Mahasiswa
 
-  **Pembedaan:**
-  - Pencarian = berdasarkan nama barang, lokasi kehilangan, nama mahasiswa, dan NIM.
-  - Filter = berdasarkan kategori dan status laporan.
-  - Badge otomatis = penanda `> 30 hr` untuk laporan `dicari` yang sudah melewati 30 hari.
-  - Aksi = WhatsApp, pembaruan status, dan penghapusan laporan.
+Petugas dapat melihat dan mengelola data akun mahasiswa yang terdaftar. Fitur yang tersedia meliputi:
 
-- **Master Kategori**
+1. Pencarian berdasarkan nama, NIM, dan nomor HP.
+2. Filter berdasarkan status akun.
+3. Melihat ringkasan aktivitas laporan dan klaim mahasiswa.
+4. Menghubungi mahasiswa melalui WhatsApp.
+5. Mengaktifkan dan menonaktifkan akun melalui atribut `is_active`.
 
-  Petugas dapat mengelola kategori barang yang digunakan dalam laporan kehilangan dan barang temuan.
+#### Rekap dan Cetak Laporan
 
-  Fitur pengelolaan meliputi:
+Sistem menyediakan halaman rekap untuk membantu petugas memantau aktivitas operasional. Fitur yang tersedia meliputi:
 
-  1. Menambahkan kategori.
-  2. Mengubah kategori.
-  3. Menghapus kategori.
-  4. Validasi nama kategori agar tidak terjadi duplikasi.
-  5. Proteksi penghapusan kategori yang masih digunakan oleh data lain.
-
-  **Pembedaan:**
-  - Aksi = menambah, mengubah, dan menghapus kategori.
-  - Validasi = mencegah duplikasi nama kategori.
-  - Proteksi = kategori yang masih digunakan oleh data lain tidak boleh dihapus.
-
-- **Kelola Pengguna Mahasiswa**
-
-  Petugas dapat melihat dan mengelola data akun mahasiswa yang terdaftar.
-
-  Fitur yang tersedia meliputi:
-
-  1. Pencarian berdasarkan nama, NIM, dan nomor HP.
-  2. Filter berdasarkan status akun.
-  3. Melihat ringkasan aktivitas laporan dan klaim mahasiswa.
-  4. Menghubungi mahasiswa melalui WhatsApp.
-  5. Mengaktifkan dan menonaktifkan akun melalui atribut `is_active`.
-
-  **Pembedaan:**
-  - Pencarian = berdasarkan nama, NIM, dan nomor HP.
-  - Filter = berdasarkan status akun.
-  - Ringkasan aktivitas = data laporan dan klaim mahasiswa.
-  - WhatsApp = komunikasi dengan mahasiswa.
-  - `is_active` = atribut untuk mengaktifkan atau menonaktifkan akun.
-
-- **Rekap dan Cetak Laporan**
-
-  Sistem menyediakan halaman rekap untuk membantu petugas memantau aktivitas operasional.
-
-  Fitur yang tersedia meliputi:
-
-  1. Ringkasan lima metrik operasional.
-  2. Filter jenis laporan, yaitu Barang Temuan, Laporan Kehilangan, dan Verifikasi Klaim.
-  3. Filter rentang tanggal.
-  4. Filter status.
-  5. Fitur cetak langsung menggunakan `window.print()`.
-  6. Tampilan laporan yang telah disesuaikan untuk dicetak atau disimpan sebagai PDF melalui browser.
-
-  **Pembedaan:**
-  - Ringkasan = lima metrik operasional.
-  - Filter = jenis laporan, rentang tanggal, dan status.
-  - Cetak = menggunakan `window.print()` dan tampilan siap cetak/PDF melalui browser.
+1. Ringkasan lima metrik operasional.
+2. Filter jenis laporan, yaitu Barang Temuan, Laporan Kehilangan, dan Verifikasi Klaim.
+3. Filter rentang tanggal.
+4. Filter status.
+5. Fitur cetak langsung menggunakan `window.print()`.
+6. Tampilan laporan yang telah disesuaikan untuk dicetak atau disimpan sebagai PDF melalui browser.
 
 ---
 
