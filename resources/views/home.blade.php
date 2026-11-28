@@ -16,60 +16,7 @@
         $isPetugas = auth()->check() && auth()->user()->role !== 'mahasiswa';
         $laporUrl = auth()->check() ? route('mahasiswa.laporan.index') : route('login');
 
-        $container = 'mx-auto w-full max-w-[1160px] px-4 sm:px-6 lg:px-8';
-        $eyebrow = 'text-xs font-semibold text-brand';
-        $btnBase = 'inline-flex items-center justify-center gap-2 border px-5 py-2.5 text-sm font-medium leading-tight transition duration-150 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 active:translate-y-0 active:scale-[0.98]';
-        $btnHeroBrand = "$btnBase rounded-full border-transparent bg-brand px-6 py-3 font-semibold text-white hover:bg-brand-dark focus-visible:ring-brand";
-        $btnHeroWhite = "$btnBase rounded-full border-transparent bg-white px-6 py-3 font-semibold text-ink-navy hover:bg-[#f4f6f8] focus-visible:ring-white";
-        $btnBrand = "$btnBase rounded-xl border-transparent bg-brand text-white hover:bg-brand-dark focus-visible:ring-brand";
-        $btnNavy = "$btnBase rounded-xl border-transparent bg-ink-navy text-white hover:bg-ink-deep focus-visible:ring-ink-navy";
-        $btnOutline = "$btnBase rounded-xl border-[#d7dde7] bg-white text-ink hover:border-ink-navy hover:bg-[#f7f8fb] hover:text-ink-navy focus-visible:ring-ink-navy/30";
-
-        $steps = [
-            [
-                'bg-brand',
-                'Laporkan kehilangan',
-                'Catat nama barang, lokasi perkiraan, tanggal, dan ciri khusus agar mudah dicocokkan.',
-            ],
-            [
-                'bg-ink-navy',
-                'Cari di katalog',
-                'Telusuri barang temuan dan laporan hilang dengan kata kunci serta kategori.',
-            ],
-            [
-                'bg-brand',
-                'Verifikasi dan ambil',
-                'Ajukan klaim, tunggu persetujuan petugas, lalu ambil barang di Pos Keamanan.',
-            ],
-        ];
-
-        $features = [
-            'Filter kategori dan kata kunci memakai pencarian yang sudah ada.',
-            'Mahasiswa mengajukan klaim dengan ciri kepemilikan.',
-            'Petugas memverifikasi lalu mencatat serah terima di pos keamanan.',
-        ];
-
         $paginator = $isHilang ? $laporanKehilangan : $barangTemuan;
-        if (request()->header('X-Per-Page') === '4') {
-            $q = $isHilang
-                ? \App\Models\LaporanKehilangan::with(['kategori', 'pengguna'])->where('status', 'dicari')
-                : \App\Models\BarangTemuan::with('kategori')->where('status', 'tersedia');
-            if (request()->filled('search')) {
-                $s = request('search');
-                $locCol = $isHilang ? 'lokasi_hilang' : 'lokasi_ditemukan';
-                $q->where(fn($w) => $w->where('nama_barang', 'like', "%{$s}%")
-                    ->orWhere($locCol, 'like', "%{$s}%")
-                    ->orWhere('deskripsi', 'like', "%{$s}%"));
-            }
-            if (request()->filled('kategori_id')) {
-                $q->where('kategori_id', request('kategori_id'));
-            }
-            $pName = $isHilang ? 'page_hilang' : 'page_temuan';
-            $paginator = $q->latest()->paginate(4, ['*'], $pName)->withQueryString();
-            if ($paginator->isEmpty() && $paginator->currentPage() > $paginator->lastPage() && $paginator->total() > 0) {
-                $paginator = $q->paginate(4, ['*'], $pName, $paginator->lastPage())->withQueryString();
-            }
-        }
         $isPaginator = $paginator instanceof \Illuminate\Pagination\AbstractPaginator;
         $items = $isPaginator ? $paginator->getCollection() : collect($paginator)->take(3);
         $currPage = $isPaginator ? $paginator->currentPage() : 1;
@@ -85,7 +32,7 @@
         <div class="absolute inset-0 bg-gradient-to-b from-ink-deep/75 via-ink-deep/65 to-ink-deep/85"></div>
 
         <div
-            class="{{ $container }} relative z-10 flex flex-col items-center justify-center pb-20 pt-[100px] text-center">
+            class="mx-auto flex w-full max-w-[1160px] flex-col items-center justify-center px-4 pb-20 pt-[100px] text-center relative z-10 sm:px-6 lg:px-8">
             <h1
                 class="fi-hero-in fi-hero-in-1 max-w-3xl font-heading text-4xl font-bold leading-[1.08] tracking-tight sm:text-5xl lg:text-[56px]">
                 Temukan Kembali Barang Berharga Anda di UNEJ
@@ -95,7 +42,8 @@
             </p>
             <div
                 class="fi-hero-in fi-hero-in-3 mt-8 flex w-full flex-col items-stretch justify-center gap-3 sm:w-auto sm:flex-row sm:items-center">
-                <a href="#katalog" class="{{ $btnHeroBrand }}">
+                <a href="#katalog"
+                    class="inline-flex items-center justify-center gap-2 rounded-full border border-transparent bg-brand px-6 py-3 text-sm font-semibold leading-tight text-white transition duration-150 hover:-translate-y-0.5 hover:bg-brand-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 active:translate-y-0 active:scale-[0.98]">
                     <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75"
                         aria-hidden="true">
                         <path stroke-linecap="round" stroke-linejoin="round"
@@ -103,7 +51,8 @@
                     </svg>
                     Cari Barang
                 </a>
-                <a href="{{ $isPetugas ? route('petugas.dashboard') : $laporUrl }}" class="{{ $btnHeroWhite }}">
+                <a href="{{ $isPetugas ? route('petugas.dashboard') : $laporUrl }}"
+                    class="inline-flex items-center justify-center gap-2 rounded-full border border-transparent bg-white px-6 py-3 text-sm font-semibold leading-tight text-ink-navy transition duration-150 hover:-translate-y-0.5 hover:bg-[#f4f6f8] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 active:translate-y-0 active:scale-[0.98]">
                     {{ $isPetugas ? 'Buka Panel Petugas' : 'Laporkan Kehilangan' }}
                 </a>
             </div>
@@ -111,9 +60,9 @@
     </section>
 
     <section id="cara-kerja" class="scroll-mt-24 bg-white py-20 [contain:layout_style] lg:py-24">
-        <div class="{{ $container }}">
+        <div class="mx-auto w-full max-w-[1160px] px-4 sm:px-6 lg:px-8">
             <div class="fi-reveal mx-auto max-w-2xl text-center">
-                <p class="{{ $eyebrow }}">Cara kerja</p>
+                <p class="text-xs font-semibold text-brand">Cara kerja</p>
                 <h2 class="mt-2 font-heading text-2xl font-semibold tracking-tight text-ink sm:text-3xl lg:text-4xl">
                     Satu alur dari laporan sampai serah terima
                 </h2>
@@ -122,21 +71,37 @@
                 </p>
             </div>
             <div class="mt-10 grid grid-cols-1 gap-4 md:grid-cols-3">
-                @foreach ($steps as $i => [$badgeBg, $title, $desc])
-                    <article
-                        class="fi-reveal-scale fi-r{{ $i + 1 }} rounded-2xl border border-[#e7ebf2] bg-[#f7f8fb] p-6 transition duration-200 hover:-translate-y-1 hover:border-[#cfd6e2] hover:bg-white hover:shadow-card sm:p-8">
-                        <span
-                            class="flex h-10 w-10 items-center justify-center rounded-xl {{ $badgeBg }} text-sm font-semibold tabular-nums text-white">{{ $i + 1 }}</span>
-                        <h3 class="mt-6 font-heading text-lg font-semibold text-ink">{{ $title }}</h3>
-                        <p class="mt-2 text-sm leading-7 text-ink-muted">{{ $desc }}</p>
-                    </article>
-                @endforeach
+                <article
+                    class="fi-reveal-scale fi-r1 rounded-2xl border border-[#e7ebf2] bg-[#f7f8fb] p-6 transition duration-200 hover:-translate-y-1 hover:border-[#cfd6e2] hover:bg-white hover:shadow-card sm:p-8">
+                    <span
+                        class="flex h-10 w-10 items-center justify-center rounded-xl bg-brand text-sm font-semibold tabular-nums text-white">1</span>
+                    <h3 class="mt-6 font-heading text-lg font-semibold text-ink">Laporkan kehilangan</h3>
+                    <p class="mt-2 text-sm leading-7 text-ink-muted">Catat nama barang, lokasi perkiraan, tanggal, dan ciri
+                        khusus agar mudah dicocokkan.</p>
+                </article>
+                <article
+                    class="fi-reveal-scale fi-r2 rounded-2xl border border-[#e7ebf2] bg-[#f7f8fb] p-6 transition duration-200 hover:-translate-y-1 hover:border-[#cfd6e2] hover:bg-white hover:shadow-card sm:p-8">
+                    <span
+                        class="flex h-10 w-10 items-center justify-center rounded-xl bg-ink-navy text-sm font-semibold tabular-nums text-white">2</span>
+                    <h3 class="mt-6 font-heading text-lg font-semibold text-ink">Cari di katalog</h3>
+                    <p class="mt-2 text-sm leading-7 text-ink-muted">Telusuri barang temuan dan laporan hilang dengan kata
+                        kunci serta kategori.</p>
+                </article>
+                <article
+                    class="fi-reveal-scale fi-r3 rounded-2xl border border-[#e7ebf2] bg-[#f7f8fb] p-6 transition duration-200 hover:-translate-y-1 hover:border-[#cfd6e2] hover:bg-white hover:shadow-card sm:p-8">
+                    <span
+                        class="flex h-10 w-10 items-center justify-center rounded-xl bg-brand text-sm font-semibold tabular-nums text-white">3</span>
+                    <h3 class="mt-6 font-heading text-lg font-semibold text-ink">Verifikasi dan ambil</h3>
+                    <p class="mt-2 text-sm leading-7 text-ink-muted">Ajukan klaim, tunggu persetujuan petugas, lalu ambil
+                        barang di Pos Keamanan.</p>
+                </article>
             </div>
         </div>
     </section>
 
     <section class="overflow-x-clip bg-[#f5f6f8] [contain:layout_style]">
-        <div class="{{ $container }} grid items-center gap-10 py-20 lg:grid-cols-2 lg:py-24">
+        <div
+            class="mx-auto grid w-full max-w-[1160px] items-center gap-10 px-4 py-20 sm:px-6 lg:grid-cols-2 lg:px-8 lg:py-24">
             <div
                 class="fi-reveal-left group overflow-hidden rounded-2xl shadow-lift transition duration-300 hover:-translate-y-1 hover:shadow-[0_24px_50px_rgba(16,42,76,0.16)]">
                 <img src="{{ asset('images/campus-activity.webp') }}" alt="Ilustrasi pencarian barang FindIT"
@@ -144,7 +109,7 @@
                     class="aspect-[4/3] w-full object-cover transition-transform duration-300 group-hover:scale-[1.03]">
             </div>
             <div class="fi-reveal-right">
-                <p class="{{ $eyebrow }}">Pencarian yang terarah</p>
+                <p class="text-xs font-semibold text-brand">Pencarian yang terarah</p>
                 <h2 class="mt-2 font-heading text-3xl font-semibold tracking-tight text-ink sm:text-4xl">
                     Temukan barang lewat katalog yang mudah dipindai
                 </h2>
@@ -153,22 +118,30 @@
                     dibuka dari kartu barang.
                 </p>
                 <ul class="mt-6 space-y-3 text-sm text-[#3d4b60]">
-                    @foreach ($features as $i => $text)
-                        <li class="fi-reveal fi-r{{ $i + 1 }} flex gap-3">
-                            <span
-                                class="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-brand-soft text-xs font-semibold tabular-nums text-brand-dark">{{ $i + 1 }}</span>
-                            <span>{{ $text }}</span>
-                        </li>
-                    @endforeach
+                    <li class="fi-reveal fi-r1 flex gap-3">
+                        <span
+                            class="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-brand-soft text-xs font-semibold tabular-nums text-brand-dark">1</span>
+                        <span>Filter kategori dan kata kunci memakai pencarian yang sudah ada.</span>
+                    </li>
+                    <li class="fi-reveal fi-r2 flex gap-3">
+                        <span
+                            class="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-brand-soft text-xs font-semibold tabular-nums text-brand-dark">2</span>
+                        <span>Mahasiswa mengajukan klaim dengan ciri kepemilikan.</span>
+                    </li>
+                    <li class="fi-reveal fi-r3 flex gap-3">
+                        <span
+                            class="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-brand-soft text-xs font-semibold tabular-nums text-brand-dark">3</span>
+                        <span>Petugas memverifikasi lalu mencatat serah terima di pos keamanan.</span>
+                    </li>
                 </ul>
             </div>
         </div>
     </section>
 
     <section id="lokasi" class="scroll-mt-24 overflow-x-clip bg-white py-20 [contain:layout_style] lg:py-24">
-        <div class="{{ $container }}">
+        <div class="mx-auto w-full max-w-[1160px] px-4 sm:px-6 lg:px-8">
             <div class="fi-reveal mx-auto mb-8 max-w-2xl text-center">
-                <p class="{{ $eyebrow }}">Lokasi layanan</p>
+                <p class="text-xs font-semibold text-brand">Lokasi layanan</p>
                 <h2 class="mt-2 font-heading text-3xl font-semibold tracking-tight text-ink sm:text-4xl">
                     Pos Keamanan Universitas Jember
                 </h2>
@@ -200,7 +173,7 @@
                     </div>
 
                     <a href="https://maps.app.goo.gl/fjzb7GHBkVuGzDsK9" target="_blank" rel="noopener"
-                        class="{{ $btnBrand }} mt-6 min-h-11 w-full">
+                        class="mt-6 inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-xl border border-transparent bg-brand px-5 py-2.5 text-sm font-medium leading-tight text-white transition duration-150 hover:-translate-y-0.5 hover:bg-brand-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 active:translate-y-0 active:scale-[0.98]">
                         <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75"
                             aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -223,9 +196,9 @@
     </section>
 
     <section id="katalog" class="scroll-mt-24 bg-[#f5f6f8] py-20 [contain:layout_style] lg:py-24">
-        <div class="{{ $container }}">
+        <div class="mx-auto w-full max-w-[1160px] px-4 sm:px-6 lg:px-8">
             <div class="fi-reveal mx-auto mb-8 max-w-2xl text-center">
-                <p class="{{ $eyebrow }}">Katalog</p>
+                <p class="text-xs font-semibold text-brand">Katalog</p>
                 <h2 class="mt-2 font-heading text-3xl font-semibold tracking-tight text-ink sm:text-4xl">
                     Barang temuan dan laporan hilang
                 </h2>
@@ -243,14 +216,18 @@
                             data-active-tab="{{ $activeTab }}">
                             <span id="catalog-tab-indicator" aria-hidden="true"
                                 class="pointer-events-none absolute top-1 {{ $isHilang ? 'left-1/2' : 'left-1' }} h-[calc(100%-8px)] w-[calc(50%-4px)] rounded-full bg-ink-navy transition-[left] duration-150 ease-[cubic-bezier(.22,1,.36,1)]"></span>
-                            @foreach (['temuan' => ['Barang Temuan', $temuanUrl], 'hilang' => ['Barang Hilang', $hilangUrl]] as $key => [$label, $url])
-                                <a href="{{ $url }}" hx-get="{{ $url }}" hx-target="#catalog-content"
-                                    hx-select="#catalog-content-body" hx-swap="innerHTML show:none focus-scroll:false"
-                                    hx-push-url="true" data-catalog-tab="{{ $key }}"
-                                    class="relative z-[1] flex-1 rounded-full px-4 py-2 text-center text-sm font-medium transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink-navy/40 {{ $activeTab === $key ? 'text-white' : 'text-ink-navy' }}">
-                                    {{ $label }}
-                                </a>
-                            @endforeach
+                            <a href="{{ $temuanUrl }}" hx-get="{{ $temuanUrl }}" hx-target="#catalog-content"
+                                hx-select="#catalog-content-body" hx-swap="innerHTML show:none focus-scroll:false"
+                                hx-push-url="true" data-catalog-tab="temuan"
+                                class="relative z-[1] flex-1 rounded-full px-4 py-2 text-center text-sm font-medium transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink-navy/40 {{ $isHilang ? 'text-ink-navy' : 'text-white' }}">
+                                Barang Temuan
+                            </a>
+                            <a href="{{ $hilangUrl }}" hx-get="{{ $hilangUrl }}" hx-target="#catalog-content"
+                                hx-select="#catalog-content-body" hx-swap="innerHTML show:none focus-scroll:false"
+                                hx-push-url="true" data-catalog-tab="hilang"
+                                class="relative z-[1] flex-1 rounded-full px-4 py-2 text-center text-sm font-medium transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink-navy/40 {{ $isHilang ? 'text-white' : 'text-ink-navy' }}">
+                                Barang Hilang
+                            </a>
                         </div>
 
                         <form action="{{ route('home') }}" method="GET" hx-get="{{ route('home') }}"
@@ -280,19 +257,21 @@
                                     </option>
                                 @endforeach
                             </select>
-                            <button type="submit" class="{{ $btnBrand }} h-[42px]">Cari</button>
+                            <button type="submit"
+                                class="inline-flex h-[42px] items-center justify-center gap-2 rounded-xl border border-transparent bg-brand px-5 py-2.5 text-sm font-medium leading-tight text-white transition duration-150 hover:-translate-y-0.5 hover:bg-brand-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 active:translate-y-0 active:scale-[0.98]">Cari</button>
                             @if (request()->filled('search') || request()->filled('kategori_id'))
                                 <a href="{{ route('home', ['tab' => $activeTab]) }}"
                                     hx-get="{{ route('home', ['tab' => $activeTab]) }}" hx-target="#catalog-content"
                                     hx-select="#catalog-content-body" hx-swap="innerHTML show:none focus-scroll:false"
-                                    hx-push-url="true" class="{{ $btnOutline }} h-[42px]">Reset</a>
+                                    hx-push-url="true"
+                                    class="inline-flex h-[42px] items-center justify-center gap-2 rounded-xl border border-[#d7dde7] bg-white px-5 py-2.5 text-sm font-medium leading-tight text-ink transition duration-150 hover:-translate-y-0.5 hover:border-ink-navy hover:bg-[#f7f8fb] hover:text-ink-navy focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink-navy/30 focus-visible:ring-offset-2 active:translate-y-0 active:scale-[0.98]">Reset</a>
                             @endif
                         </form>
                     </div>
 
                     <div id="catalog-results" class="min-h-[480px] scroll-mt-24"
                         hx-on::after-swap="if (event.detail.requestConfig?.elt?.tagName === 'A' && this.getBoundingClientRect().top < 96) this.scrollIntoView({ block: 'start', behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' })">
-                        <div id="catalog-results-body" data-per-page="{{ $isPaginator ? $paginator->perPage() : 3 }}">
+                        <div id="catalog-results-body">
 
                             @if ($items->isEmpty())
                                 <div
@@ -305,7 +284,7 @@
                                     </p>
                                 </div>
                             @else
-                                <div class="mt-6 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+                                <div class="mt-6 grid grid-cols-1 gap-5 md:grid-cols-3">
                                     @foreach ($items as $item)
                                         @php
                                             $katNama = $item->kategori?->nama_kategori ?? 'Umum';
@@ -350,7 +329,7 @@
                                                     {{ $item->deskripsi }}</p>
                                                 <button type="button"
                                                     popovertarget="modal-{{ $activeTab }}-{{ $item->id }}"
-                                                    class="{{ $isHilang ? $btnOutline : $btnNavy }} mt-4 w-full">
+                                                    class="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-xl border px-5 py-2.5 text-sm font-medium leading-tight transition duration-150 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 active:translate-y-0 active:scale-[0.98] {{ $isHilang ? 'border-[#d7dde7] bg-white text-ink hover:border-ink-navy hover:bg-[#f7f8fb] hover:text-ink-navy focus-visible:ring-ink-navy/30' : 'border-transparent bg-ink-navy text-white hover:bg-ink-deep focus-visible:ring-ink-navy' }}">
                                                     Lihat Detail
                                                 </button>
                                             </div>
@@ -360,8 +339,6 @@
 
                                 @if ($lastPage > 1)
                                     @php
-                                        $pageBtn =
-                                            'inline-flex h-10 items-center justify-center gap-1 rounded-xl border border-[#d7dde7] bg-white px-4 text-xs font-medium text-ink transition duration-150 hover:-translate-y-0.5 hover:border-ink-navy hover:bg-[#f7f8fb] hover:text-ink-navy focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink-navy/30';
                                         $window = 5;
                                         $startPage = min($currPage, max(1, $lastPage - $window + 1));
                                         $endPage = min($lastPage, $startPage + $window - 1);
@@ -373,7 +350,8 @@
                                         @if ($currPage > 1)
                                             <a href="{{ $pageUrl($currPage - 1) }}"
                                                 hx-get="{{ $pageUrl($currPage - 1) }}"
-                                                class="{{ $pageBtn }}">&lsaquo; Prev</a>
+                                                class="inline-flex h-10 items-center justify-center gap-1 rounded-xl border border-[#d7dde7] bg-white px-4 text-xs font-medium text-ink transition duration-150 hover:-translate-y-0.5 hover:border-ink-navy hover:bg-[#f7f8fb] hover:text-ink-navy focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink-navy/30">&lsaquo;
+                                                Prev</a>
                                         @endif
 
                                         @if ($startPage > 1)
@@ -398,18 +376,13 @@
 
                                         @if ($currPage < $lastPage)
                                             <a href="{{ $pageUrl($currPage + 1) }}"
-                                                hx-get="{{ $pageUrl($currPage + 1) }}" class="{{ $pageBtn }}">Next
+                                                hx-get="{{ $pageUrl($currPage + 1) }}"
+                                                class="inline-flex h-10 items-center justify-center gap-1 rounded-xl border border-[#d7dde7] bg-white px-4 text-xs font-medium text-ink transition duration-150 hover:-translate-y-0.5 hover:border-ink-navy hover:bg-[#f7f8fb] hover:text-ink-navy focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink-navy/30">Next
                                                 &rsaquo;</a>
                                         @endif
                                     </nav>
                                 @endif
                             @endif
-                            @php
-                                $dialogClass =
-                                    'fi-detail-modal m-0 mt-auto max-h-[92vh] w-full max-w-full overflow-y-auto rounded-t-2xl border border-[#e7ebf2] bg-white p-0 text-left backdrop:bg-ink-deep/60 sm:m-auto sm:w-[calc(100%-2rem)] sm:rounded-2xl';
-                                $closeBtnClass =
-                                    'flex h-9 w-9 items-center justify-center rounded-lg text-ink-muted transition-colors duration-150 hover:bg-[#f3f5f8] hover:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink-navy/30';
-                            @endphp
 
                             @foreach ($items as $item)
                                 @php
@@ -426,7 +399,7 @@
 
                                 <div id="{{ $modalId }}" popover hx-boost="false"
                                     aria-labelledby="{{ $modalId }}-title"
-                                    class="{{ $dialogClass }} {{ $isHilang ? 'sm:max-w-xl' : 'sm:max-w-2xl' }}">
+                                    class="fi-detail-modal m-0 mt-auto max-h-[92vh] w-full max-w-full overflow-y-auto rounded-t-2xl border border-[#e7ebf2] bg-white p-0 text-left backdrop:bg-ink-deep/60 sm:m-auto sm:w-[calc(100%-2rem)] sm:rounded-2xl {{ $isHilang ? 'sm:max-w-xl' : 'sm:max-w-2xl' }}">
                                     <div
                                         class="sticky top-0 z-10 flex items-start justify-between gap-4 border-b border-[#e7ebf2] bg-white px-5 py-4 sm:px-6">
                                         <div>
@@ -436,7 +409,9 @@
                                             </h3>
                                         </div>
                                         <button type="button" popovertarget="{{ $modalId }}"
-                                            popovertargetaction="hide" class="{{ $closeBtnClass }}" aria-label="Tutup">
+                                            popovertargetaction="hide"
+                                            class="flex h-9 w-9 items-center justify-center rounded-lg text-ink-muted transition-colors duration-150 hover:bg-[#f3f5f8] hover:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink-navy/30"
+                                            aria-label="Tutup">
                                             <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24"
                                                 stroke="currentColor" stroke-width="1.75" aria-hidden="true">
                                                 <path stroke-linecap="round" stroke-linejoin="round"
@@ -488,11 +463,12 @@
                                             <div
                                                 class="mt-6 flex flex-col gap-2 border-t border-[#e7ebf2] pt-4 sm:flex-row sm:justify-end">
                                                 <button type="button" popovertarget="{{ $modalId }}"
-                                                    popovertargetaction="hide" class="{{ $btnOutline }}">Tutup</button>
+                                                    popovertargetaction="hide"
+                                                    class="inline-flex items-center justify-center gap-2 rounded-xl border border-[#d7dde7] bg-white px-5 py-2.5 text-sm font-medium leading-tight text-ink transition duration-150 hover:-translate-y-0.5 hover:border-ink-navy hover:bg-[#f7f8fb] hover:text-ink-navy focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink-navy/30 focus-visible:ring-offset-2 active:translate-y-0 active:scale-[0.98]">Tutup</button>
                                                 @if ($waPelapor)
                                                     <a href="https://wa.me/{{ $waPelapor }}?text={{ urlencode('Halo ' . $pelapor . ', saya melihat laporan kehilangan "' . $item->nama_barang . '" di FindIT UNEJ.') }}"
                                                         target="_blank" rel="noopener"
-                                                        class="{{ $btnBase }} rounded-xl border-transparent bg-[#25D366] text-white hover:bg-[#1fb85a] focus-visible:ring-[#25D366]">
+                                                        class="inline-flex items-center justify-center gap-2 rounded-xl border border-transparent bg-[#25D366] px-5 py-2.5 text-sm font-medium leading-tight text-white transition duration-150 hover:-translate-y-0.5 hover:bg-[#1fb85a] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#25D366] focus-visible:ring-offset-2 active:translate-y-0 active:scale-[0.98]">
                                                         <svg class="h-4 w-4 shrink-0" viewBox="0 0 24 24"
                                                             fill="currentColor" aria-hidden="true">
                                                             <path
@@ -528,8 +504,9 @@
                                                                 class="flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
                                                                 <button type="button" popovertarget="{{ $modalId }}"
                                                                     popovertargetaction="hide"
-                                                                    class="{{ $btnOutline }}">Batal</button>
-                                                                <button type="submit" class="{{ $btnBrand }}">Kirim
+                                                                    class="inline-flex items-center justify-center gap-2 rounded-xl border border-[#d7dde7] bg-white px-5 py-2.5 text-sm font-medium leading-tight text-ink transition duration-150 hover:-translate-y-0.5 hover:border-ink-navy hover:bg-[#f7f8fb] hover:text-ink-navy focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink-navy/30 focus-visible:ring-offset-2 active:translate-y-0 active:scale-[0.98]">Batal</button>
+                                                                <button type="submit"
+                                                                    class="inline-flex items-center justify-center gap-2 rounded-xl border border-transparent bg-brand px-5 py-2.5 text-sm font-medium leading-tight text-white transition duration-150 hover:-translate-y-0.5 hover:bg-brand-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 active:translate-y-0 active:scale-[0.98]">Kirim
                                                                     Pengajuan Klaim</button>
                                                             </div>
                                                         </form>
@@ -540,7 +517,7 @@
                                                         <p class="text-sm text-ink">Masuk dengan akun mahasiswa untuk
                                                             mengajukan klaim.</p>
                                                         <a href="{{ route('login') }}"
-                                                            class="{{ $btnBrand }} px-4 py-2 text-xs">Masuk</a>
+                                                            class="inline-flex items-center justify-center gap-2 rounded-xl border border-transparent bg-brand px-4 py-2 text-xs font-medium leading-tight text-white transition duration-150 hover:-translate-y-0.5 hover:bg-brand-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 active:translate-y-0 active:scale-[0.98]">Masuk</a>
                                                     </div>
                                                 @endauth
                                             </div>
@@ -555,7 +532,7 @@
         </div>
     </section>
 
-    <section class="{{ $container }} pb-4">
+    <section class="mx-auto w-full max-w-[1160px] px-4 pb-4 sm:px-6 lg:px-8">
         <div
             class="fi-reveal-scale overflow-hidden rounded-2xl bg-brand px-6 py-10 text-white shadow-card sm:px-10 lg:px-12">
             <div class="grid items-center gap-8 lg:grid-cols-[1fr_auto]">
@@ -575,10 +552,12 @@
                     @endif
                 </div>
                 <div class="flex flex-col gap-3 sm:flex-row lg:flex-col">
-                    <a href="#katalog" class="{{ $btnHeroWhite }}">Cari Barang</a>
+                    <a href="#katalog"
+                        class="inline-flex items-center justify-center gap-2 rounded-full border border-transparent bg-white px-6 py-3 text-sm font-semibold leading-tight text-ink-navy transition duration-150 hover:-translate-y-0.5 hover:bg-[#f4f6f8] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 active:translate-y-0 active:scale-[0.98]">Cari
+                        Barang</a>
                     @unless ($isPetugas)
                         <a href="{{ $laporUrl }}"
-                            class="{{ $btnBase }} rounded-full border-white/40 bg-transparent px-6 py-3 font-semibold text-white hover:bg-white/10 focus-visible:ring-white">
+                            class="inline-flex items-center justify-center gap-2 rounded-full border border-white/40 bg-transparent px-6 py-3 text-sm font-semibold leading-tight text-white transition duration-150 hover:-translate-y-0.5 hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 active:translate-y-0 active:scale-[0.98]">
                             Laporkan Kehilangan
                         </a>
                     @endunless
@@ -586,25 +565,4 @@
             </div>
         </div>
     </section>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const mq = window.matchMedia('(min-width: 640px) and (max-width: 1023.98px)');
-            const want = () => (mq.matches ? '4' : '3');
-            document.body.addEventListener('htmx:configRequest', (e) => {
-                e.detail.headers['X-Per-Page'] = want();
-            });
-            const sync = () => {
-                const body = document.getElementById('catalog-results-body');
-                if (!body || body.dataset.perPage === want() || !window.htmx) return;
-                window.htmx.ajax('GET', location.pathname + location.search, {
-                    target: '#catalog-results',
-                    select: '#catalog-results-body',
-                    swap: 'innerHTML show:none focus-scroll:false',
-                });
-            };
-            sync();
-            mq.addEventListener('change', sync);
-        });
-    </script>
 @endsection

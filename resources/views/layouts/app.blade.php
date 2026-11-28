@@ -42,7 +42,6 @@
         }
     </script>
     <style>
-        /* ponytail: native base-select + scroll-driven animations + scroll-spy replaces JS */
         html,
         body {
             overflow-anchor: none;
